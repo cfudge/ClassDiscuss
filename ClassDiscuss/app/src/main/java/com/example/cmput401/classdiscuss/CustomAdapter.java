@@ -26,6 +26,8 @@ public class CustomAdapter extends ArrayAdapter<String>{
      ArrayList<String> listItems;
     Activity activity;
 
+
+
      CustomAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
@@ -43,29 +45,23 @@ public class CustomAdapter extends ArrayAdapter<String>{
         String classes = getItem(position);
         TextView listText = (TextView) customView.findViewById(R.id.listText);
         final TextView test = (TextView) customView.findViewById(R.id.test);
+
+
         Button deleteButton = (Button) customView.findViewById(R.id.deleteButton);
 
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
+                public void onClick(View v) {
 
-                alert(position);
-                //test.setText(String.valueOf(position));
-
-
-            }
-        });
-
-
+                    alert(position);
+                    //test.setText(String.valueOf(position));
+                }
+            });
 
         listText.setText(classes);
-
-
         return customView;
     }
-
-
 
 
 //Alert Dialog that pops up and asks the user if they want to delete the channel

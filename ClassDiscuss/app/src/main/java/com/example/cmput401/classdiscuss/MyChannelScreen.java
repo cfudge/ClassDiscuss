@@ -21,11 +21,11 @@ public class MyChannelScreen extends ActionBarActivity {
    // public ArrayAdapter<String> channelAdapter;
     CustomAdapter channelAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_screen);
+
 
         channelList = new ArrayList<String>();
         channelAdapter = new CustomAdapter(this, channelList, MyChannelScreen.this);
@@ -39,6 +39,7 @@ public class MyChannelScreen extends ActionBarActivity {
         super.onStart();
 
         addChannels();
+
     }
 
     public void addChannels(){
@@ -49,6 +50,9 @@ public class MyChannelScreen extends ActionBarActivity {
         channelAdapter.notifyDataSetChanged();
 
         Button addButton = (Button) findViewById(R.id.add_new_channel);
+
+
+
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -58,32 +62,8 @@ public class MyChannelScreen extends ActionBarActivity {
     }
 
 
+
     public void channelSelected(){
-
-    }
-
-    public void alert(){
-       AlertDialog.Builder builder = new AlertDialog.Builder(MyChannelScreen.this);
-        builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
-
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-
-        });
-
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        //Get alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
 
     }
 
@@ -103,13 +83,7 @@ public class MyChannelScreen extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_edit) {
-            //removeChannel();
-            return true;
-        }
-
-        //noinspection SimplifiableIfStatement
-        else if (id == R.id.action_settings) {
+         if (id == R.id.action_settings) {
             return true;
         }
 
