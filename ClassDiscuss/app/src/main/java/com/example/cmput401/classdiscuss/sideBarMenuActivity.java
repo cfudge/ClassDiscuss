@@ -28,29 +28,33 @@ public class sideBarMenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuInflater menuI = getMenuInflater();
-        menuI.inflate(R.menu.menu_side_bar_menu, menu);
-
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                break;
             case R.id.action_profile:
                 Intent myProfile = new Intent();
                 myProfile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(myProfile);
                 break;
-            default:
+            case R.id.action_myChannels:
+                Intent myChannels = new Intent();
+                myChannels.setClass(getApplicationContext(), MyChannelScreen.class);
+                startActivity(myChannels);
                 break;
+            case R.id.action_edit_profile:
+                Intent edit = new Intent();
+                edit.setClass(getApplicationContext(), EditProfileActivity.class);
+                startActivity(edit);
+                break;
+            case R.id.action_settings:
+            case R.id.action_logout:
+            default:
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }
