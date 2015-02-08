@@ -24,6 +24,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cmput401.classdiscuss.MainActivity" />
         </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/menu_profile"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.MainActivity" />
+        </activity>
+        <activity
+            android:name=".sideBarMenuActivity"
+            android:label="@string/title_activity_side_bar_menu" >
+        </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.ProfileActivity" />
+        </activity>
     </application>
 
 </manifest>

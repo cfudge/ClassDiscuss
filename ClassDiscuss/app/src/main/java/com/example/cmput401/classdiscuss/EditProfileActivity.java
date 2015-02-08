@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -90,7 +93,7 @@ public class EditProfileActivity extends sideBarMenuActivity {
                             public void onClick(DialogInterface dialog, int whichButton){
                                 publicChecked();
                             }
-                         })
+                        })
                 .show();
     }
 
@@ -120,6 +123,14 @@ public class EditProfileActivity extends sideBarMenuActivity {
         EditUserName.setEnabled(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menuI = getMenuInflater();
+        menuI.inflate(R.menu.menu_side_bar_menu, menu);
+
+        return true;
+    }
 
 
 }
