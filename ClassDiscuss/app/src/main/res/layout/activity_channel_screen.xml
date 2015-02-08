@@ -19,6 +19,7 @@
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
         android:scrollbars="vertical"
+        android:textColor="#333333"
         />
 
     <Button

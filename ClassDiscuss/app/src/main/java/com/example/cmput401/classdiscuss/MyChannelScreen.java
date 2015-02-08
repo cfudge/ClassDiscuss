@@ -28,12 +28,10 @@ public class MyChannelScreen extends ActionBarActivity {
         setContentView(R.layout.activity_channel_screen);
 
         channelList = new ArrayList<String>();
-        channelAdapter = new CustomAdapter(this, channelList);
+        channelAdapter = new CustomAdapter(this, channelList, MyChannelScreen.this);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
-
-
     }
 
     @Override
@@ -41,8 +39,6 @@ public class MyChannelScreen extends ActionBarActivity {
         super.onStart();
 
         addChannels();
-
-
     }
 
     public void addChannels(){
@@ -61,9 +57,6 @@ public class MyChannelScreen extends ActionBarActivity {
         });
     }
 
-    public void removeChannel(){
-            alert();
-    }
 
     public void channelSelected(){
 
@@ -111,7 +104,7 @@ public class MyChannelScreen extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
          if (id == R.id.action_edit) {
-            removeChannel();
+            //removeChannel();
             return true;
         }
 

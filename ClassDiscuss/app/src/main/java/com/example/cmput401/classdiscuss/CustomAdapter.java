@@ -24,11 +24,13 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
      Context context;
      ArrayList<String> listItems;
+    Activity activity;
 
-     CustomAdapter(Context context, ArrayList<String> listItems){
+     CustomAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
         this.listItems = listItems;
+        this.activity = activity;
 
     }
 
@@ -47,10 +49,10 @@ public class CustomAdapter extends ArrayAdapter<String>{
         deleteButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                
-                listItems.remove(position);
+
+                alert(position);
                 //test.setText(String.valueOf(position));
-                notifyDataSetChanged();
+
 
             }
         });
@@ -66,9 +68,31 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
 
 
+//Alert Dialog that pops up and asks the user if they want to delete the channel
+    public void alert(final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
 
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                listItems.remove(position);
+                notifyDataSetChanged();
+            }
 
+        });
 
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+
+        //Get alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
 
 }
