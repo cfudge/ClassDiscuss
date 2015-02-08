@@ -7,12 +7,14 @@
 
     <TextView android:text="@string/my_channels"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal" />
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="334dp"
+        android:layout_height="295dp"
         android:divider="#33CCFF"
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
@@ -23,8 +25,10 @@
         android:id="@+id/add_new_channel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:text="@string/add_new_channel"
         android:textColor="#33CCFF" />
+
+
 
 </LinearLayout>
