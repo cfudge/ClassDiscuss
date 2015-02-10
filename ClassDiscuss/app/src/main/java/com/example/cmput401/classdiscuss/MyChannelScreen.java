@@ -2,6 +2,7 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,7 +57,9 @@ public class MyChannelScreen extends ActionBarActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
+                Intent addChannels = new Intent();
+                addChannels.setClass(getApplicationContext(), AddChannelScreen.class);
+                startActivity(addChannels);
             }
         });
     }

@@ -44,6 +44,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cmput401.classdiscuss.ProfileActivity" />
         </activity>
+        <activity
+            android:name=".AddChannelScreen"
+            android:label="@string/title_activity_add_channel_screen" >
+        </activity>
     </application>
 
 </manifest>
