@@ -7,6 +7,7 @@ package com.example.cmput401.classdiscuss;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.preference.DialogPreference;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,7 +50,10 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
         Button deleteButton = (Button) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
+        final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_inactive);
+        final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active);
         statusButton.setTag("Active");
+        statusButton.setText("0");
 
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +69,13 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
             public void onClick(View v) {
                 if (statusButton.getTag().equals("Active")){
-                    confirm(position, statusButton);
+                    confirm(position, statusButton, inactivePic);
                     //test.setText(String.valueOf(position));
                 }
                 else {
-                    statusButton.setText("Active");
+                    statusButton.setText("0");
                     statusButton.setTag("Active");
+                    statusButton.setBackgroundDrawable(activePic);
                 }
             }
         });
@@ -108,14 +113,15 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
     }
 
-    public void confirm(final int position, final Button button) {
+    public void confirm(final int position, final Button button, final Drawable icon) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(R.string.deactivate_message).setTitle(R.string.confirm_deactivate_title);
 
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                button.setText("Inactive");
+                button.setText("");
+                button.setBackgroundDrawable(icon);
                 button.setTag("Inactive");
             }
 
