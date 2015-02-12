@@ -6,41 +6,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 
 public class AddChannelScreen extends ActionBarActivity {
 
     ListView addChannelListView;
-    public ArrayList<String> channelList;
-    // public ArrayAdapter<String> channelAdapter;
     ChannelAddAdapter channelAdapter;
+    Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_channel_screen);
-
-        channelList = new ArrayList<String>();
-        channelAdapter = new ChannelAddAdapter(this, channelList, AddChannelScreen.this);
+        singleton = Singleton.getInstance();
+        channelAdapter = new ChannelAddAdapter(this, singleton.availableChannelList, AddChannelScreen.this);
 
         addChannelListView = (ListView) findViewById(R.id.add_channel_list_view);
         addChannelListView.setAdapter(channelAdapter);
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-
-        addChannels();
-
-    }
-
-    public void addChannels(){
-        String class1 = "CMPUT 101";
-        channelList.add(0,class1);
-        channelList.add(1, "campusSocial");
-        channelAdapter.notifyDataSetChanged();
     }
 
     @Override

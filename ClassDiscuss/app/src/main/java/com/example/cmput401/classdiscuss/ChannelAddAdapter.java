@@ -64,7 +64,9 @@ public class ChannelAddAdapter extends ArrayAdapter<String>{
         if(singleton.subscribedChannelList.contains(listItems.get(position))) {
             Toast.makeText(getContext(), "Already subscribed.",
                     Toast.LENGTH_SHORT).show();
+            return;
         }
+        singleton.subscribedChannelList.add(listItems.get(position));
     }
 
 }

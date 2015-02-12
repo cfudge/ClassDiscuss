@@ -38,13 +38,20 @@ public class MyChannelScreen extends ActionBarActivity {
 
     }
 
-    public void addChannels(){
-        String campusSocial = "CampusSocial";
-        String class1 = "CMPUT 101";
-        singleton.subscribedChannelList.add(0, class1);
-        singleton.subscribedChannelList.add(1, campusSocial);
+    @Override
+    protected void onResume(){
+        super.onResume();
         channelAdapter.notifyDataSetChanged();
+    }
 
+    public void addChannels(){
+        if(singleton.subscribedChannelList.isEmpty()) {
+            String campusSocial = "CampusSocial";
+            String class1 = "CMPUT 101";
+            singleton.subscribedChannelList.add(0, class1);
+            singleton.subscribedChannelList.add(1, campusSocial);
+            channelAdapter.notifyDataSetChanged();
+        }
         Button addButton = (Button) findViewById(R.id.add_new_channel);
 
 

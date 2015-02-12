@@ -1,6 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by CMDF_Alien on 2/12/2015.
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Singleton {
     public ArrayList<String> subscribedChannelList;
-    public ArrayList<String> availableChannelList;
+    ArrayList<String> availableChannelList = new ArrayList<>(Arrays.asList("CMPUT 101", "CampusSocial"));
     private static Singleton instance = null;
     protected Singleton() {
         // Exists only to defeat instantiation.
