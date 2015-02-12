@@ -49,6 +49,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
         Button deleteButton = (Button) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
+        statusButton.setTag("Active");
 
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +64,13 @@ public class CustomAdapter extends ArrayAdapter<String>{
         statusButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                //String status = statusButton.getText().toString();
-                if (statusButton.getText().equals("Active")) {
+                if (statusButton.getTag().equals("Active")){
                     confirm(position, statusButton);
                     //test.setText(String.valueOf(position));
                 }
                 else {
                     statusButton.setText("Active");
+                    statusButton.setTag("Active");
                 }
             }
         });
@@ -114,8 +115,8 @@ public class CustomAdapter extends ArrayAdapter<String>{
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                button.setText("Deactive");
-                //notifyDataSetChanged();
+                button.setText("Inactive");
+                button.setTag("Inactive");
             }
 
         });
