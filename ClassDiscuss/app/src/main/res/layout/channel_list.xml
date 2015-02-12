@@ -12,7 +12,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textColor="#333333"
-    android:textSize="18sp"/>
+    android:textSize="18sp"
+    />
 
     <TextView
         android:id="@+id/test"
@@ -28,5 +29,14 @@
         android:text="Delete"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"/>
+
+    <Button
+        android:id="@+id/activeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Active"
+        android:layout_alignTop="@+id/deleteButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

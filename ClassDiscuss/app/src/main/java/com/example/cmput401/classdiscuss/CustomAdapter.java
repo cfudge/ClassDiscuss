@@ -48,6 +48,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
 
         Button deleteButton = (Button) customView.findViewById(R.id.deleteButton);
+        final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
 
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,21 @@ public class CustomAdapter extends ArrayAdapter<String>{
                     //test.setText(String.valueOf(position));
                 }
             });
+
+        statusButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                //String status = statusButton.getText().toString();
+                if (statusButton.getText().equals("Active")) {
+                    confirm(position, statusButton);
+                    //test.setText(String.valueOf(position));
+                }
+                else {
+                    statusButton.setText("Active");
+                }
+            }
+        });
+
 
         listText.setText(classes);
         return customView;
@@ -74,6 +90,32 @@ public class CustomAdapter extends ArrayAdapter<String>{
             public void onClick(DialogInterface dialog, int which) {
                 listItems.remove(position);
                 notifyDataSetChanged();
+            }
+
+        });
+
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        //Get alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    public void confirm(final int position, final Button button) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.deactivate_message).setTitle(R.string.confirm_deactivate_title);
+
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                button.setText("Deactive");
+                //notifyDataSetChanged();
             }
 
         });
