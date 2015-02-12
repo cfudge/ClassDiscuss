@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 
 public class MyChannelScreen extends ActionBarActivity {
 
     ListView listView;
-    public ArrayList<String> channelList;
+    private Singleton singleton;
    // public ArrayAdapter<String> channelAdapter;
     CustomAdapter channelAdapter;
 
@@ -24,27 +22,27 @@ public class MyChannelScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_screen);
 
-
-        channelList = new ArrayList<String>();
-        channelAdapter = new CustomAdapter(this, channelList, MyChannelScreen.this);
+        singleton = Singleton.getInstance();
+        channelAdapter = new CustomAdapter(this, singleton.subscribedChannelList, MyChannelScreen.this);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
+        addChannels();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
 
-        addChannels();
+        //addChannels();
 
     }
 
     public void addChannels(){
         String campusSocial = "CampusSocial";
         String class1 = "CMPUT 101";
-        channelList.add(0,class1);
-        channelList.add(1, campusSocial);
+        singleton.subscribedChannelList.add(0, class1);
+        singleton.subscribedChannelList.add(1, campusSocial);
         channelAdapter.notifyDataSetChanged();
 
         Button addButton = (Button) findViewById(R.id.add_new_channel);

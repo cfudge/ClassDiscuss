@@ -3,6 +3,7 @@ package com.example.cmput401.classdiscuss;
 /**
  * Created by CMDF_Alien on 2/10/2015.
  */
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,12 +21,14 @@ public class ChannelAddAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
+    Singleton singleton;
 
     ChannelAddAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
         this.listItems = listItems;
         this.activity = activity;
+        singleton = Singleton.getInstance();
     }
 
 
@@ -57,7 +61,10 @@ public class ChannelAddAdapter extends ArrayAdapter<String>{
 
     //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void add(final int position){
-
+        if(singleton.subscribedChannelList.contains(listItems.get(position))) {
+            Toast.makeText(getContext(), "Already subscribed.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
