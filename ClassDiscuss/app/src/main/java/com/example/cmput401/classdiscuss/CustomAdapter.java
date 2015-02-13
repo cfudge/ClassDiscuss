@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.view.LayoutInflater;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.view.View;
@@ -48,7 +49,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
         final TextView test = (TextView) customView.findViewById(R.id.test);
 
 
-        Button deleteButton = (Button) customView.findViewById(R.id.deleteButton);
+        ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
         final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_inactive);
         final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active);

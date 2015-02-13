@@ -23,11 +23,11 @@
         android:layout_height="match_parent"
         android:textSize="18sp"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:background="@drawable/ic_delete"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         />
