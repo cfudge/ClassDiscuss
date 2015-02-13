@@ -53,6 +53,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 break;
             case R.id.action_settings:
             case R.id.action_logout:
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
