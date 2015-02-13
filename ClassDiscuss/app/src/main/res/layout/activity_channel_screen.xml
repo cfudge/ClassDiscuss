@@ -15,8 +15,8 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="334dp"
-        android:layout_height="295dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:divider="#33CCFF"
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
