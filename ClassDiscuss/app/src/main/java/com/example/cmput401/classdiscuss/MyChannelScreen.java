@@ -34,7 +34,6 @@ public class MyChannelScreen extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
 
-        //addChannels();
 
     }
 

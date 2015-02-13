@@ -5,18 +5,27 @@
     android:orientation="vertical"
     tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
 
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_multiple25"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        />
+
     <TextView android:text="@string/my_channels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="20dp"
         android:paddingTop="10dp"
         android:layout_gravity="center_horizontal" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:divider="#33CCFF"
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
@@ -26,10 +35,10 @@
 
     <Button
         android:id="@+id/add_new_channel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/add_new_channel"
+        android:background="@drawable/ic_greencircle"
         android:textColor="#33CCFF"
         android:layout_alignParentTop="true" />
 
