@@ -27,4 +27,7 @@
     <string name="title_activity_add_channel_screen">AddChannelScreen</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+
 </resources>
