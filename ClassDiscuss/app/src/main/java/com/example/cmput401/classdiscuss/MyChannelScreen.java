@@ -3,11 +3,18 @@ package com.example.cmput401.classdiscuss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
 
 
 public class MyChannelScreen extends ActionBarActivity {
@@ -28,6 +35,7 @@ public class MyChannelScreen extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
         addChannels();
+
     }
 
     @Override
@@ -88,6 +96,32 @@ public class MyChannelScreen extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
          if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_logout) {
+           // MainActivity.isLoggedIn = false;
+            MainActivity.loggedIn = false;
+           // MainActivity.mGoogleApiClient.connect();
+           // if (MainActivity.mGoogleApiClient.isConnected()) {
+                //Toast.makeText(this, "In channel screen!", Toast.LENGTH_LONG).show();
+               /* Plus.AccountApi.clearDefaultAccount(MainActivity.mGoogleApiClient);
+                Plus.AccountApi.revokeAccessAndDisconnect(MainActivity.mGoogleApiClient)
+                        .setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status arg0) {
+                                Log.e("MyChannelScreen", "User access revoked!");
+                              //  MainActivity.mGoogleApiClient.connect();
+
+                            }
+
+                        });
+            }
+                MainActivity.loggedIn = true;*/
+                Intent ToChannelScreen = new Intent();
+                ToChannelScreen.setClass(getApplicationContext(), MainActivity.class);
+                startActivity(ToChannelScreen);
+
+
             return true;
         }
 
