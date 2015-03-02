@@ -42,5 +42,13 @@
         android:textColor="#33CCFF"
         android:layout_alignParentTop="true" />
 
+    <Button
+        android:id="@+id/connections"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#33CCFF"
+        android:layout_alignParentTop="true" />
+
 
 </LinearLayout>

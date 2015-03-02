@@ -60,6 +60,15 @@
             android:name=".AddChannelScreen"
             android:label="@string/title_activity_add_channel_screen" >
         </activity>
+        <activity
+            android:name=".ConnectionList"
+            android:label="@string/my_connections"
+            android:parentActivityName=".MyChannelScreen" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.MyChannelScreen" />
+        </activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

@@ -36,12 +36,24 @@ public class MyChannelScreen extends ActionBarActivity {
         listView.setAdapter(channelAdapter);
         addChannels();
 
+        Button channelButton = (Button) findViewById(R.id.connections);
+
+
+
+        channelButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent addChannels = new Intent();
+                addChannels.setClass(getApplicationContext(), ConnectionList.class);
+                startActivity(addChannels);
+            }
+        });
+
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-
 
     }
 
