@@ -7,18 +7,18 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 
-public class AddChannelScreen extends ActionBarActivity {
+public class ChannelsAddActivity extends ActionBarActivity {
 
     ListView addChannelListView;
-    ChannelAddAdapter channelAdapter;
-    Singleton singleton;
+    ChannelsAddAdapter channelAdapter;
+    Channels channels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_channel_screen);
-        singleton = Singleton.getInstance();
-        channelAdapter = new ChannelAddAdapter(this, singleton.availableChannelList, AddChannelScreen.this);
+        channels = Channels.getInstance();
+        channelAdapter = new ChannelsAddAdapter(this, channels.availableChannelList, ChannelsAddActivity.this);
 
         addChannelListView = (ListView) findViewById(R.id.add_channel_list_view);
         addChannelListView.setAdapter(channelAdapter);

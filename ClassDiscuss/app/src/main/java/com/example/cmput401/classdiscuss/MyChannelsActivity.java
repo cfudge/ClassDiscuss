@@ -8,20 +8,20 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class MyChannelScreen extends sideBarMenuActivity {
+public class MyChannelsActivity extends sideBarMenuActivity {
 
     ListView listView;
-    private Singleton singleton;
+    private Channels channels;
    // public ArrayAdapter<String> channelAdapter;
-    CustomAdapter channelAdapter;
+   MyChannelsAdapter  channelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_screen);
 
-        singleton = Singleton.getInstance();
-        channelAdapter = new CustomAdapter(this, singleton.subscribedChannelList, MyChannelScreen.this);
+        channels = Channels.getInstance();
+        channelAdapter = new MyChannelsAdapter(this, channels.subscribedChannelList, MyChannelsActivity.this);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
@@ -43,11 +43,11 @@ public class MyChannelScreen extends sideBarMenuActivity {
     }
 
     public void addChannels(){
-        if(singleton.subscribedChannelList.isEmpty()) {
+        if(channels.subscribedChannelList.isEmpty()) {
             String campusSocial = "CampusSocial";
             String class1 = "CMPUT 101";
-            singleton.subscribedChannelList.add(0, class1);
-            singleton.subscribedChannelList.add(1, campusSocial);
+            channels.subscribedChannelList.add(0, class1);
+            channels.subscribedChannelList.add(1, campusSocial);
             channelAdapter.notifyDataSetChanged();
         }
         Button addButton = (Button) findViewById(R.id.add_new_channel);
@@ -58,7 +58,7 @@ public class MyChannelScreen extends sideBarMenuActivity {
 
             public void onClick(View v) {
                 Intent addChannels = new Intent();
-                addChannels.setClass(getApplicationContext(), AddChannelScreen.class);
+                addChannels.setClass(getApplicationContext(), ChannelsAddActivity.class);
                 startActivity(addChannels);
             }
         });
