@@ -2,22 +2,13 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
 
 
-public class MyChannelScreen extends ActionBarActivity {
+public class MyChannelScreen extends sideBarMenuActivity {
 
     ListView listView;
     private Singleton singleton;
@@ -36,18 +27,6 @@ public class MyChannelScreen extends ActionBarActivity {
         listView.setAdapter(channelAdapter);
         addChannels();
 
-        Button channelButton = (Button) findViewById(R.id.connections);
-
-
-
-        channelButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent addChannels = new Intent();
-                addChannels.setClass(getApplicationContext(), ConnectionList.class);
-                startActivity(addChannels);
-            }
-        });
 
     }
 
@@ -99,45 +78,5 @@ public class MyChannelScreen extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-         if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_logout) {
-           // MainActivity.isLoggedIn = false;
-            MainActivity.loggedIn = false;
-           // MainActivity.mGoogleApiClient.connect();
-           // if (MainActivity.mGoogleApiClient.isConnected()) {
-                //Toast.makeText(this, "In channel screen!", Toast.LENGTH_LONG).show();
-               /* Plus.AccountApi.clearDefaultAccount(MainActivity.mGoogleApiClient);
-                Plus.AccountApi.revokeAccessAndDisconnect(MainActivity.mGoogleApiClient)
-                        .setResultCallback(new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status arg0) {
-                                Log.e("MyChannelScreen", "User access revoked!");
-                              //  MainActivity.mGoogleApiClient.connect();
-
-                            }
-
-                        });
-            }
-                MainActivity.loggedIn = true;*/
-                Intent ToChannelScreen = new Intent();
-                ToChannelScreen.setClass(getApplicationContext(), MainActivity.class);
-                startActivity(ToChannelScreen);
-
-
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 }
