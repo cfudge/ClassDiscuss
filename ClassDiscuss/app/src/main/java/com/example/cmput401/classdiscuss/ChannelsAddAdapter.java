@@ -16,19 +16,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ChannelAddAdapter extends ArrayAdapter<String>{
+public class ChannelsAddAdapter extends ArrayAdapter<String>{
 
     Context context;
     ArrayList<String> listItems;
     Activity activity;
-    Singleton singleton;
+    Channels channels;
 
-    ChannelAddAdapter(Context context, ArrayList<String> listItems, Activity activity){
+    ChannelsAddAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
         this.listItems = listItems;
         this.activity = activity;
-        singleton = Singleton.getInstance();
+        channels = channels.getInstance();
     }
 
 
@@ -61,12 +61,12 @@ public class ChannelAddAdapter extends ArrayAdapter<String>{
 
     //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void add(final int position){
-        if(singleton.subscribedChannelList.contains(listItems.get(position))) {
+        if(channels.subscribedChannelList.contains(listItems.get(position))) {
             Toast.makeText(getContext(), "Already subscribed.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        singleton.subscribedChannelList.add(listItems.get(position));
+        channels.subscribedChannelList.add(listItems.get(position));
     }
 
 }

@@ -28,13 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyChannelScreen"
-            android:label="@string/title_activity_channel_screen"
-            android:parentActivityName=".MainActivity" >
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.cmput401.classdiscuss.MainActivity" />
+            android:name=".MyChannelsActivity"
+            android:label="@string/title_activity_channel_screen">
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -49,7 +44,7 @@
             android:label="@string/title_activity_side_bar_menu" >
         </activity>
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".ProfileEditActivity"
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".ProfileActivity" >
             <meta-data
@@ -57,17 +52,21 @@
                 android:value="com.example.cmput401.classdiscuss.ProfileActivity" />
         </activity>
         <activity
-            android:name=".AddChannelScreen"
-            android:label="@string/title_activity_add_channel_screen" >
+            android:name=".ChannelsAddActivity"
+            android:label="@string/title_activity_add_channel_screen"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.ProfileActivity" />
         </activity>
         <activity
-            android:name=".ConnectionList"
+            android:name=".ConnectionsActivity"
             android:label="@string/my_connections"
-            android:parentActivityName=".MyChannelScreen" >
+            android:parentActivityName=".MyChannelsActivity" >
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.cmput401.classdiscuss.MyChannelScreen" />
+                android:value="com.example.cmput401.classdiscuss.MyChannelsActivity" />
         </activity>
         <meta-data
             android:name="com.google.android.gms.version"
