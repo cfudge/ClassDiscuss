@@ -7,12 +7,24 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class ConnectionList extends ActionBarActivity {
 
     ListView listView;
     private Singleton singleton;
     ConnectionsAdapter connectionsAdapter;
+
+    ArrayList<Integer> messageTimes = new ArrayList<Integer>();
+
+    long time =  System.currentTimeMillis();
+    Timestamp timeStamp =  new Timestamp(time);
+    String tStamp = timeStamp.toString();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +47,16 @@ public class ConnectionList extends ActionBarActivity {
     }
 
     public void addConnections(){
+        messageTimes.add(timeStamp.getHours());
+        messageTimes.add(timeStamp.getMinutes());
+        messageTimes.add(timeStamp.getSeconds());
+        messageTimes.add(30);
+        messageTimes.add(60);
+        messageTimes.add(1);
+
         singleton.myConnections.add("John");
         singleton.myConnections.add("Joe");
-        singleton.displayMessage.add("Hey, How are you?");
+        singleton.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
         singleton.displayMessage.add("Let's meet up to study");
         connectionsAdapter.notifyDataSetChanged();
         if(singleton.myConnections.isEmpty()) {
@@ -48,10 +67,21 @@ public class ConnectionList extends ActionBarActivity {
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");
         }
+
+        sortList();
+
     }
 
-    public void sortList(){
 
+    public void sortList(){
+        Collections.sort(messageTimes, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });
+        TextView noMessage = (TextView) findViewById(R.id.no_messages);
+        noMessage.setText(messageTimes.toString());
     }
 
     @Override

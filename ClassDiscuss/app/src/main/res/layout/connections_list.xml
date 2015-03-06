@@ -9,12 +9,13 @@
 
     <TextView
         android:id="@+id/listText"
+        android:text="Messages"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333333"
         android:textSize="18sp"
-        android:paddingBottom="10sp"
+        android:paddingBottom="8sp"
         />
 
     <TextView
