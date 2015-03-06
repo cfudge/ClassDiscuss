@@ -2,35 +2,35 @@ package com.example.cmput401.classdiscuss;
 // Code mainly taken from http://www.androidhive.info/2014/02/android-login-with-google-plus-account-1/
 
 
-        import java.io.InputStream;
-
         import android.app.Activity;
-        import android.content.Intent;
-        import android.content.IntentSender.SendIntentException;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.View;
-        import android.view.View.OnClickListener;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.GooglePlayServicesUtil;
-        import com.google.android.gms.common.SignInButton;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-        import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-        import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.common.api.Status;
-        import com.google.android.gms.plus.Plus;
-        import com.google.android.gms.plus.model.people.Person;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+
+import java.io.InputStream;
 
 public class MainActivity extends Activity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener {
@@ -161,7 +161,7 @@ public class MainActivity extends Activity implements OnClickListener,
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
                 if (email.contains("ualberta.ca")) {
                     Intent ToChannelScreen = new Intent();
-                    ToChannelScreen.setClass(getApplicationContext(), MyChannelScreen.class);
+                    ToChannelScreen.setClass(getApplicationContext(), MyChannelsActivity.class);
                     startActivity(ToChannelScreen);
                 } else {
                     Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
