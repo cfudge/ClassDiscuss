@@ -13,11 +13,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class ConnectionList extends ActionBarActivity {
+public class ConnectionsActivity extends ActionBarActivity {
 
     ListView listView;
-    private Singleton singleton;
+    private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
+    Connections connections;
 
     ArrayList<Integer> messageTimes = new ArrayList<Integer>();
 
@@ -32,8 +33,8 @@ public class ConnectionList extends ActionBarActivity {
         setContentView(R.layout.activity_connections_list);
 
 
-        singleton = Singleton.getInstance();
-        connectionsAdapter = new ConnectionsAdapter(this, singleton.myConnections, singleton.displayMessage, ConnectionList.this);
+        myConnections = myConnections.getInstance();
+        connectionsAdapter = new ConnectionsAdapter(this, myConnections.myConnections, myConnections.displayMessage, ConnectionsActivity.this);
 
         listView = (ListView) findViewById(R.id.channel_list_view);
         listView.setAdapter(connectionsAdapter);
@@ -47,6 +48,7 @@ public class ConnectionList extends ActionBarActivity {
     }
 
     public void addConnections(){
+
         messageTimes.add(timeStamp.getHours());
         messageTimes.add(timeStamp.getMinutes());
         messageTimes.add(timeStamp.getSeconds());
@@ -54,16 +56,22 @@ public class ConnectionList extends ActionBarActivity {
         messageTimes.add(60);
         messageTimes.add(1);
 
-        singleton.myConnections.add("John");
-        singleton.myConnections.add("Joe");
-        singleton.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
-        singleton.displayMessage.add("Let's meet up to study");
+        connections.myConnections.add("John");
+        connections.myConnections.add("Joe");
+        connections.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
+        connections.displayMessage.add("Let's meet up to study");
+
+        myConnections.myConnections.add("John");
+        myConnections.myConnections.add("Joe");
+        myConnections.displayMessage.add("Hey, How are you?");
+        myConnections.displayMessage.add("Let's meet up to study");
+
         connectionsAdapter.notifyDataSetChanged();
-        if(singleton.myConnections.isEmpty()) {
+        if(myConnections.myConnections.isEmpty()) {
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");
         }
-        if(singleton.displayMessage.isEmpty()){
+        if(myConnections.displayMessage.isEmpty()){
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");
         }

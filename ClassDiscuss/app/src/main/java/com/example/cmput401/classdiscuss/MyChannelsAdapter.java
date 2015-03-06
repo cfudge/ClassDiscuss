@@ -6,31 +6,27 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.preference.DialogPreference;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.view.View;
-import android.content.Context;
 
 import java.util.ArrayList;
 
 //https://www.youtube.com/watch?v=nOdSARCVYic custom adapter tutorial
-public class CustomAdapter extends ArrayAdapter<String>{
+public class MyChannelsAdapter extends ArrayAdapter<String>{
 
-     Context context;
-     ArrayList<String> listItems;
+    Context context;
+    ArrayList<String> listItems;
     Activity activity;
 
-
-
-     CustomAdapter(Context context, ArrayList<String> listItems, Activity activity){
+    MyChannelsAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
         this.listItems = listItems;

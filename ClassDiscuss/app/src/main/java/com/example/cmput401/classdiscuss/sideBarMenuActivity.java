@@ -1,10 +1,8 @@
 package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 /**
@@ -43,17 +41,41 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 break;
             case R.id.action_myChannels:
                 Intent myChannels = new Intent();
-                myChannels.setClass(getApplicationContext(), MyChannelScreen.class);
+                myChannels.setClass(getApplicationContext(), MyChannelsActivity.class);
                 startActivity(myChannels);
+                break;
+            case R.id.action_myConnections:
+                Intent activity = new Intent();
+                activity.setClass(getApplicationContext(), ConnectionsActivity.class);
+                startActivity(activity);
                 break;
             case R.id.action_edit_profile:
                 Intent edit = new Intent();
-                edit.setClass(getApplicationContext(), EditProfileActivity.class);
+                edit.setClass(getApplicationContext(), ProfileEditActivity.class);
                 startActivity(edit);
                 break;
             case R.id.action_settings:
             case R.id.action_logout:
-                break;
+                MainActivity.loggedIn = false;
+                // MainActivity.mGoogleApiClient.connect();
+                // if (MainActivity.mGoogleApiClient.isConnected()) {
+                //Toast.makeText(this, "In channel screen!", Toast.LENGTH_LONG).show();
+               /* Plus.AccountApi.clearDefaultAccount(MainActivity.mGoogleApiClient);
+                Plus.AccountApi.revokeAccessAndDisconnect(MainActivity.mGoogleApiClient)
+                        .setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status arg0) {
+                                Log.e("MyChannelScreen", "User access revoked!");
+                              //  MainActivity.mGoogleApiClient.connect();
+
+                            }
+
+                        });
+            }
+                MainActivity.loggedIn = true;*/
+                Intent ToChannelScreen = new Intent();
+                ToChannelScreen.setClass(getApplicationContext(), MainActivity.class);
+                startActivity(ToChannelScreen);
             default:
                 return super.onOptionsItemSelected(item);
         }

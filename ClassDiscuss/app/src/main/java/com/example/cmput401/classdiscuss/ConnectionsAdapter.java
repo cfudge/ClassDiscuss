@@ -2,13 +2,10 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ public class ConnectionsAdapter extends ArrayAdapter<String> {
     ArrayList<String> listItems;
     ArrayList<String> messages;
     Activity activity;
-    Singleton singleton;
+    Connections Conn;
 
     ConnectionsAdapter(Context context, ArrayList<String> listItems, ArrayList<String> messages, Activity activity) {
         super(context, R.layout.connections_list, listItems);
@@ -30,7 +27,7 @@ public class ConnectionsAdapter extends ArrayAdapter<String> {
         this.listItems = listItems;
         this.messages = messages;
         this.activity = activity;
-        singleton = Singleton.getInstance();
+        Conn = Connections.getInstance();
     }
 
     @Override
@@ -38,8 +35,8 @@ public class ConnectionsAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.connections_list, parent, false);
 
-        String connections = singleton.myConnections.get(position);
-        String message = singleton.displayMessage.get(position);
+        String connections = Conn.myConnections.get(position);
+        String message = Conn.displayMessage.get(position);
         TextView listText = (TextView) customView.findViewById(R.id.listText);
         TextView secondText = (TextView) customView.findViewById(R.id.secondText);
 

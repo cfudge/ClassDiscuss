@@ -5,15 +5,6 @@
     android:orientation="vertical"
     tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
 
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_multiple25"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        />
-
     <TextView android:text="@string/my_channels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,22 +24,22 @@
         android:textColor="#333333"
         />
 
-    <Button
-        android:id="@+id/add_new_channel"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ic_greencircle"
-        android:textColor="#33CCFF"
-        android:layout_alignParentTop="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/add_new_channel"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@drawable/ic_green"
+            android:textColor="#33CCFF"
+            android:layout_alignParentTop="true" />
 
-    <Button
-        android:id="@+id/connections"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#33CCFF"
-        android:layout_alignParentTop="true" />
+    </LinearLayout>
 
 
 </LinearLayout>

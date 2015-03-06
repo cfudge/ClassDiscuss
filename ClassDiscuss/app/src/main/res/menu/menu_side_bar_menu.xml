@@ -4,9 +4,14 @@
     tools:context="com.example.cmput401.classdiscuss.sideBarMenuActivity">
     <item android:id="@+id/action_myChannels" android:title="@string/menu_myChannels"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_myConnections" android:title="@string/my_connections"
+        android:icon="@drawable/ic_myconnections"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/menu_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_logout" android:title="@string/logout"
         android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>
