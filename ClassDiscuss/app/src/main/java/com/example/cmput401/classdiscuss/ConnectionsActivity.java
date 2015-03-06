@@ -18,7 +18,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     ListView listView;
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
-    Connections connections;
+
 
     ArrayList<Integer> messageTimes = new ArrayList<Integer>();
 
@@ -56,10 +56,10 @@ public class ConnectionsActivity extends ActionBarActivity {
         messageTimes.add(60);
         messageTimes.add(1);
 
-        connections.myConnections.add("John");
-        connections.myConnections.add("Joe");
-        connections.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
-        connections.displayMessage.add("Let's meet up to study");
+        myConnections.myConnections.add("John");
+        myConnections.myConnections.add("Joe");
+        myConnections.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
+        myConnections.displayMessage.add("Let's meet up to study");
 
         myConnections.myConnections.add("John");
         myConnections.myConnections.add("Joe");
