@@ -56,7 +56,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 break;
             case R.id.action_settings:
             case R.id.action_logout:
-                MainActivity.loggedIn = false;
+               // MainActivity.loggedIn = false;
                 // MainActivity.mGoogleApiClient.connect();
                 // if (MainActivity.mGoogleApiClient.isConnected()) {
                 //Toast.makeText(this, "In channel screen!", Toast.LENGTH_LONG).show();

@@ -1,8 +1,8 @@
 package com.example.cmput401.classdiscuss;
-// Code mainly taken from http://www.androidhive.info/2014/02/android-login-with-google-plus-account-1/
 
+import java.io.InputStream;
 
-        import android.app.Activity;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
@@ -30,8 +30,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import java.io.InputStream;
-
 public class MainActivity extends Activity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener {
 
@@ -43,7 +41,7 @@ public class MainActivity extends Activity implements OnClickListener,
     private static final int PROFILE_PIC_SIZE = 400;
 
     // Google client to interact with Google API
-    public static GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      * A flag indicating that a PendingIntent is in progress and prevents us
@@ -60,7 +58,6 @@ public class MainActivity extends Activity implements OnClickListener,
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
-    public static boolean loggedIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +135,6 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int responseCode,
                                     Intent intent) {
-        Log.e(TAG, "in activity result");
         if (requestCode == RC_SIGN_IN) {
             if (responseCode != RESULT_OK) {
                 mSignInClicked = false;
@@ -156,26 +152,12 @@ public class MainActivity extends Activity implements OnClickListener,
     public void onConnected(Bundle arg0) {
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
-        if (mGoogleApiClient.isConnected()) {
-          //  if (loggedIn) {
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                if (email.contains("ualberta.ca")) {
-                    Intent ToChannelScreen = new Intent();
-                    ToChannelScreen.setClass(getApplicationContext(), MyChannelsActivity.class);
-                    startActivity(ToChannelScreen);
-                } else {
-                    Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
-                    //revokeGplusAccess();
-                }
-           // }
-            //revokeGplusAccess();
-            signOutFromGplus();
-        }
+
         // Get user's information
-        //getProfileInformation();
+        getProfileInformation();
 
         // Update the UI after signin
-        //updateUI(true);
+        updateUI(true);
 
     }
 
@@ -286,7 +268,7 @@ public class MainActivity extends Activity implements OnClickListener,
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
-            //updateUI(false);
+            updateUI(false);
         }
     }
 
@@ -302,7 +284,7 @@ public class MainActivity extends Activity implements OnClickListener,
                         public void onResult(Status arg0) {
                             Log.e(TAG, "User access revoked!");
                             mGoogleApiClient.connect();
-                            //updateUI(false);
+                            updateUI(false);
                         }
 
                     });
