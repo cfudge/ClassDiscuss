@@ -155,9 +155,10 @@ public class ChatActivity extends ActionBarActivity {
         query.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
-                    if (mMessages != null)
+                    if (mMessages != null) {
                         mMessages.clear();
-                    mMessages.addAll(messages);
+                        mMessages.addAll(messages);
+                    }
                     mAdapter.notifyDataSetChanged(); // update adapter
                     lvChat.invalidate(); // redraw listview
                 } else {
