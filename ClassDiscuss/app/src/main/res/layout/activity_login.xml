@@ -5,7 +5,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.cmput401.classdiscuss.LoginActivity">
+    tools:context="com.example.cmput401.classdiscuss.LoginActivity"
+    android:weightSum="1">
 
     <!-- Login progress -->
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
@@ -13,52 +14,39 @@
         android:layout_marginBottom="8dp" android:visibility="gone" />
 
     <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_height="42dp"
+        android:layout_weight="1.01"></ScrollView>
 
-            <com.google.android.gms.common.SignInButton android:id="@+id/plus_sign_in_button"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_weight="0.06">
 
-            <LinearLayout android:id="@+id/plus_sign_out_buttons"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:visibility="gone" android:weightSum="2">
+        <LinearLayout android:id="@+id/plus_sign_out_buttons"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:visibility="gone" android:weightSum="2">
 
-                <Button android:id="@+id/plus_sign_out_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="match_parent"
-                    android:layout_weight="1" android:text="@string/plus_sign_out" />
+            <Button android:id="@+id/plus_sign_out_button" style="?android:textAppearanceSmall"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_weight="1" android:text="@string/plus_sign_out" />
 
-                <Button android:id="@+id/plus_disconnect_button"
-                    style="?android:textAppearanceSmall" android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:text="@string/plus_disconnect" />
+            <Button android:id="@+id/plus_disconnect_button"
+                style="?android:textAppearanceSmall" android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1"
+                android:text="@string/plus_disconnect" />
 
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:orientation="vertical">
-
-                <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress" android:maxLines="1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/password" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
-
-                <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical">
+
+        </LinearLayout>
+
+        <com.google.android.gms.common.SignInButton android:id="@+id/plus_sign_in_button"
+            android:layout_width="match_parent" android:layout_height="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_weight="0.70" />
+    </LinearLayout>
 
 </LinearLayout>
 

@@ -11,4 +11,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_logout" android:title="@string/logout"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_chat" android:title="@string/chat"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
