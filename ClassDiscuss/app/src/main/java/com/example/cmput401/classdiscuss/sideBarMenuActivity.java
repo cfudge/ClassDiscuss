@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
 /**
  * <p>
  * This class contains the implementation of side bar menu button.
@@ -55,27 +57,18 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(edit);
                 break;
             case R.id.action_settings:
+            case R.id.action_chat:
+                Intent chatIntent = new Intent();
+                chatIntent.setClass(getApplicationContext(), ChatActivity.class);
+                startActivity(chatIntent);
+                break;
+            // Clearly doesn't work right now.  the login activity has saved your
+            // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:
-               // MainActivity.loggedIn = false;
-                // MainActivity.mGoogleApiClient.connect();
-                // if (MainActivity.mGoogleApiClient.isConnected()) {
-                //Toast.makeText(this, "In channel screen!", Toast.LENGTH_LONG).show();
-               /* Plus.AccountApi.clearDefaultAccount(MainActivity.mGoogleApiClient);
-                Plus.AccountApi.revokeAccessAndDisconnect(MainActivity.mGoogleApiClient)
-                        .setResultCallback(new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status arg0) {
-                                Log.e("MyChannelScreen", "User access revoked!");
-                              //  MainActivity.mGoogleApiClient.connect();
-
-                            }
-
-                        });
-            }
-                MainActivity.loggedIn = true;*/
-                Intent ToChannelScreen = new Intent();
-                ToChannelScreen.setClass(getApplicationContext(), MainActivity.class);
-                startActivity(ToChannelScreen);
+                Intent ToLogIn = new Intent();
+                ToLogIn.setClass(getApplicationContext(), LoginActivity.class);
+                startActivity(ToLogIn);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -5,7 +5,8 @@
     <item android:id="@+id/action_myChannels" android:title="@string/menu_myChannels"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_myConnections" android:title="@string/my_connections"
-        android:icon="@drawable/ic_myconnections"
+        android:icon="@drawable/ic_myconnections" />
+    <item android:id="@+id/action_chat" android:title="@string/chat"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
         android:orderInCategory="100" app:showAsAction="never" />
