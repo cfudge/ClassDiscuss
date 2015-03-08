@@ -70,6 +70,7 @@ public class ChannelsAddActivity extends ActionBarActivity {
 
                     addChannelListView.setFilterText(newText);
                     addChannelListView.setTextFilterEnabled(true);
+                    addChannelListView.setAdapter(channelAdapter);
                     return false;
                 }
             }
