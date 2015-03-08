@@ -23,6 +23,12 @@ public class Channels {
         availableChannelList.add("CMPUT 104");
         availableChannelList.add("CMPUT 105");
         availableChannelList.add("CMPUT 106");
+        availableChannelList.add("MATH 114");
+        availableChannelList.add("MATH 115");
+        availableChannelList.add("MUSIC 103");
+        availableChannelList.add("STS 350");
+        availableChannelList.add("STS 450");
+        availableChannelList.add("EAS 100");
 
         subscribedChannelList = new ArrayList<String>();
         displayMessage = new ArrayList<String>();

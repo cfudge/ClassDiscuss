@@ -4,4 +4,12 @@
     tools:context="com.example.cmput401.classdiscuss.AddChannelScreen">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_menu_search_holo_light"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView"
+        />
 </menu>
