@@ -43,7 +43,6 @@ public class ChannelsAddActivity extends ActionBarActivity {
         //Current activity is searchable
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(true); //Iconify search bar by default
-        searchView.setSubmitButtonEnabled(true);
 
         search();
         return true;
@@ -53,11 +52,7 @@ public class ChannelsAddActivity extends ActionBarActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-
-
-
-                return true;
+               return true;
             }
 
             @Override
