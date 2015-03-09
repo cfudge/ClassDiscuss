@@ -59,7 +59,6 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
     }
 
 
-    //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void add(final int position){
         if(channels.subscribedChannelList.contains(listItems.get(position))) {
             Toast.makeText(getContext(), "Already subscribed.",

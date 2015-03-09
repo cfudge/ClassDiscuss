@@ -239,9 +239,9 @@ public abstract class PlusBaseActivity extends Activity
     @Override
     public void onConnected(Bundle connectionHint) {
         updateConnectButtonState();
-        Intent myProfile = new Intent();
-        myProfile.setClass(getApplicationContext(), MyChannelsActivity.class);
-        startActivity(myProfile);
+        Intent mapIntent = new Intent();
+        mapIntent.setClass(getApplicationContext(), TestActivity.class);
+        startActivity(mapIntent);
         setProgressBarVisible(false);
         onPlusClientSignIn();
     }

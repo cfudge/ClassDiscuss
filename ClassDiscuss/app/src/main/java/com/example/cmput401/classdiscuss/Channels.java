@@ -26,8 +26,6 @@ public class Channels {
 
         subscribedChannelList = new ArrayList<String>();
         displayMessage = new ArrayList<String>();
-
-
     }
     public static Channels getInstance() {
         if(instance == null) {

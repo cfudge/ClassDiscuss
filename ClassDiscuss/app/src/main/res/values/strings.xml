@@ -36,5 +36,7 @@
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
     <string name="chat">Chat</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_test">testActivity</string>
 
 </resources>
