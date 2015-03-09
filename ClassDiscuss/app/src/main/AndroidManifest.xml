@@ -99,7 +99,7 @@
             android:label="@string/title_activity_chat" >
         </activity>
         <activity
-            android:name=".ConnectToParse"
+            android:name=".ConnectToParseActivity"
             android:label="ConnecToParse" >
         </activity>
 
