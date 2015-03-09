@@ -3,6 +3,7 @@ package com.example.cmput401.classdiscuss;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,24 +12,28 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 
 public class ProfileEditActivity extends sideBarMenuActivity {
 
+    //For supplying to the startActivityForResult method:
+    private static final int SELECT_PICTURE = 1;
+    final Profile myProfile = Profile.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofile);
-
-        final Profile myProfile = Profile.getInstance();
 
         Button buttonSave = (Button) findViewById(R.id.buttonSave);
         final EditText EditUserName = (EditText) findViewById(R.id.EditUserName);
         TextView textUserEmail = (TextView) findViewById(R.id.textUserEmail);
         final CheckBox boxPrivate = (CheckBox) findViewById(R.id.EditCheckPrivate);
         final CheckBox boxPublic = (CheckBox) findViewById(R.id.EditCheckPublic);
+        final ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
 
         //set user's information
         EditUserName.setText(myProfile.getUserName());
@@ -71,6 +76,39 @@ public class ProfileEditActivity extends sideBarMenuActivity {
             }
         });
 
+        /**
+         * Referenced the code laid out here:
+         * http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically
+         */
+        profilePicView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent imageSelect = new Intent();
+                imageSelect.setType("image/*");
+                imageSelect.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(imageSelect, "Select Picture"), SELECT_PICTURE);
+            }
+        });
+
+        if(myProfile.getProfilePicURI() != null){
+            profilePicView.setImageURI(myProfile.getProfilePicURI());
+        }
+
+    }
+
+    /**
+     * Referenced the code laid out here:
+     * http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                myProfile.setProfilePicURI(selectedImageUri);
+                ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+                profilePicView.setImageURI(myProfile.getProfilePicURI());
+            }
+        }
     }
 
     protected void alertBox(String title, String myMessage)

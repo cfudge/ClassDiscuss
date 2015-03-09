@@ -1,5 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
+import android.net.Uri;
+
 /**
  * Created by nhu on 15-02-07.
  */
@@ -7,6 +9,8 @@ public class Profile {
     private String name;
     private String email;
     private boolean emailPrivate;
+
+    private Uri profilePicURI;
     private static final Profile profileInstance = new Profile();
 
     public static Profile getInstance(){
@@ -50,6 +54,14 @@ public class Profile {
 
     public void setEmailPrivate(boolean privacy){
         this.emailPrivate = privacy;
+    }
+
+    public Uri getProfilePicURI() {
+        return profilePicURI;
+    }
+
+    public void setProfilePicURI(Uri profilePicURI) {
+        this.profilePicURI = profilePicURI;
     }
 
     public String getUsernameFromEmail(){

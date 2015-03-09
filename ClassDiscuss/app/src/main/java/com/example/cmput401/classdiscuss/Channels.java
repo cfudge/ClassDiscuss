@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class Channels {
     ArrayList<String> availableChannelList = new ArrayList<>();
     private static Channels instance = null;
-    public ArrayList<String>displayMessage;
+    public ArrayList<String> displayMessage;
+    public Profile userProfile;
 
     protected Channels() {
         availableChannelList.add("CMPUT 101");

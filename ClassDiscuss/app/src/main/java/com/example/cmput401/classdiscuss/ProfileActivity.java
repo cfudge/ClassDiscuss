@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProfileActivity extends sideBarMenuActivity{
+
+    final Profile myProfile = Profile.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        final Profile myProfile = Profile.getInstance();
 
         TextView textUserName = (TextView) findViewById(R.id.textUserName);
         TextView textUserEmail = (TextView) findViewById(R.id.textUserEmail);
@@ -23,6 +25,11 @@ public class ProfileActivity extends sideBarMenuActivity{
 
         setCheckPrivacyBox(myProfile);
 
+        ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+
+        if(myProfile.getProfilePicURI() != null) {
+            profilePicView.setImageURI(myProfile.getProfilePicURI());
+        }
     }
 
     public void setCheckPrivacyBox(Profile myProfile){
