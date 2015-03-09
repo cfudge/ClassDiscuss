@@ -238,12 +238,24 @@ public abstract class PlusBaseActivity extends Activity
      */
     @Override
     public void onConnected(Bundle connectionHint) {
+
+        //grab user's information
+        String currentEmail = mPlusClient.getAccountName();
+        String currentUser = currentEmail.replace("@ualberta.ca", "");
+
+        //set User's information
+        Profile user = Profile.getInstance();
+        user.setEmail(currentEmail);
+        user.setUserName(currentUser);
+
         updateConnectButtonState();
-        Intent mapIntent = new Intent();
-        mapIntent.setClass(getApplicationContext(), TestActivity.class);
-        startActivity(mapIntent);
+
+        Intent myProfile = new Intent();
+        myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);
+        startActivity(myProfile);
         setProgressBarVisible(false);
         onPlusClientSignIn();
+        //onPlusClientSignOut();
     }
 
     /**

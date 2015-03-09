@@ -2,6 +2,7 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import android.widget.ListView;
 public class MyChannelsActivity extends sideBarMenuActivity {
 
     ListView listView;
-    private Channels channels;
+    private MyChannels myChannels;
    // public ArrayAdapter<String> channelAdapter;
    MyChannelsAdapter  channelAdapter;
 
@@ -20,14 +21,36 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_screen);
 
-        channels = Channels.getInstance();
-        channelAdapter = new MyChannelsAdapter(this, channels.subscribedChannelList, MyChannelsActivity.this);
+        myChannels = myChannels.getInstance();
+        channelAdapter = new MyChannelsAdapter(this, myChannels.getSubscribedList(), MyChannelsActivity.this);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
-        addChannels();
+
+        initializeChannels();
+
+        //needs to wait for parse.com to query the subscribed channels
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
+        Log.d("score", "update view in MyChannelsActivity");
+        //update list
+        channelAdapter.notifyDataSetChanged();
 
 
+        //set add button listener
+        Button addButton = (Button) findViewById(R.id.add_new_channel);
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent addChannels = new Intent();
+                addChannels.setClass(getApplicationContext(), ChannelsAddActivity.class);
+                startActivity(addChannels);
+            }
+        });
     }
 
     @Override
@@ -42,34 +65,9 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         channelAdapter.notifyDataSetChanged();
     }
 
-    public void addChannels(){
-        if(channels.subscribedChannelList.isEmpty()) {
-            String campusSocial = "CampusSocial";
-            String class1 = "CMPUT 101";
-            channels.subscribedChannelList.add(0, class1);
-            channels.subscribedChannelList.add(1, campusSocial);
-            channelAdapter.notifyDataSetChanged();
-        }
-        Button addButton = (Button) findViewById(R.id.add_new_channel);
-
-
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent addChannels = new Intent();
-                addChannels.setClass(getApplicationContext(), ChannelsAddActivity.class);
-                startActivity(addChannels);
-            }
-        });
+    public void initializeChannels(){
+        Parse.getInstance().Initiate();
     }
-
-
-
-    public void channelSelected(){
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
