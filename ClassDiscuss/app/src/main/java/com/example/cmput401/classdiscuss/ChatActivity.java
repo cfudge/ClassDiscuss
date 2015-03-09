@@ -1,25 +1,21 @@
 package com.example.cmput401.classdiscuss;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.Parse;
-import com.parse.ParseAnonymousUtils;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
@@ -46,12 +42,12 @@ public class ChatActivity extends ActionBarActivity {
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
 
-    // Defines a runnable which is run every 100ms
+    // Defines a runnable which is run every 10000ms
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             refreshMessages();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, 10000);
         }
     };
     private void refreshMessages() {

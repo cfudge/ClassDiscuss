@@ -25,6 +25,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
+    MyChannels myChannels = MyChannels.getInstance();
 
     MyChannelsAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
@@ -91,7 +92,14 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String item = listItems.get(position);
+
+                //remove from view
                 listItems.remove(position);
+
+                //update parse.com
+                myChannels.deleteChannel();
+
                 notifyDataSetChanged();
             }
 

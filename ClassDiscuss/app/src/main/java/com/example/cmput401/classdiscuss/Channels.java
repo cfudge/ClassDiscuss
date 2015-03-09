@@ -8,15 +8,11 @@ import java.util.ArrayList;
  * http://www.javaworld.com/article/2073352/core-java/simply-singleton.html
  */
 public class Channels {
-    public ArrayList<String> subscribedChannelList;
     ArrayList<String> availableChannelList = new ArrayList<>();
     private static Channels instance = null;
-
     public ArrayList<String>displayMessage;
 
-
     protected Channels() {
-        // Exists only to defeat instantiation.
         availableChannelList.add("CMPUT 101");
         availableChannelList.add("CMPUT 102");
         availableChannelList.add("CMPUT 103");
@@ -30,9 +26,7 @@ public class Channels {
         availableChannelList.add("STS 450");
         availableChannelList.add("EAS 100");
 
-        subscribedChannelList = new ArrayList<String>();
         displayMessage = new ArrayList<String>();
-
 
     }
     public static Channels getInstance() {

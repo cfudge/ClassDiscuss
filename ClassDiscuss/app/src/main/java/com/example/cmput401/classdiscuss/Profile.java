@@ -15,8 +15,8 @@ public class Profile {
 
 
     private Profile() {
-        this.name = "unknown";
-        this.email = "abcdefghikl@ualberta.ca";
+        this.name = "";
+        this.email = "";
         this.emailPrivate = false;
     }
 
@@ -42,6 +42,10 @@ public class Profile {
 
     public void setUserName(String newName) {
         this.name = newName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setEmailPrivate(boolean privacy){

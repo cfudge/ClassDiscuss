@@ -21,14 +21,14 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
-    Channels channels;
+    MyChannels myChannels;
 
     ChannelsAddAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
         this.context = context;
         this.listItems = listItems;
         this.activity = activity;
-        channels = channels.getInstance();
+        myChannels = MyChannels.getInstance();
     }
 
 
@@ -61,12 +61,13 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
 
     //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void add(final int position){
-        if(channels.subscribedChannelList.contains(getItem(position))) {
+        if(myChannels.ifContains(getItem(position))) {
             Toast.makeText(getContext(), "Already subscribed.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        channels.subscribedChannelList.add(getItem(position));
+        myChannels.addChannel(getItem(position));
+
     }
 
 }
