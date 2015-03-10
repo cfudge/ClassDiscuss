@@ -18,11 +18,10 @@ public class ConnectToParseActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String App_ID = "7B1T7M2TH01J3jKhJjsYAHQKRYCXVvZKXMMwoQjG";
-        String Client_ID= "Q8MOuQJaOeyaTeNC1MQxivTghm2bnZzrwvtp9oac";
+        String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
+        String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
 
         Parse.initialize(this, App_ID, Client_ID);
-
 
         //create new user
         Profile User = Profile.getInstance();
@@ -31,13 +30,21 @@ public class ConnectToParseActivity extends Activity{
         userParse.setPassword(User.getUserName());
         userParse.setEmail(User.getUserEmail());
 
+        com.example.cmput401.classdiscuss.Parse.getInstance().Initiate();
+
         // other fields can be set just like with ParseObject
         //user.put("phone", "650-555-0000");
 
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-                    //start map activity
+
+                    /*//needs to wait for parse.com to query the subscribed channels
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }*/
 
                     Intent mapIntent = new Intent();
                     mapIntent.setClass(getApplicationContext(), TestActivity.class);

@@ -27,15 +27,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(channelAdapter);
 
-        initializeChannels();
-
-        //needs to wait for parse.com to query the subscribed channels
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-
         Log.d("score", "update view in MyChannelsActivity");
         //update list
         channelAdapter.notifyDataSetChanged();
@@ -66,7 +57,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     }
 
     public void initializeChannels(){
-        Parse.getInstance().Initiate();
+        //initialized channels in ConnectToParseActivity
     }
 
     @Override
