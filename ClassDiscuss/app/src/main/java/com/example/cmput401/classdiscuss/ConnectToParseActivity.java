@@ -47,7 +47,7 @@ public class ConnectToParseActivity extends Activity{
                     }*/
 
                     Intent mapIntent = new Intent();
-                    mapIntent.setClass(getApplicationContext(), TestActivity.class);
+                    mapIntent.setClass(getApplicationContext(), MapActivity.class);
                     startActivity(mapIntent);
 
                 } else {

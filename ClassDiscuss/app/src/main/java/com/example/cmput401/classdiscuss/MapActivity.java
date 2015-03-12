@@ -10,7 +10,10 @@ import android.view.MotionEvent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Referenced the code here:
@@ -23,7 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class MapActivity extends FragmentActivity {
     private GestureDetector gestureDetector;
-    static final LatLng CAMPUS = new LatLng(53.523384, -113.525300);
+    static final LatLng CAMPUS = new LatLng(53.551, 9.993);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
@@ -78,11 +81,11 @@ public class MapActivity extends FragmentActivity {
 
 
 
-        // Move the camera instantly to hamburg with a zoom of 15.
+        // Move the camera instantly to campus with a zoom of 15.
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS, 15));
 
         // Zoom in, animating the camera.
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
     }
 
     @Override
