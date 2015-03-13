@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapActivity extends FragmentActivity {
     private GestureDetector gestureDetector;
-    static final LatLng CAMPUS = new LatLng(53.551, 9.993);
+    static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
@@ -81,8 +81,8 @@ public class MapActivity extends FragmentActivity {
 
 
 
-        // Move the camera instantly to campus with a zoom of 15.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS, 15));
+        // Move the camera instantly to campus with a zoom of 20.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS, 20));
 
         // Zoom in, animating the camera.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
