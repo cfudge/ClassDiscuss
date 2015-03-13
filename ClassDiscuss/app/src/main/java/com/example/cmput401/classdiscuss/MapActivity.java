@@ -3,19 +3,13 @@ package com.example.cmput401.classdiscuss;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Referenced the code here:
@@ -27,7 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * http://stackoverflow.com/questions/14965124/how-to-change-activity-with-left-right-swipe
  */
 public class MapActivity extends FragmentActivity {
-    private GestureDetector gestureDetector;
     static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -35,7 +28,6 @@ public class MapActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        gestureDetector = new GestureDetector(new SwipeGestureDetector());
         setUpMapIfNeeded();
 
         //set channel button listener
@@ -109,63 +101,7 @@ public class MapActivity extends FragmentActivity {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS, 20));
 
         // Zoom in, animating the camera.
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        }
-        return super.onTouchEvent(event);
-    }
-
-    private void onLeftSwipe() {
-        Intent myChannels = new Intent();
-        myChannels.setClass(getApplicationContext(), MyChannelsActivity.class);
-        startActivity(myChannels);
-    }
-
-    private void onRightSwipe() {
-        Intent myConnections = new Intent();
-        myConnections.setClass(getApplicationContext(), ConnectionsActivity.class);
-        startActivity(myConnections);
-    }
-
-    // Private class for gestures
-    private class SwipeGestureDetector
-            extends GestureDetector.SimpleOnGestureListener {
-        // Swipe properties, you can change it to make the swipe
-        // longer or shorter and speed
-        private static final int SWIPE_MIN_DISTANCE = 120;
-        private static final int SWIPE_MAX_OFF_PATH = 200;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 1;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2,
-                               float velocityX, float velocityY) {
-            try {
-                float diffAbs = Math.abs(e1.getY() - e2.getY());
-                float diff = e1.getX() - e2.getX();
-
-                if (diffAbs > SWIPE_MAX_OFF_PATH)
-                    return false;
-
-                // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    MapActivity.this.onLeftSwipe();
-                    return true;
-                    // Right swipe
-                } else if (-diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    MapActivity.this.onRightSwipe();
-                    return true;
-                }
-            } catch (Exception e) {
-                Log.e("YourActivity", "Error on gestures");
-            }
-            return false;
-        }
-    }
 }
