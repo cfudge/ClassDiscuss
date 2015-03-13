@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +37,28 @@ public class MapActivity extends FragmentActivity {
         setContentView(R.layout.activity_map);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         setUpMapIfNeeded();
+
+        //set channel button listener
+        Button channelButton = (Button) findViewById(R.id.channel_map_btn);
+        channelButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent myChannels = new Intent();
+                myChannels.setClass(getApplicationContext(), MyChannelsActivity.class);
+                startActivity(myChannels);
+            }
+        });
+
+        //set connections button listener
+        Button connectionsButton = (Button) findViewById(R.id.connect_map_btn);
+        connectionsButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent myConnections = new Intent();
+                myConnections.setClass(getApplicationContext(), ConnectionsActivity.class);
+                startActivity(myConnections);
+            }
+        });
     }
     @Override
     protected void onResume(){
