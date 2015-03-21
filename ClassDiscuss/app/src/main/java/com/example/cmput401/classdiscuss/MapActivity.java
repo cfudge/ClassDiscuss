@@ -11,6 +11,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 /**
  * Referenced the code here:
  * http://www.vogella.com/tutorials/AndroidGoogleMaps/article.html#googlemaps_activity

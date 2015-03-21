@@ -1,7 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
-/**
- * Created by CMDF_Alien on 2/10/2015.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 
 import android.app.Activity;

@@ -9,10 +9,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-/**
- * Created by nhu on 15-03-07.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
-
 public class ConnectToParseActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {

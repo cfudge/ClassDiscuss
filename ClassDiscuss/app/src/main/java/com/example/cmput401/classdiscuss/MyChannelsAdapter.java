@@ -1,9 +1,8 @@
 package com.example.cmput401.classdiscuss;
 
-/**
- * Created by Nancy on 2/7/2015.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

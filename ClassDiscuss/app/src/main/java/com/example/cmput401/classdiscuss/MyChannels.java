@@ -2,8 +2,8 @@ package com.example.cmput401.classdiscuss;
 
 import java.util.ArrayList;
 
-/**
- * Created by nhu on 15-03-08.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class MyChannels {
 

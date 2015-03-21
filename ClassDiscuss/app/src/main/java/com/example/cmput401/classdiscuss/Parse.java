@@ -12,8 +12,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by nhu on 15-03-08.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class Parse extends Activity {
     private static final Parse parseInstance = new Parse();
@@ -120,7 +120,8 @@ public class Parse extends Activity {
                 }
             }
         });
-
     }
+
+
 
 }

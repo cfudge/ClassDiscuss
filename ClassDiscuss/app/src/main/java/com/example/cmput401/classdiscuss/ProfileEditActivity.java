@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class ProfileEditActivity extends sideBarMenuActivity {
 
     //For supplying to the startActivityForResult method:
@@ -162,7 +164,7 @@ public class ProfileEditActivity extends sideBarMenuActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater menuI = getMenuInflater();
-        menuI.inflate(R.menu.menu_side_bar_menu, menu);
+        menuI.inflate(R.menu.menu_mychannels, menu);
 
         return true;
     }

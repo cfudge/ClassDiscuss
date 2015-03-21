@@ -2,6 +2,10 @@ package com.example.cmput401.classdiscuss;
 
 import java.util.ArrayList;
 
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
+
 /**
  * Created by CMDF_Alien on 2/12/2015.
  * Follows the design pattern laid out here:

@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class ConnectionsActivity extends ActionBarActivity {
 
     ListView listView;
@@ -95,7 +97,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_connections_list, menu);
+        getMenuInflater().inflate(R.menu.menu_connections, menu);
         return true;
     }
 

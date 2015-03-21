@@ -7,6 +7,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class ProfileActivity extends sideBarMenuActivity{
 
     final Profile myProfile = Profile.getInstance();

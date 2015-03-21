@@ -11,7 +11,9 @@ import android.widget.SearchView;
 
 import java.util.ArrayList;
 
-
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class ChannelsAddActivity extends ActionBarActivity {
 
     ListView addChannelListView;
