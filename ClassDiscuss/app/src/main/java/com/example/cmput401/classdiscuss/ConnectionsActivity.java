@@ -69,24 +69,14 @@ public class ConnectionsActivity extends ActionBarActivity {
 
     public void addConnections(){
 
-        messageTimes.add(timeStamp.getHours());
+       /* messageTimes.add(timeStamp.getHours());
         messageTimes.add(timeStamp.getMinutes());
         messageTimes.add(timeStamp.getSeconds());
         messageTimes.add(30);
         messageTimes.add(60);
-        messageTimes.add(1);
+        messageTimes.add(1);*/
 
-        myConnections.myConnections.add("John");
-        myConnections.myConnections.add("Joe");
-        myConnections.displayMessage.add("Hey, How are you?" + timeStamp.getHours() + ":" + timeStamp.getMinutes());
-        myConnections.displayMessage.add("Let's meet up to study");
 
-        myConnections.myConnections.add("John");
-        myConnections.myConnections.add("Joe");
-        myConnections.displayMessage.add("Hey, How are you?");
-        myConnections.displayMessage.add("Let's meet up to study");
-
-        connectionsAdapter.notifyDataSetChanged();
         if(myConnections.myConnections.isEmpty()) {
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");

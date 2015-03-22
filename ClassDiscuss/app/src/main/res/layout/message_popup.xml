@@ -14,15 +14,16 @@
         android:layout_toLeftOf="@+id/sendButton"
         android:layout_toStartOf="@+id/sendButton" />
 
-   <!-- <TextView
+    <TextView
         android:id="@+id/list_people"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:paddingBottom="20dp"
         android:paddingTop="10dp"
+        android:text="Users"
         android:layout_gravity="center_horizontal"
-        />-->
+        />
 
 
     <ListView
@@ -52,7 +53,7 @@
 
     <EditText
         android:id="@+id/enterMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter Message"
         />
