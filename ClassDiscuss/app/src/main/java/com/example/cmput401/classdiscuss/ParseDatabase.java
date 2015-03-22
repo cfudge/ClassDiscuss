@@ -3,33 +3,38 @@ package com.example.cmput401.classdiscuss;
 import android.app.Activity;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by nhu on 15-03-08.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
-public class Parse extends Activity {
-    private static final Parse parseInstance = new Parse();
+public class ParseDatabase extends Activity {
+    private static final ParseDatabase parseInstance = new ParseDatabase();
     String ChannelsClass;
     String ObjectId;
     List channelList;
-    boolean initializedDone;
+    ArrayList<String> users;
 
-    private Parse() {
+
+    private ParseDatabase() {
         this.ChannelsClass = "Channels";
         this.ObjectId = "";
         this.channelList = Collections.emptyList();
+        users = new ArrayList<String>();
 
     }
 
-    public static Parse getInstance() {
+    public static ParseDatabase getInstance() {
         return parseInstance;
     }
 
@@ -39,7 +44,7 @@ public class Parse extends Activity {
 
             //get the object id now and save it for future use
             ParseQuery<ParseObject> query = ParseQuery.getQuery(this.ChannelsClass);
-            query.whereEqualTo("userID", Profile.getInstance().getUserEmail());
+            query.whereEqualTo("userID", Profile.getInstance().getEmail());
 
             //check if userID already existed in database
             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -71,7 +76,7 @@ public class Parse extends Activity {
         //make a new object for the user in the database
         ParseObject Channels = new ParseObject(this.ChannelsClass);
         Channels.put("channels", Arrays.asList());
-        Channels.put("userID", Profile.getInstance().getUserEmail());
+        Channels.put("userID", Profile.getInstance().getEmail());
         Channels.saveInBackground();
 
         //now object is created, we initiate again to get the objectID
@@ -106,7 +111,6 @@ public class Parse extends Activity {
     public void deleteChannel() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(this.ChannelsClass);
-        Log.d("score", "did it go here- deleteChannel");
         // Retrieve the object by id
         query.getInBackground(getObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject ParseChannels, ParseException e) {
@@ -120,7 +124,26 @@ public class Parse extends Activity {
                 }
             }
         });
+    }
 
+    public void queryAllUsers() {
+
+        final Users usersList = Users.getInstance();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+
+        query.findInBackground(new FindCallback<ParseUser>() {
+            public void done(List<ParseUser> parseUsers, ParseException e) {
+                if (e == null) {
+                    int userSize = parseUsers.size();
+                    for(int x =0; x < userSize; x++  ){
+                        usersList.addNewUser(parseUsers.get(x).getUsername());
+                    }
+                    // The query was successful.
+                } else {
+                    // Something went wrong.
+                }
+            }
+        });
     }
 
 }

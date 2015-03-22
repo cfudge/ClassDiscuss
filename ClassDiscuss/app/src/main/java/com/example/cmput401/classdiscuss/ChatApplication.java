@@ -5,8 +5,8 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-/**
- * Created by Valerie on 2015-03-06.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class ChatApplication extends Application {
     public static final String YOUR_APPLICATION_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";

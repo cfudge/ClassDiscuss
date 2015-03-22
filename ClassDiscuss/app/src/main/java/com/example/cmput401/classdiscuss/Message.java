@@ -3,8 +3,8 @@ package com.example.cmput401.classdiscuss;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-/**
- * Created by Valerie on 2015-03-06.
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 @ParseClassName("Message")
 public class Message extends ParseObject {

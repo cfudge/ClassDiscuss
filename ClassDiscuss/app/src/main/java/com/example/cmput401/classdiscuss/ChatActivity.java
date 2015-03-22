@@ -20,7 +20,9 @@ import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class ChatActivity extends ActionBarActivity {
     private static final String TAG = ChatActivity.class.getName();
     private static String sUserId;
@@ -121,7 +123,7 @@ public class ChatActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_channel_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
         return true;
     }
 

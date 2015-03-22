@@ -114,24 +114,27 @@
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat" >
         </activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name=".ConnectToParseActivity"
+            android:label="ConnecToParse" >
+        </activity>
+        <activity
+            android:name=".UserActivity"
+            android:label="Users" >
+        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBtGkcgmQYbdOl12fcVVSk74q4Up7wwvzA"/>
         <!--android:value="@string/google_maps_key" -->
-
-   <activity
-       android:name=".MapActivity"
-       android:label="@string/title_activity_map" >
-   </activity>
-   <activity
-       android:name=".TestActivity"
-       android:label="@string/title_activity_test" >
-   </activity>
-   <activity
-       android:name=".ConnectToParseActivity"
-       android:label="ConnecToParse" >
-   </activity>
 
    <!-- information needed for Parse.com -->
         <service android:name="com.parse.PushService" />
@@ -163,7 +166,7 @@
         <!-- replace @drawable/push_icon with your push icon identifier -->
        <!-- <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_green"/>
         -->
->>>>>>> 5fbf9e71dc4c91cf11af93c82636a69b0177bda2
+
     </application>
 
 </manifest>

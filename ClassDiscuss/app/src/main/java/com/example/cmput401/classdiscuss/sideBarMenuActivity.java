@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
+
+import com.parse.ParseUser;
+
 /**
  * <p>
  * This class contains the implementation of side bar menu button.
@@ -18,8 +18,7 @@ import com.google.android.gms.common.SignInButton;
  * will extend this one, so that they will all have button and behave as activities.
  * </p>
  *
- * @author Nhu Bui (nbui)
- *
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class sideBarMenuActivity extends ActionBarActivity {
 
@@ -37,6 +36,10 @@ public class sideBarMenuActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case R.id.action_profile:
+                final ParseUser user = ParseUser.getCurrentUser();
+                Profile me = Profile.getInstance();
+                me.setUserName(user.getUsername());
+
                 Intent myProfile = new Intent();
                 myProfile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(myProfile);
@@ -61,6 +64,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 Intent chatIntent = new Intent();
                 chatIntent.setClass(getApplicationContext(), ChatActivity.class);
                 startActivity(chatIntent);
+                break;
+            case R.id.action_users:
+                Intent usersIntent = new Intent();
+                usersIntent.setClass(getApplicationContext(), UserActivity.class);
+                startActivity(usersIntent);
                 break;
             // Clearly doesn't work right now.  the login activity has saved your
             // email address so if you log out it automatically signs you back in.

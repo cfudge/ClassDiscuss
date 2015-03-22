@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class MyChannelsActivity extends sideBarMenuActivity {
 
     ListView listView;
@@ -63,7 +65,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_channel_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_mychannels, menu);
         return true;
     }
 
