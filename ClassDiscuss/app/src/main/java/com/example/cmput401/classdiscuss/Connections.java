@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 
 public class Connections {
-    private static Connections instance = null;
     public ArrayList<String> myConnections;
     public ArrayList<String>displayMessage;
 

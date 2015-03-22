@@ -55,6 +55,8 @@ public class ConnectToParseActivity extends Activity{
             }
         });
 
+        com.example.cmput401.classdiscuss.Parse.getInstance().queryAllUsers();
+
 
     }
 
