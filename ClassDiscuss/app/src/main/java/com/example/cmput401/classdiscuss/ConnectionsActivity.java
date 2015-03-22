@@ -2,10 +2,20 @@ package com.example.cmput401.classdiscuss;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.view.ViewGroup.LayoutParams;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,6 +28,10 @@ public class ConnectionsActivity extends ActionBarActivity {
     ListView listView;
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
+
+    PopupWindow popup;
+    PopupListAdapter popupAdapter;
+    ListView popupList;
 
 
     ArrayList<Integer> messageTimes = new ArrayList<Integer>();
@@ -33,11 +47,14 @@ public class ConnectionsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_connections_list);
 
 
+
         myConnections = myConnections.getInstance();
         connectionsAdapter = new ConnectionsAdapter(this, myConnections.myConnections, myConnections.displayMessage, ConnectionsActivity.this);
 
         listView = (ListView) findViewById(R.id.channel_list_view);
         listView.setAdapter(connectionsAdapter);
+
+        popupMenu();
 
     }
 
@@ -90,6 +107,51 @@ public class ConnectionsActivity extends ActionBarActivity {
         });
         TextView noMessage = (TextView) findViewById(R.id.no_messages);
         noMessage.setText(messageTimes.toString());
+    }
+
+    public void popupMenu(){
+        //Button to test popup menu
+        //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+        //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
+
+
+        popupAdapter = new PopupListAdapter(this, myConnections.myConnections);
+
+
+
+        final Button popupButton = (Button) findViewById(R.id.popup_button);
+        popupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.message_popup, null);
+                popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+
+               // popupList = (ListView) popup.getContentView().findViewById(R.id.popup_list_view);
+
+
+                popupList = (ListView) view.findViewById(R.id.popup_list_view);
+                popupList.setAdapter(popupAdapter);
+
+                // popupAdapter.notifyDataSetChanged();
+
+                popup.showAtLocation(view, Gravity.CENTER, 0,0);
+
+                ImageButton closeButton = (ImageButton) view.findViewById(R.id.close_button);
+                closeButton.setOnClickListener(new ImageButton.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup.dismiss();
+                    }
+                });
+                EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
+
+            }
+        });
+
+
     }
 
     @Override
