@@ -31,6 +31,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
 
+   Users users =  Users.getInstance();
     PopupWindow popup;
     PopupListAdapter popupAdapter;
     ListView popupList;
@@ -117,7 +118,7 @@ public class ConnectionsActivity extends ActionBarActivity {
         //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
 
 
-        popupAdapter = new PopupListAdapter(this, myConnections.myConnections);
+        popupAdapter = new PopupListAdapter(this, users.users);
 
 
 
@@ -131,13 +132,10 @@ public class ConnectionsActivity extends ActionBarActivity {
                 View view = inflater.inflate(R.layout.message_popup, null);
                 popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
 
-               // popupList = (ListView) popup.getContentView().findViewById(R.id.popup_list_view);
-
-
                 popupList = (ListView) view.findViewById(R.id.popup_list_view);
                 popupList.setAdapter(popupAdapter);
 
-                // popupAdapter.notifyDataSetChanged();
+
 
                 popup.showAtLocation(view, Gravity.CENTER, 0,0);
 
