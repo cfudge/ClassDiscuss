@@ -27,9 +27,11 @@ public class ConnectToParseActivity extends Activity{
         ParseUser userParse = new ParseUser();
         userParse.setUsername(User.getUserName());
         userParse.setPassword(User.getUserName());
-        userParse.setEmail(User.getUserEmail());
+        userParse.setEmail(User.getEmail());
 
-        com.example.cmput401.classdiscuss.Parse.getInstance().Initiate();
+        ParseDatabase parseData = ParseDatabase.getInstance();
+        parseData.Initiate();
+        parseData.queryAllUsers();
 
         // other fields can be set just like with ParseObject
         //user.put("phone", "650-555-0000");
@@ -54,9 +56,6 @@ public class ConnectToParseActivity extends Activity{
                 }
             }
         });
-
-        com.example.cmput401.classdiscuss.Parse.getInstance().queryAllUsers();
-
 
     }
 

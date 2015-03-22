@@ -245,7 +245,6 @@ public abstract class PlusBaseActivity extends Activity
 
         //set User's information
         Profile user = Profile.getInstance();
-        user.setEmail(currentEmail);
         user.setUserName(currentUser);
 
         updateConnectButtonState();

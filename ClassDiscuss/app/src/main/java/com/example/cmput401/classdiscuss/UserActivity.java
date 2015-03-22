@@ -1,5 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,22 +22,12 @@ public class UserActivity extends sideBarMenuActivity {
         setContentView(R.layout.activity_user);
 
         //populate the list
-
+        users.updateUsersList();
 
 
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.listUsers);
 
-        // Defined Array values to show in ListView
-        String[] values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
-        };
 
         // Define a new Adapter
         // First parameter - Context
@@ -62,6 +53,13 @@ public class UserActivity extends sideBarMenuActivity {
 
                 // ListView Clicked item value
                 String  itemValue = (String) listView.getItemAtPosition(position);
+                Profile me = Profile.getInstance();
+                me.setUserName(itemValue);
+                System.out.print(itemValue);
+                System.out.print("***************");
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
             }
         });
 

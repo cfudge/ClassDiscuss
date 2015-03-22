@@ -7,53 +7,27 @@ import android.net.Uri;
  */
 public class Profile {
     private String name;
-    private String email;
-    private boolean emailPrivate;
 
     private Uri profilePicURI;
-    private static final Profile profileInstance = new Profile();
+    private static Profile instance = new Profile();
 
-    public static Profile getInstance(){
-        return profileInstance;
-    }
-
-
-    private Profile() {
+    public Profile() {
         this.name = "";
-        this.email = "";
-        this.emailPrivate = false;
+
     }
 
     public String getUserName() {
         return this.name;
     }
 
-    public String getUserEmail() {
-
-        return this.email;
+    public void setUserName(String name){
+        this.name = name;
     }
 
-    public boolean isEmailPrivate() {
-        return this.emailPrivate;
-    }
-
-    public boolean isEmailPublic() {
-        if(this.emailPrivate){
-            return false;
-        }
-        return true;
-    }
-
-    public void setUserName(String newName) {
-        this.name = newName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setEmailPrivate(boolean privacy){
-        this.emailPrivate = privacy;
+    public String getEmail(){
+        String username = this.name;
+        String email = username + "@ualberta.ca";
+        return email;
     }
 
     public Uri getProfilePicURI() {
@@ -64,10 +38,12 @@ public class Profile {
         this.profilePicURI = profilePicURI;
     }
 
-    public String getUsernameFromEmail(){
-        String email = getUserEmail();
-        String username = email.split("@")[0];
-        return username;
+    public static Profile getInstance() {
+        if(instance == null) {
+            instance = new Profile();
+        }
+        return instance;
     }
+
 
 }

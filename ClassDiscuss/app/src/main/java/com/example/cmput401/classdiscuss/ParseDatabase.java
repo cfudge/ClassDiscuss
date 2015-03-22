@@ -18,15 +18,15 @@ import java.util.List;
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
-public class Parse extends Activity {
-    private static final Parse parseInstance = new Parse();
+public class ParseDatabase extends Activity {
+    private static final ParseDatabase parseInstance = new ParseDatabase();
     String ChannelsClass;
     String ObjectId;
     List channelList;
     ArrayList<String> users;
 
 
-    private Parse() {
+    private ParseDatabase() {
         this.ChannelsClass = "Channels";
         this.ObjectId = "";
         this.channelList = Collections.emptyList();
@@ -34,7 +34,7 @@ public class Parse extends Activity {
 
     }
 
-    public static Parse getInstance() {
+    public static ParseDatabase getInstance() {
         return parseInstance;
     }
 
@@ -44,7 +44,7 @@ public class Parse extends Activity {
 
             //get the object id now and save it for future use
             ParseQuery<ParseObject> query = ParseQuery.getQuery(this.ChannelsClass);
-            query.whereEqualTo("userID", Profile.getInstance().getUserEmail());
+            query.whereEqualTo("userID", Profile.getInstance().getEmail());
 
             //check if userID already existed in database
             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -76,7 +76,7 @@ public class Parse extends Activity {
         //make a new object for the user in the database
         ParseObject Channels = new ParseObject(this.ChannelsClass);
         Channels.put("channels", Arrays.asList());
-        Channels.put("userID", Profile.getInstance().getUserEmail());
+        Channels.put("userID", Profile.getInstance().getEmail());
         Channels.saveInBackground();
 
         //now object is created, we initiate again to get the objectID
@@ -136,10 +136,8 @@ public class Parse extends Activity {
                 if (e == null) {
                     int userSize = parseUsers.size();
                     for(int x =0; x < userSize; x++  ){
-                        usersList.addUser(parseUsers.get(x).getUsername());
+                        usersList.addNewUser(parseUsers.get(x).getUsername());
                     }
-                    System.out.print(parseUsers);
-
                     // The query was successful.
                 } else {
                     // Something went wrong.
@@ -147,11 +145,5 @@ public class Parse extends Activity {
             }
         });
     }
-
-    public ArrayList<String> getAllUsers(){
-        return users;
-    }
-
-
 
 }

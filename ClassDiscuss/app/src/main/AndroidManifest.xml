@@ -166,7 +166,7 @@
         <!-- replace @drawable/push_icon with your push icon identifier -->
        <!-- <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_green"/>
         -->
->>>>>>> 5fbf9e71dc4c91cf11af93c82636a69b0177bda2
+
     </application>
 
 </manifest>

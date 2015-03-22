@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+
+import com.parse.ParseUser;
+
 /**
  * <p>
  * This class contains the implementation of side bar menu button.
@@ -33,6 +36,10 @@ public class sideBarMenuActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case R.id.action_profile:
+                final ParseUser user = ParseUser.getCurrentUser();
+                Profile me = Profile.getInstance();
+                me.setUserName(user.getUsername());
+
                 Intent myProfile = new Intent();
                 myProfile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(myProfile);

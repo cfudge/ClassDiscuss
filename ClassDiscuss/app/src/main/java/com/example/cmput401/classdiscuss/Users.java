@@ -1,4 +1,5 @@
 package com.example.cmput401.classdiscuss;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class Users{
 
     private static final Users usersInstance = new Users();
-    Parse parseUsers = Parse.getInstance();
+    ParseDatabase parseUsers = ParseDatabase.getInstance();
 
     ArrayList<String> users;
 
@@ -22,17 +23,20 @@ public class Users{
         return users;
     }
 
-    public void addUser(String name){
-        users.add(name);
+    public void addNewUser(String name){
+        boolean foundUser= false;
+        for(int x =0; x < users.size(); x++){
+            if(users.get(x).equals(name)){
+                foundUser = true;
+            }
+        }
+        if (!foundUser){
+            users.add(name);
+        }
     }
 
     public void updateUsersList(){
-        /*Parse parseUsers = Parse.getInstance();
-        int userSize = parseUsers.getAllUsers();
-        int userSize = parseUsers.size();
-        for(int x =0; x < userSize; x++  ){
-            usersList.addUser(parseUsers.get(x).getUsername());
-        }*/
+        parseUsers.queryAllUsers();
     }
 
 
