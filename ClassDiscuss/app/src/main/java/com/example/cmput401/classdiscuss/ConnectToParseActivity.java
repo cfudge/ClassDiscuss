@@ -37,23 +37,23 @@ public class ConnectToParseActivity extends Activity{
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-
-                    /*//needs to wait for parse.com to query the subscribed channels
-                    try {
-                        Thread.sleep(1000);
-                    } catch(InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }*/
-
-                    Intent mapIntent = new Intent();
-                    mapIntent.setClass(getApplicationContext(), MapActivity.class);
-                    startActivity(mapIntent);
-
+                    //user existed
                 } else {
-
+                    //new users
                 }
             }
         });
+
+        /*//needs to wait for parse.com to query the subscribed channels
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }*/
+
+        Intent mapIntent = new Intent();
+        mapIntent.setClass(getApplicationContext(), MapActivity.class);
+        startActivity(mapIntent);
 
     }
 

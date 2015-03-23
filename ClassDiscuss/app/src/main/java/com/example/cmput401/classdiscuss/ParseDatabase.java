@@ -24,8 +24,6 @@ public class ParseDatabase extends Activity {
     String myChannelObjectId;
     List channelList;
 
-
-
     private ParseDatabase() {
         this.myChannelObjectId = ""; //this is for the main user
         this.channelList = Collections.emptyList();
@@ -123,7 +121,6 @@ public class ParseDatabase extends Activity {
     }
 
     public void deleteChannelFromParse() {
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
         // Retrieve the object by id
         query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseObject>() {
@@ -178,6 +175,8 @@ public class ParseDatabase extends Activity {
                     Log.d("score", "image " + image);
                     UsersClass.put("Image", image);
                     UsersClass.saveInBackground();
+
+                    setDataLocally();
 
                 }
             }
