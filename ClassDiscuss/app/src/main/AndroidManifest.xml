@@ -58,7 +58,7 @@
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/menu_profile"
+            android:label="Profile"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -70,7 +70,7 @@
         </activity>
         <activity
             android:name=".ProfileEditActivity"
-            android:label="@string/title_activity_edit_profile"
+            android:label="Edit Profile"
             android:parentActivityName=".ProfileActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -78,7 +78,7 @@
         </activity>
         <activity
             android:name=".ChannelsAddActivity"
-            android:label="@string/title_activity_add_channel_screen"
+            android:label="Add Channels"
             android:parentActivityName=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
@@ -128,7 +128,7 @@
         </activity>
         <activity
             android:name=".UserActivity"
-            android:label="Users" >
+            android:label="Other Users" >
         </activity>
 
         <meta-data

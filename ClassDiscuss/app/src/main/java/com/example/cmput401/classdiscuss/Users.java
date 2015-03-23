@@ -1,5 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ public class Users{
     private static final Users usersInstance = new Users();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
-    ArrayList<String> users;
+    private ArrayList<String> users;
 
     private Users() {
         users = new ArrayList<String>();
@@ -30,6 +32,11 @@ public class Users{
                 foundUser = true;
             }
         }
+        if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
+            //don't add current user to list
+            foundUser = true;
+        }
+        //add new users
         if (!foundUser){
             users.add(name);
         }
@@ -37,6 +44,10 @@ public class Users{
 
     public void updateUsersList(){
         parseUsers.setDataLocally();
+    }
+
+    public void clearUsersList(){
+        users.clear();
     }
 
 

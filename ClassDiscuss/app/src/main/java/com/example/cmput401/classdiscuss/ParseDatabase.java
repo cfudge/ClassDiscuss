@@ -34,9 +34,9 @@ public class ParseDatabase extends Activity {
     }
 
     public void Initiate() {
-        setDataLocally();
         createNewProfileToParse();
         createNewChannelsToParse();
+        setDataLocally();
     }
 
     private void createNewChannelsToParse() {
@@ -144,6 +144,7 @@ public class ParseDatabase extends Activity {
                     if (e == null) {
                         // The query was successful.
                         Users usersList = Users.getInstance();
+                        usersList.clearUsersList();
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
