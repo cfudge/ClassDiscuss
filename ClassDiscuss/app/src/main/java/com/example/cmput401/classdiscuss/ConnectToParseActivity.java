@@ -29,9 +29,7 @@ public class ConnectToParseActivity extends Activity{
         userParse.setPassword(User.getUserName());
         userParse.setEmail(User.getEmail());
 
-        ParseDatabase parseData = ParseDatabase.getInstance();
-        parseData.Initiate();
-        parseData.queryAllUsers();
+        ParseDatabase.getInstance().Initiate();
 
         // other fields can be set just like with ParseObject
         //user.put("phone", "650-555-0000");

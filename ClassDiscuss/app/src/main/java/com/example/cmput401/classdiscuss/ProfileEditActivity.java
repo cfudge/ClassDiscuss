@@ -35,11 +35,9 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         EditUserName.setText(myProfile.getUserName());
         textUserEmail.setText(myProfile.getEmail());
 
-
         buttonSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent Profile = new Intent();
                 Profile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(Profile);
@@ -64,7 +62,6 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         if(myProfile.getProfilePicURI() != null){
             profilePicView.setImageURI(myProfile.getProfilePicURI());
         }
-
     }
 
     /**
@@ -87,7 +84,6 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater menuI = getMenuInflater();
         menuI.inflate(R.menu.menu_mychannels, menu);
-
         return true;
     }
 

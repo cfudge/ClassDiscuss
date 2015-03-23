@@ -1,7 +1,5 @@
 package com.example.cmput401.classdiscuss;
 
-import com.parse.Parse;
-
 import java.util.ArrayList;
 
 /*
@@ -28,7 +26,7 @@ public class MyChannels {
     public void addChannel(String item){
         if(!ifContains(item)){
             this.subscribedChannelList.add(item);
-            ParseDatabase.getInstance().addChannels(item);
+            ParseDatabase.getInstance().addChannelsToParse(item);
         }
 
     }
@@ -36,7 +34,7 @@ public class MyChannels {
     public void deleteChannel(){
         //MyChannelsAdapter deleted the item from subscribedChannelList
         //now we just need to update parse.com
-        ParseDatabase.getInstance().deleteChannel();
+        ParseDatabase.getInstance().deleteChannelFromParse();
     }
 
     public boolean ifContains(String item){

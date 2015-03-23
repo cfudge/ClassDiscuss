@@ -48,6 +48,7 @@ public class UserActivity extends sideBarMenuActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
                 // ListView Clicked item index
                 int itemPosition = position;
 
@@ -55,8 +56,7 @@ public class UserActivity extends sideBarMenuActivity {
                 String  itemValue = (String) listView.getItemAtPosition(position);
                 Profile me = Profile.getInstance();
                 me.setUserName(itemValue);
-                System.out.print(itemValue);
-                System.out.print("***************");
+
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);

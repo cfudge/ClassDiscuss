@@ -36,7 +36,7 @@ public class Users{
     }
 
     public void updateUsersList(){
-        parseUsers.queryAllUsers();
+        parseUsers.setDataLocally();
     }
 
 
