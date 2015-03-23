@@ -10,6 +10,7 @@ import android.os.Bundle;
 /**
  * Created by Kelsey on 22/03/2015.
  * Get the location from the user's phone
+ * initializeLocation() must be called before this may be used
  * Code taken from https://github.com/CMPUT301W14T02/Comput301Project/
  * blob/master/CMPUT301T02Project/src/ca/ualberta/cs/cmput301t02project/model/GPSLocation.java
  */
