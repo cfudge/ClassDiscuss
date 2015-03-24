@@ -30,9 +30,11 @@ public class ProfileActivity extends sideBarMenuActivity{
 
         ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
 
-        if(!myProfile.getProfilePicURI().toString().equals("null")) {
-            if(myProfile.getProfilePicURI() !=null){
-                profilePicView.setImageURI(myProfile.getProfilePicURI());
+        if(myProfile.getProfilePicURI() != null){
+            if(!myProfile.getProfilePicURI().toString().equals("null")) {
+                if(myProfile.getProfilePicURI() !=null){
+                    profilePicView.setImageURI(myProfile.getProfilePicURI());
+                }
             }
         }
     }
