@@ -29,32 +29,37 @@ public class ConnectToParseActivity extends Activity{
         userParse.setPassword(User.getUserName());
         userParse.setEmail(User.getEmail());
 
-        ParseDatabase.getInstance().Initiate();
-
         // other fields can be set just like with ParseObject
-        //user.put("phone", "650-555-0000");
+        userParse.put("Image", "null");
 
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-                    //user existed
+                    //old users /// hmmm wonder how we know if there is an error signing in?
+
+
+                    /*//needs to wait for parse.com to query the subscribed channels
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }*/
+
                 } else {
                     //new users
+
                 }
+                ParseDatabase.getInstance().Initiate();
+                startApp();
             }
         });
 
-        /*//needs to wait for parse.com to query the subscribed channels
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }*/
+    }
 
+    public void startApp(){
         Intent mapIntent = new Intent();
         mapIntent.setClass(getApplicationContext(), MapActivity.class);
         startActivity(mapIntent);
-
     }
 
 }

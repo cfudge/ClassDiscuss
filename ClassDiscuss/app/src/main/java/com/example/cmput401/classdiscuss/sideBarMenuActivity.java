@@ -37,9 +37,10 @@ public class sideBarMenuActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_profile:
                 final ParseUser user = ParseUser.getCurrentUser();
-                Profile me = Profile.getInstance();
-                me.setUserName(user.getUsername());
-
+                if (user != null){
+                    Profile me = Profile.getInstance();
+                    me.setUserName(user.getUsername());
+                }
                 Intent myProfile = new Intent();
                 myProfile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(myProfile);
@@ -74,7 +75,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 Intent ProfileActivity = new Intent();
                 ProfileActivity.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(ProfileActivity);
-                return true;
+                break;
             // Clearly doesn't work right now.  the login activity has saved your
             // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:

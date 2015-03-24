@@ -27,19 +27,14 @@ public class ChatActivity extends ActionBarActivity {
     private static final String TAG = ChatActivity.class.getName();
     private static String sUserId;
 
-
-    public static final String USER_ID_KEY = "userId";
-
     private EditText etMessage;
     private Button btSend;
-
 
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
 
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
@@ -65,6 +60,7 @@ public class ChatActivity extends ActionBarActivity {
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
         } else { // If not logged in, login as a new anonymous user
+            //TODO don't log in anonymously, log them out
             login();
         }
         // Run the runnable object defined every 100ms
@@ -73,7 +69,7 @@ public class ChatActivity extends ActionBarActivity {
 
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
-        sUserId = ParseUser.getCurrentUser().getObjectId();
+        sUserId = ParseUser.getCurrentUser().getUsername();
         setupMessagePosting();
     }
 
@@ -156,14 +152,13 @@ public class ChatActivity extends ActionBarActivity {
                     if (mMessages != null) {
                         mMessages.clear();
                         mMessages.addAll(messages);
+                        mAdapter.notifyDataSetChanged(); // update adapter
+                        lvChat.invalidate(); // redraw listview
                     }
-                    mAdapter.notifyDataSetChanged(); // update adapter
-                    lvChat.invalidate(); // redraw listview
                 } else {
                     Log.d("message", "Error: " + e.getMessage());
                 }
             }
         });
     }
-
 }
