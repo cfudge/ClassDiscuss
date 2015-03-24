@@ -15,7 +15,7 @@ public class Users{
     private static final Users usersInstance = new Users();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
-    private ArrayList<String> users;
+    ArrayList<String> users;
 
     private Users() {
         users = new ArrayList<String>();
@@ -32,10 +32,13 @@ public class Users{
                 foundUser = true;
             }
         }
-        if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
-            //don't add current user to list
-            foundUser = true;
+        if(ParseUser.getCurrentUser() != null){
+            if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
+                //don't add current user to list
+                foundUser = true;
+            }
         }
+
         //add new users
         if (!foundUser){
             users.add(name);

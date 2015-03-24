@@ -29,10 +29,10 @@ public class ConnectToParseActivity extends Activity{
         userParse.setPassword(User.getUserName());
         userParse.setEmail(User.getEmail());
 
-        ParseDatabase.getInstance().Initiate();
+
 
         // other fields can be set just like with ParseObject
-        //user.put("phone", "650-555-0000");
+        userParse.put("Image", " ");
 
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
@@ -41,6 +41,7 @@ public class ConnectToParseActivity extends Activity{
                 } else {
                     //new users
                 }
+                ParseDatabase.getInstance().Initiate();
             }
         });
 
