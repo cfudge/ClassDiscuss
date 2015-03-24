@@ -154,7 +154,9 @@ public class ParseDatabase extends Activity {
                             //images purposes
                             String username = objects.get(x).getUsername();
                             String usersImage = objects.get(x).getString("Image");
-                            Profile.getInstance().addToUserAndImagesTable(username, usersImage);
+                            if(username != null && usersImage != null){
+                                Profile.getInstance().addToUserAndImagesTable(username, usersImage);
+                            }
                         }
                     } else {
                         //failed

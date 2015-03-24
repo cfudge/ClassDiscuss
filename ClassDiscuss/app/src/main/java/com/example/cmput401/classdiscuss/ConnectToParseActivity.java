@@ -36,24 +36,30 @@ public class ConnectToParseActivity extends Activity{
             public void done(ParseException e) {
                 if (e != null) {
                     //old users /// hmmm wonder how we know if there is an error signing in?
+
+
+                    /*//needs to wait for parse.com to query the subscribed channels
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }*/
+
                 } else {
                     //new users
+
                 }
                 ParseDatabase.getInstance().Initiate();
+                startApp();
             }
         });
 
-        /*//needs to wait for parse.com to query the subscribed channels
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }*/
+    }
 
+    public void startApp(){
         Intent mapIntent = new Intent();
         mapIntent.setClass(getApplicationContext(), MapActivity.class);
         startActivity(mapIntent);
-
     }
 
 }
