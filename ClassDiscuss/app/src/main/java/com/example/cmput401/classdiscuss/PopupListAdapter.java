@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,7 +43,24 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
 
         listText.setText(classes);
+
+        onCheckboxClicked(customView);
+
         return customView;
+    }
+
+      public void onCheckboxClicked(View view){
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+        boolean checked = checkBox.isChecked();
+
+        switch (view.getId()){
+            case R.id.checkBox:
+                if(checked){
+                    Toast.makeText(getContext(), "Checked",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+        }
     }
 
 }

@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,15 +102,11 @@ public class ConnectionsActivity extends ActionBarActivity {
         noMessage.setText(messageTimes.toString());
     }
 
+    //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+    //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
     public void popupMenu(){
         //Button to test popup menu
-        //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
-        //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
-
-
         popupAdapter = new PopupListAdapter(this, users.users);
-
-
 
         final Button popupButton = (Button) findViewById(R.id.popup_button);
         popupButton.setOnClickListener(new View.OnClickListener() {
@@ -125,8 +121,6 @@ public class ConnectionsActivity extends ActionBarActivity {
                 popupList = (ListView) view.findViewById(R.id.popup_list_view);
                 popupList.setAdapter(popupAdapter);
 
-
-
                 popup.showAtLocation(view, Gravity.CENTER, 0,0);
 
                 ImageButton closeButton = (ImageButton) view.findViewById(R.id.close_button);
@@ -136,13 +130,28 @@ public class ConnectionsActivity extends ActionBarActivity {
                         popup.dismiss();
                     }
                 });
+
                 EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
+
 
             }
         });
-
-
     }
+
+    //http://developer.android.com/guide/topics/ui/controls/checkbox.html
+   /* public void onCheckboxClicked(View view){
+        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+        boolean checked = checkBox.isChecked();
+
+        switch (view.getId()){
+            case R.id.checkBox:
+                if(checked){
+                    Toast.makeText(this, "Checked",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+        }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
