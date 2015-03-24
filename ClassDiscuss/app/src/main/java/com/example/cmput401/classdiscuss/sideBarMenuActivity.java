@@ -54,11 +54,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 activity.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(activity);
                 break;
-            case R.id.action_edit_profile:
+            /*case R.id.action_edit_profile:
                 Intent edit = new Intent();
                 edit.setClass(getApplicationContext(), ProfileEditActivity.class);
                 startActivity(edit);
-                break;
+                break;*/
             case R.id.action_settings:
             case R.id.action_chat:
                 Intent chatIntent = new Intent();
@@ -79,7 +79,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
             // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:
                 Intent ToLogIn = new Intent();
-                ToLogIn.setClass(getApplicationContext(), LoginActivity.class);
+                ToLogIn.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(ToLogIn);
                 break;
             default:

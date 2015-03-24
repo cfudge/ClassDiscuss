@@ -44,7 +44,7 @@ public class ProfileActivity extends sideBarMenuActivity{
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             if(Profile.getInstance().getUserName().equals(currentUser.getUsername().toString())){
-                menuI.inflate(R.menu.menu_profile, menu);
+            //    menuI.inflate(R.menu.menu_profile, menu);
             }
         }
         return true;

@@ -154,12 +154,26 @@ public class MainActivity extends Activity implements OnClickListener,
     public void onConnected(Bundle arg0) {
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
-
+        if (mGoogleApiClient.isConnected()) {
+            //  if (loggedIn) {
+            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+            if (email.contains("@ualberta.ca")) {
+                Intent ToChannelScreen = new Intent();
+                ToChannelScreen.setClass(getApplicationContext(), MapActivity.class);
+                startActivity(ToChannelScreen);
+            } else {
+                Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
+                //revokeGplusAccess();
+            }
+            // }
+            //revokeGplusAccess();
+            signOutFromGplus();
+        }
         // Get user's information
-        getProfileInformation();
+        //getProfileInformation();
 
         // Update the UI after signin
-        updateUI(true);
+        //updateUI(true);
 
     }
 
