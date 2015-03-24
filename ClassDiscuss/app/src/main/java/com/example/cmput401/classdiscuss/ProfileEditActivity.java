@@ -83,7 +83,7 @@ public class ProfileEditActivity extends sideBarMenuActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater menuI = getMenuInflater();
-        menuI.inflate(R.menu.menu_mychannels, menu);
+        menuI.inflate(R.menu.menu_editprofile, menu);
         return true;
     }
 
