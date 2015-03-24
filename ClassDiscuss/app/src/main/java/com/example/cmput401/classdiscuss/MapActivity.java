@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.location.Location;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -26,12 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 public class MapActivity extends FragmentActivity {
     static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private Location currentLocation; //Will need to be stored with each user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         setUpMapIfNeeded();
+        updateUserLocation();
 
         //set channel button listener
         Button channelButton = (Button) findViewById(R.id.channel_map_btn);
@@ -96,15 +103,39 @@ public class MapActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(53.523384, -113.525300)).title("Marker"));
-
-
-
         // Move the camera instantly to campus with a zoom of 20.
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS, 20));
 
         // Zoom in, animating the camera.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        placeBuildingMarkers();
+        checkIfOnCampus(3, 5);
     }
+
+    private void updateUserLocation() {
+        GPSLocation.initializeLocation(getApplicationContext());
+        currentLocation = GPSLocation.getInstance().getLocation();
+    }
+
+    private void placeBuildingMarkers() {
+        Marker comSciMarker = mMap.addMarker(
+                    new MarkerOptions().position(new LatLng(53.526800, -113.527184))
+            );
+
+    }
+
+    private boolean checkIfOnCampus(double lat, double lng){
+        LatLngBounds bounds = new LatLngBounds(new LatLng(53.517288, -113.533018),
+                new LatLng(53.530606, -113.511475));
+        if (bounds.contains(new LatLng(lat, lng)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
 }
