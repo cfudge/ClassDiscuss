@@ -8,6 +8,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,48 +35,49 @@ public class ParseDatabase extends Activity {
     }
 
     public void Initiate() {
-        createNewProfileToParse();
         createNewChannelsToParse();
         setDataLocally();
     }
 
     private void createNewChannelsToParse() {
-        //get the object id now and save it for future use
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
-        query.whereEqualTo("userID", Profile.getInstance().getEmail());
 
-        //check if userID already existed in database
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                if (object == null) {
-                    //make a new object for the user in the database
-                    ParseObject Channels = new ParseObject(ChannelsClass);
-                    Channels.put("channels", Arrays.asList());
-                    Channels.put("userID", Profile.getInstance().getEmail());
-                    //get the object id now and save it for future uses
-                    setMyChannelObjectId(Channels.getObjectId());
-                    Channels.saveInBackground();
-                } else {
-                    //already exists
-                    //get the object id now and save it for future uses
-                    setMyChannelObjectId(object.getObjectId());
+            //get the object id now and save it for future use
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
+            query.whereEqualTo("userID", Profile.getInstance().getEmail());
 
-                    //set the subscribed channels list locally
-                    List channelList = object.getList("channels");
-                    MyChannels subscriptionList = MyChannels.getInstance();
-                    for (int x = 0; x < channelList.size(); x++) {
-                        if (!subscriptionList.ifContains(channelList.get(x).toString())) {
-                            subscriptionList.addChannel(channelList.get(x).toString());
+            //check if userID already existed in database
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (object == null) {
+                        //make a new object for the user in the database
+                        ParseObject Channels = new ParseObject(ChannelsClass);
+                        Channels.put("channels", Arrays.asList());
+                        Channels.put("userID", Profile.getInstance().getEmail());
+                        //get the object id now and save it for future uses
+                        setMyChannelObjectId(Channels.getObjectId());
+
+                        Channels.saveInBackground();
+                    } else {
+                        //already exists
+                        //get the object id now and save it for future uses
+                        setMyChannelObjectId(object.getObjectId());
+
+                        //set the subscribed channels list locally
+                        List channelList = object.getList("channels");
+                        MyChannels subscriptionList = MyChannels.getInstance();
+                        for (int x = 0; x < channelList.size(); x++) {
+                            if (!subscriptionList.ifContains(channelList.get(x).toString())) {
+                                subscriptionList.addChannel(channelList.get(x).toString());
+                            }
+
                         }
-
+                        Log.d("score", "subscription list updated");
                     }
-                    Log.d("score", "subscription list updated");
                 }
-            }
-        });
+            });
     }
 
-    private void createNewProfileToParse() {
+    /*private void createNewProfileToParse() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
         query.whereEqualTo("username", Profile.getInstance().getUserName());
 
@@ -94,7 +96,7 @@ public class ParseDatabase extends Activity {
                 }
             }
         });
-    }
+    }*/
 
     public String getMyChannelObjectId() {
         return this.myChannelObjectId;
@@ -106,7 +108,6 @@ public class ParseDatabase extends Activity {
 
     public void addChannelsToParse(final String item) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
-        Log.d("score", "getMyChannelObjectId() " + getMyChannelObjectId());
 
         // Retrieve the object by id
         query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseObject>() {
@@ -138,9 +139,9 @@ public class ParseDatabase extends Activity {
 
     //call this every time you update an image, so it updates the information
     public void setDataLocally() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.findInBackground(new FindCallback<ParseUser>() {
+            public void done(List<ParseUser> objects, ParseException e) {
                     if (e == null) {
                         // The query was successful.
                         Users usersList = Users.getInstance();
@@ -149,7 +150,6 @@ public class ParseDatabase extends Activity {
                         for(int x =0; x < userSize; x++  ){
                             //set users list
                             usersList.addNewUser(objects.get(x).get("username").toString());
-                            Log.d("score", objects.get(x).get("username").toString());
 
                             //images purposes
                             String username = objects.get(x).get("username").toString();
@@ -164,16 +164,15 @@ public class ParseDatabase extends Activity {
     }
 
     public void setUsersImageToParse(String username, final String image){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
 
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject UsersClass, ParseException e) {
+        query.getFirstInBackground(new GetCallback<ParseUser>() {
+            public void done(ParseUser UsersClass, ParseException e) {
                 if (UsersClass == null) {
                     Log.d("score", "no success setUsersImageToParse");
                 } else {
                     //success
-                    Log.d("score", "image " + image);
                     UsersClass.put("Image", image);
                     UsersClass.saveInBackground();
 

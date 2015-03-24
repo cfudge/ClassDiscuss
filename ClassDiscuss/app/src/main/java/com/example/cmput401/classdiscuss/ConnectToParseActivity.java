@@ -29,17 +29,19 @@ public class ConnectToParseActivity extends Activity{
         userParse.setPassword(User.getUserName());
         userParse.setEmail(User.getEmail());
 
-
-
         // other fields can be set just like with ParseObject
-        userParse.put("Image", " ");
+        userParse.put("Image", "null");
 
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-                    //user existed
+                    //error happen
+                    //logout or something
+                    //right now we are doing nothing, but if you log into nim without a uofa
+                    //account, you will experience alot of crashes...
+                    //only because no tables are created for you in parse
                 } else {
-                    //new users
+                    //success
                 }
                 ParseDatabase.getInstance().Initiate();
             }
