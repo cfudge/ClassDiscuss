@@ -35,13 +35,9 @@ public class ConnectToParseActivity extends Activity{
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e != null) {
-                    //error happen
-                    //logout or something
-                    //right now we are doing nothing, but if you log into nim without a uofa
-                    //account, you will experience alot of crashes...
-                    //only because no tables are created for you in parse
+                    //old users /// hmmm wonder how we know if there is an error signing in?
                 } else {
-                    //success
+                    //new users
                 }
                 ParseDatabase.getInstance().Initiate();
             }

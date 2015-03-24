@@ -149,10 +149,10 @@ public class ParseDatabase extends Activity {
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
-                            usersList.addNewUser(objects.get(x).get("username").toString());
+                            usersList.addNewUser(objects.get(x).getUsername());
 
                             //images purposes
-                            String username = objects.get(x).get("username").toString();
+                            String username = objects.get(x).getUsername();
                             String usersImage = objects.get(x).getString("Image");
                             Profile.getInstance().addToUserAndImagesTable(username, usersImage);
                         }
