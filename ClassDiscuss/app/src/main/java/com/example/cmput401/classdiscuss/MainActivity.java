@@ -27,6 +27,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.io.InputStream;
 /*
@@ -65,6 +70,12 @@ public class MainActivity extends Activity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //parse initialization
+        String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
+        String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
+
+        Parse.initialize(this, App_ID, Client_ID);
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
@@ -160,13 +171,12 @@ public class MainActivity extends Activity implements OnClickListener,
             if (currentEmail.contains("@ualberta.ca")) {
                 String currentUser = currentEmail.replace("@ualberta.ca", "");
 
-                //set User's information
+                //set User's information, this is needed for parse
                 Profile user = Profile.getInstance();
                 user.setUserName(currentUser);
 
-                Intent myProfile = new Intent();
-                myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);
-                startActivity(myProfile);
+                connectToParse();
+
             } else {
                 Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
                 //revokeGplusAccess();
@@ -287,6 +297,9 @@ public class MainActivity extends Activity implements OnClickListener,
      * */
     private void signOutFromGplus() {
         if (mGoogleApiClient.isConnected()) {
+            if(ParseUser.getCurrentUser() != null){
+                ParseUser.logOut();
+            }
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
@@ -341,5 +354,51 @@ public class MainActivity extends Activity implements OnClickListener,
         }
     }
 
+    private void connectToParse(){
+        //create new user
+        Profile User = Profile.getInstance();
+        ParseUser userParse = new ParseUser();
+        userParse.setUsername(User.getUserName());
+        userParse.setPassword(User.getUserName());
+        userParse.setEmail(User.getEmail());
+
+        // other fields can be set just like with ParseObject
+        userParse.put("Image", "null");
+
+        userParse.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    // Hooray! Let them use the app now.
+                    ParseDatabase.getInstance().Initiate();
+                    startApp();
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    login();
+                }
+            }
+        });
+    }
+
+    public void login(){
+        Profile User = Profile.getInstance();
+        ParseUser.logInInBackground(User.getUserName(), User.getUserName(), new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    // Hooray! The user is logged in.
+                    ParseDatabase.getInstance().Initiate();
+                    startApp();
+                } else {
+                    // Signup failed. Look at the ParseException to see what happened.
+                }
+            }
+        });
+    }
+
+    public void startApp(){
+        Intent mapIntent = new Intent();
+        mapIntent.setClass(getApplicationContext(), MapActivity.class);
+        startActivity(mapIntent);
+    }
 }
 

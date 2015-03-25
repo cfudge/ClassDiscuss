@@ -250,7 +250,7 @@ public abstract class PlusBaseActivity extends Activity
         updateConnectButtonState();
 
         Intent myProfile = new Intent();
-        myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);
+        //myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);
         startActivity(myProfile);
         setProgressBarVisible(false);
         onPlusClientSignIn();

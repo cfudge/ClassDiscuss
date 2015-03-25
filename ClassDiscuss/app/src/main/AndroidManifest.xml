@@ -123,10 +123,6 @@
             android:label="@string/title_activity_test" >
         </activity>
         <activity
-            android:name=".ConnectToParseActivity"
-            android:label="ConnecToParse" >
-        </activity>
-        <activity
             android:name=".UserActivity"
             android:label="Other Users" >
         </activity>
