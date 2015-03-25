@@ -41,7 +41,7 @@ public class ProfileActivity extends sideBarMenuActivity{
 
         textUserEmail.setText(myProfile.getEmail());
         textUserName.setText(myProfile.getUserName());
-        Log.d("currentuser", currentUser.getUsername().toString());
+        // Log.d("currentuser", currentUser.getUsername().toString());
 
         ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
         myChannels = myChannels.getInstance();
