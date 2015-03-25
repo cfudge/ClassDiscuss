@@ -171,9 +171,9 @@ public class MainActivity extends Activity implements OnClickListener,
             if (currentEmail.contains("@ualberta.ca")) {
                 String currentUser = currentEmail.replace("@ualberta.ca", "");
 
-                //set User's information, this is needed for parse
-                Profile user = Profile.getInstance();
-                user.setUserName(currentUser);
+                //set User's information
+                Profiles profiles = Profiles.getInstance();
+                profiles.loginEmail = currentEmail;
 
                 connectToParse();
 
@@ -355,15 +355,13 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     private void connectToParse(){
+        Profiles profiles = Profiles.getInstance();
+        String loginUser = profiles.loginEmail.replace("@ualberta.ca", "");
         //create new user
-        Profile User = Profile.getInstance();
         ParseUser userParse = new ParseUser();
-        userParse.setUsername(User.getUserName());
-        userParse.setPassword(User.getUserName());
-        userParse.setEmail(User.getEmail());
-
-        // other fields can be set just like with ParseObject
-        userParse.put("Image", "null");
+        userParse.setUsername(loginUser);
+        userParse.setPassword(loginUser);
+        userParse.setEmail(profiles.loginEmail);
 
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
@@ -381,8 +379,9 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     public void login(){
-        Profile User = Profile.getInstance();
-        ParseUser.logInInBackground(User.getUserName(), User.getUserName(), new LogInCallback() {
+        Profiles profiles = Profiles.getInstance();
+        String loginUser = profiles.loginEmail.replace("@ualberta.ca", "");
+        ParseUser.logInInBackground(loginUser, loginUser, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     // Hooray! The user is logged in.

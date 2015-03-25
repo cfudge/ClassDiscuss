@@ -1,73 +1,104 @@
 package com.example.cmput401.classdiscuss;
 
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-/*
- * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by CMDF_Alien on 3/24/2015.
  */
-public class Profile {
-    private String name;
+/*Followed the tutorial here:
+http://www.androidbegin.com/tutorial/android-parse-com-image-upload-tutorial/
+*/
 
-    private Uri profilePicURI;
-    private static Profile instance = new Profile();
-    Hashtable userAndImagesTable;
+public class Profile{
 
-    public Profile() {
-        this.name = "";
-        this.userAndImagesTable = new Hashtable();
+    private ParseUser parseEntry;
 
+    public String getEmail() {return parseEntry.getString("email");}
+
+    public String getUserName() {return parseEntry.getString("username");}
+
+    public void setUserName(String userName){
+        parseEntry.put("username", userName);
+        parseEntry.saveInBackground();
     }
 
-    public void addToUserAndImagesTable(String username, String usersImage){
-        userAndImagesTable.put(username, usersImage);
-    }
-
-    public Hashtable getUserAndImagesTable(){
-        return userAndImagesTable;
-    }
-
-    public String getUserName() {
-        return this.name;
-    }
-
-    public void setUserName(String name){
-        this.name = name;
-    }
-
-    public String getEmail(){
-        String username = this.name;
-        String email = username + "@ualberta.ca";
-        return email;
-    }
-
-    public Uri getProfilePicURI() {
-        Enumeration item = userAndImagesTable.keys();
-        while (item.hasMoreElements()) {
-            String username = (String) item.nextElement();
-            if(this.name.equals(username)){
-                //get values = ur string
-                return Uri.parse(userAndImagesTable.get(username).toString());
-            }
+    public ParseUser getParseEntry(String searchField, String searchValue) {
+        if(parseEntry != null){
+            return parseEntry;
         }
-        return profilePicURI;
-    }
-
-    public void setProfilePicURI(Uri profilePicURI) {
-        ParseDatabase.getInstance().setUsersImageToParse(this.name, profilePicURI.toString());
-
-        //need to save it in profile as it is faster than waiting for parse to update
-        this.profilePicURI = profilePicURI;
-    }
-
-    public static Profile getInstance() {
-        if(instance == null) {
-            instance = new Profile();
+        if(searchValue == null){
+            return null;
         }
-        return instance;
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo(searchField, searchValue);
+        try {
+            parseEntry = (ParseUser) query.find().get(0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parseEntry;
     }
 
+    public void setParseEntry(ParseUser parseEntry){
+        this.parseEntry = parseEntry;
+    }
+
+    public Bitmap getPic(){
+        ParseFile picFile = parseEntry.getParseFile("ProfilePic");
+        if(picFile == null){
+            return null;
+        }
+        try {
+            byte[] image = picFile.getData();
+            Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length);
+            return pic;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setPic(Bitmap pic){
+        // Convert it to byte
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        // Compress image to lower quality scale 1 - 100
+        pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] image = stream.toByteArray();
+
+        // Create the ParseFile
+        ParseFile file = new ParseFile("userPic.png", image);
+
+        parseEntry.put("ProfilePic", file);
+        parseEntry.saveInBackground();
+    }
+
+    public ArrayList<String> getChannels() {
+        List<ParseObject> ob = null;
+        ArrayList<String> channelsList = new ArrayList<String>();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Channels");
+        query.whereEqualTo("userID", getEmail());
+        try {
+            ob = query.find();
+        } catch (ParseException e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        for (ParseObject channels : ob) {
+            channelsList = (ArrayList<String>) channels.get("channels");
+        }
+        return channelsList;
+    }
 
 }

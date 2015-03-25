@@ -1,8 +1,10 @@
 package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -10,6 +12,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.parse.ParseUser;
+
+import java.io.IOException;
 
 
 /*
@@ -19,12 +25,16 @@ public class ProfileEditActivity extends sideBarMenuActivity {
 
     //For supplying to the startActivityForResult method:
     private static final int SELECT_PICTURE = 1;
-    final Profile myProfile = Profile.getInstance();
+    final Profiles profiles = Profiles.getInstance();
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    Profile currentUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofile);
+        currentUserProfile = new Profile();
+        currentUserProfile.setParseEntry(currentUser);
 
         Button buttonSave = (Button) findViewById(R.id.buttonSave);
         final TextView EditUserName = (TextView) findViewById(R.id.EditUserName);
@@ -32,12 +42,13 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         final ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
 
         //set user's information
-        EditUserName.setText(myProfile.getUserName());
-        textUserEmail.setText(myProfile.getEmail());
+        EditUserName.setText(currentUser.getString("username"));
+        textUserEmail.setText(currentUser.getString("email"));
 
         buttonSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                profiles.displayProfile.setParseEntry(currentUser);
                 Intent Profile = new Intent();
                 Profile.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(Profile);
@@ -59,8 +70,9 @@ public class ProfileEditActivity extends sideBarMenuActivity {
             }
         });
 
-        if(myProfile.getProfilePicURI() != null){
-            profilePicView.setImageURI(myProfile.getProfilePicURI());
+        Bitmap profilePic = currentUserProfile.getPic();
+        if(profilePic != null){//myProfile.getProfilePicURI() != null){
+            profilePicView.setImageBitmap(profilePic);
         }
     }
 
@@ -72,9 +84,16 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                myProfile.setProfilePicURI(selectedImageUri);
+                try {
+                    currentUserProfile.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+                //myProfile.setProfilePicURI(selectedImageUri);
                 ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
-                profilePicView.setImageURI(myProfile.getProfilePicURI());
+                //profilePicView.setImageURI(myProfile.getProfilePicURI());
+                profilePicView.setImageBitmap(currentUserProfile.getPic());
             }
         }
     }

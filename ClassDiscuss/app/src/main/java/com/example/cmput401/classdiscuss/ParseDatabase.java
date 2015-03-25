@@ -43,7 +43,7 @@ public class ParseDatabase extends Activity {
 
             //get the object id now and save it for future use
             ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
-            query.whereEqualTo("userID", Profile.getInstance().getEmail());
+            query.whereEqualTo("userID", Profiles.getInstance().loginEmail);
 
             //check if userID already existed in database
             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -52,7 +52,7 @@ public class ParseDatabase extends Activity {
                         //make a new object for the user in the database
                         ParseObject Channels = new ParseObject(ChannelsClass);
                         Channels.put("channels", Arrays.asList());
-                        Channels.put("userID", Profile.getInstance().getEmail());
+                        Channels.put("userID", Profiles.getInstance().loginEmail);
                         //get the object id now and save it for future uses
                         setMyChannelObjectId(Channels.getObjectId());
 
@@ -79,7 +79,7 @@ public class ParseDatabase extends Activity {
 
     /*private void createNewProfileToParse() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
-        query.whereEqualTo("username", Profile.getInstance().getUserName());
+        query.whereEqualTo("username", OldProfile.getInstance().getUserName());
 
         //check if userID already existed in database
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -88,7 +88,7 @@ public class ParseDatabase extends Activity {
                     //make a new object for the user in the database
                     ParseObject Channels = new ParseObject(ImageClass);
                     Channels.put("Image", "");
-                    Channels.put("username", Profile.getInstance().getUserName());
+                    Channels.put("username", OldProfile.getInstance().getUserName());
                     Channels.saveInBackground();
 
                 } else { //success
@@ -155,7 +155,7 @@ public class ParseDatabase extends Activity {
                             String username = objects.get(x).getUsername();
                             String usersImage = objects.get(x).getString("Image");
                             if(username != null && usersImage != null){
-                                Profile.getInstance().addToUserAndImagesTable(username, usersImage);
+                                OldProfile.getInstance().addToUserAndImagesTable(username, usersImage);
                             }
                         }
                     } else {
