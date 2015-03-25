@@ -161,8 +161,8 @@ public class MainActivity extends Activity implements OnClickListener,
                 String currentUser = currentEmail.replace("@ualberta.ca", "");
 
                 //set User's information
-                Profile user = Profile.getInstance();
-                user.setUserName(currentUser);
+                Profiles profiles = Profiles.getInstance();
+                profiles.loginEmail = currentEmail;
 
                 Intent myProfile = new Intent();
                 myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);

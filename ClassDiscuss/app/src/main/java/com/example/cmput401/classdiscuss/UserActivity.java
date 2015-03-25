@@ -54,8 +54,10 @@ public class UserActivity extends sideBarMenuActivity {
 
                 // ListView Clicked item value
                 String  itemValue = (String) listView.getItemAtPosition(position);
-                Profile me = Profile.getInstance();
-                me.setUserName(itemValue);
+                Profiles profiles = Profiles.getInstance();
+                Profile displayProfile = new Profile();
+                displayProfile.getParseEntry("username", itemValue);
+                profiles.displayProfile = displayProfile;
 
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ProfileActivity.class);

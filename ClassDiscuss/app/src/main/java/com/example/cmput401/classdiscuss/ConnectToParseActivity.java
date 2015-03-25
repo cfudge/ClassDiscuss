@@ -3,7 +3,9 @@ package com.example.cmput401.classdiscuss;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -16,26 +18,27 @@ public class ConnectToParseActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Profiles profiles = Profiles.getInstance();
+        final String loginUserName = profiles.loginEmail.replace("@ualberta.ca", "");
+        Log.e("loginusername", loginUserName);
 
         String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
         String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
 
         Parse.initialize(this, App_ID, Client_ID);
 
-        //create new user
-        Profile User = Profile.getInstance();
-        ParseUser userParse = new ParseUser();
-        userParse.setUsername(User.getUserName());
-        userParse.setPassword(User.getUserName());
-        userParse.setEmail(User.getEmail());
+        ParseUser.logInInBackground(loginUserName, loginUserName, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user == null) {
+                    ParseUser userParse = new ParseUser();
+                    userParse.setUsername(loginUserName);
+                    userParse.setPassword(loginUserName);
+                    userParse.setEmail(profiles.loginEmail);
 
-        // other fields can be set just like with ParseObject
-        userParse.put("Image", "null");
-
-        userParse.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e != null) {
-                    //old users /// hmmm wonder how we know if there is an error signing in?
+                    userParse.signUpInBackground(new SignUpCallback() {
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                //old users /// hmmm wonder how we know if there is an error signing in?
 
 
                     /*//needs to wait for parse.com to query the subscribed channels
@@ -45,15 +48,23 @@ public class ConnectToParseActivity extends Activity{
                         Thread.currentThread().interrupt();
                     }*/
 
-                } else {
-                    //new users
+                            } else {
+                                //new users
 
+                            }
+                        }
+                    });
                 }
                 ParseDatabase.getInstance().Initiate();
+                if(ParseUser.getCurrentUser() == null){
+                    Log.e("couldn't login", "Couldn't login");
+                }
                 startApp();
             }
         });
-
+        if(ParseUser.getCurrentUser() == null){
+            Log.e("couldn't login", "Couldn't login");
+        }
     }
 
     public void startApp(){
