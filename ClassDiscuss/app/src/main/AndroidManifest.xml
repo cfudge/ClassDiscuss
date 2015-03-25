@@ -64,7 +64,7 @@
         <activity
             android:name=".ProfileActivity"
             android:label="Profile"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MyChannelsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cmput401.classdiscuss.MainActivity" />
