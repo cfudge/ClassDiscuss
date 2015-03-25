@@ -101,7 +101,7 @@ public class ProfileActivity extends sideBarMenuActivity{
         //display edit option for current user
         if (currentUser != null) {
             if(Profile.getInstance().getUserName().equals(currentUser.getUsername().toString())){
-            //    menuI.inflate(R.menu.menu_profile, menu);
+                menuI.inflate(R.menu.menu_profile, menu);
             }
         }
         return true;
