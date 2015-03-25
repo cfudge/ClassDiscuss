@@ -1,37 +1,42 @@
 package com.example.cmput401.classdiscuss;
-// Code mainly taken from http://www.androidhive.info/2014/02/android-login-with-google-plus-account-1/
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import java.io.InputStream;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.content.IntentSender.SendIntentException;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.View;
-        import android.view.View.OnClickListener;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.TextView;
-        import android.widget.Toast;
-
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.GooglePlayServicesUtil;
-        import com.google.android.gms.common.SignInButton;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-        import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-        import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.common.api.Status;
-        import com.google.android.gms.plus.Plus;
-        import com.google.android.gms.plus.model.people.Person;
-
+import java.io.InputStream;
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
+ */
 public class MainActivity extends Activity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener {
 
@@ -43,7 +48,7 @@ public class MainActivity extends Activity implements OnClickListener,
     private static final int PROFILE_PIC_SIZE = 400;
 
     // Google client to interact with Google API
-    public static GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
 
     /**
      * A flag indicating that a PendingIntent is in progress and prevents us
@@ -60,12 +65,17 @@ public class MainActivity extends Activity implements OnClickListener,
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
-    public static boolean loggedIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //parse initialization
+        String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
+        String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
+
+        Parse.initialize(this, App_ID, Client_ID);
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
@@ -138,7 +148,6 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int responseCode,
                                     Intent intent) {
-        Log.e(TAG, "in activity result");
         if (requestCode == RC_SIGN_IN) {
             if (responseCode != RESULT_OK) {
                 mSignInClicked = false;
@@ -157,17 +166,22 @@ public class MainActivity extends Activity implements OnClickListener,
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
         if (mGoogleApiClient.isConnected()) {
-          //  if (loggedIn) {
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-                if (email.contains("ualberta.ca")) {
-                    Intent ToChannelScreen = new Intent();
-                    ToChannelScreen.setClass(getApplicationContext(), MyChannelScreen.class);
-                    startActivity(ToChannelScreen);
-                } else {
-                    Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
-                    //revokeGplusAccess();
-                }
-           // }
+            //  if (loggedIn) {
+            String currentEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
+            if (currentEmail.contains("@ualberta.ca")) {
+                String currentUser = currentEmail.replace("@ualberta.ca", "");
+
+                //set User's information, this is needed for parse
+                Profile user = Profile.getInstance();
+                user.setUserName(currentUser);
+
+                connectToParse();
+
+            } else {
+                Toast.makeText(this, "Must be a ualberta account!", Toast.LENGTH_LONG).show();
+                //revokeGplusAccess();
+            }
+            // }
             //revokeGplusAccess();
             signOutFromGplus();
         }
@@ -243,7 +257,7 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_side_bar_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_mychannels, menu);
         return true;
     }
 
@@ -283,10 +297,13 @@ public class MainActivity extends Activity implements OnClickListener,
      * */
     private void signOutFromGplus() {
         if (mGoogleApiClient.isConnected()) {
+            if(ParseUser.getCurrentUser() != null){
+                ParseUser.logOut();
+            }
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
-            //updateUI(false);
+            updateUI(false);
         }
     }
 
@@ -302,7 +319,7 @@ public class MainActivity extends Activity implements OnClickListener,
                         public void onResult(Status arg0) {
                             Log.e(TAG, "User access revoked!");
                             mGoogleApiClient.connect();
-                            //updateUI(false);
+                            updateUI(false);
                         }
 
                     });
@@ -337,5 +354,51 @@ public class MainActivity extends Activity implements OnClickListener,
         }
     }
 
+    private void connectToParse(){
+        //create new user
+        Profile User = Profile.getInstance();
+        ParseUser userParse = new ParseUser();
+        userParse.setUsername(User.getUserName());
+        userParse.setPassword(User.getUserName());
+        userParse.setEmail(User.getEmail());
+
+        // other fields can be set just like with ParseObject
+        userParse.put("Image", "null");
+
+        userParse.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    // Hooray! Let them use the app now.
+                    ParseDatabase.getInstance().Initiate();
+                    startApp();
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    login();
+                }
+            }
+        });
+    }
+
+    public void login(){
+        Profile User = Profile.getInstance();
+        ParseUser.logInInBackground(User.getUserName(), User.getUserName(), new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    // Hooray! The user is logged in.
+                    ParseDatabase.getInstance().Initiate();
+                    startApp();
+                } else {
+                    // Signup failed. Look at the ParseException to see what happened.
+                }
+            }
+        });
+    }
+
+    public void startApp(){
+        Intent mapIntent = new Intent();
+        mapIntent.setClass(getApplicationContext(), MapActivity.class);
+        startActivity(mapIntent);
+    }
 }
 

@@ -1,57 +1,73 @@
 package com.example.cmput401.classdiscuss;
 
-/**
- * Created by nhu on 15-02-07.
+import android.net.Uri;
+
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+/*
+ * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class Profile {
     private String name;
-    private String email;
-    private boolean emailPrivate;
-    private static final Profile profileInstance = new Profile();
 
-    public static Profile getInstance(){
-        return profileInstance;
+    private Uri profilePicURI;
+    private static Profile instance = new Profile();
+    Hashtable userAndImagesTable;
+
+    public Profile() {
+        this.name = "";
+        this.userAndImagesTable = new Hashtable();
+
     }
 
+    public void addToUserAndImagesTable(String username, String usersImage){
+        userAndImagesTable.put(username, usersImage);
+    }
 
-    private Profile() {
-        this.name = "unknown";
-        this.email = "abcdefghikl@ualberta.ca";
-        this.emailPrivate = false;
+    public Hashtable getUserAndImagesTable(){
+        return userAndImagesTable;
     }
 
     public String getUserName() {
         return this.name;
     }
 
-    public String getUserEmail() {
-
-        return this.email;
+    public void setUserName(String name){
+        this.name = name;
     }
 
-    public boolean isEmailPrivate() {
-        return this.emailPrivate;
+    public String getEmail(){
+        String username = this.name;
+        String email = username + "@ualberta.ca";
+        return email;
     }
 
-    public boolean isEmailPublic() {
-        if(this.emailPrivate){
-            return false;
+    public Uri getProfilePicURI() {
+        Enumeration item = userAndImagesTable.keys();
+        while (item.hasMoreElements()) {
+            String username = (String) item.nextElement();
+            if(this.name.equals(username)){
+                //get values = ur string
+                return Uri.parse(userAndImagesTable.get(username).toString());
+            }
         }
-        return true;
+        return profilePicURI;
     }
 
-    public void setUserName(String newName) {
-        this.name = newName;
+    public void setProfilePicURI(Uri profilePicURI) {
+        ParseDatabase.getInstance().setUsersImageToParse(this.name, profilePicURI.toString());
+
+        //need to save it in profile as it is faster than waiting for parse to update
+        this.profilePicURI = profilePicURI;
     }
 
-    public void setEmailPrivate(boolean privacy){
-        this.emailPrivate = privacy;
+    public static Profile getInstance() {
+        if(instance == null) {
+            instance = new Profile();
+        }
+        return instance;
     }
 
-    public String getUsernameFromEmail(){
-        String email = getUserEmail();
-        String username = email.split("@")[0];
-        return username;
-    }
 
 }

@@ -11,7 +11,6 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -75,40 +74,16 @@
                 android:layout_span="9"
                 android:layout_weight="100"/>
         </TableRow>
-        <TableRow
+        <TextView
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Subscribed Channels"
+            android:id="@+id/textChannelTitle"
+            android:layout_marginTop="10dp" />
+        <ListView
+            android:id="@+id/channelListview"
+            android:layout_below="@id/textUserEmail"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="Private"
-                android:id="@+id/checkPrivate"
-                android:layout_alignTop="@+id/textEmail"
-                android:layout_column="41"
-                android:layout_gravity="left"/>
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="Public"
-                android:id="@+id/checkPublic"
-                android:layout_alignTop="@+id/textEmail"
-                android:layout_column="49"
-                android:checked="false"
-                android:layout_gravity="bottom"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-        </TableRow>
+            android:background ="@android:color/transparent"/>
     </TableLayout>
 </RelativeLayout>
