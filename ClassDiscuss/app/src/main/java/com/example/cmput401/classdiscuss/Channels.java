@@ -31,7 +31,7 @@ public class Channels {
         availableChannelList.add("STS 450");
         availableChannelList.add("EAS 100");
 
-        displayMessage = new ArrayList<String>();
+        //displayMessage = new ArrayList<String>();
     }
     public static Channels getInstance() {
         if(instance == null) {
