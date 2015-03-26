@@ -30,6 +30,8 @@ import com.google.android.gms.plus.model.people.Person;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -74,8 +76,13 @@ public class MainActivity extends Activity implements OnClickListener,
         //parse initialization
         String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
         String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
-
+//        Parse.enableLocalDatastore(this);
         Parse.initialize(this, App_ID, Client_ID);
+
+
+        // Register your parse models here
+        ParseObject.registerSubclass(Message.class);
+
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);

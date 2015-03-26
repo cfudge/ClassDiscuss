@@ -1,8 +1,12 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,11 +19,13 @@ import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -34,8 +40,10 @@ public class ChatActivity extends ActionBarActivity {
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
-
+    IntentFilter filter1;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+
+    Profiles profile = Profiles.getInstance();
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
@@ -59,6 +67,10 @@ public class ChatActivity extends ActionBarActivity {
 
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
+            refreshMessages();
+            //filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
+
+            //registerReceiver(myReceiver, filter1);
             startWithCurrentUser();
         } else { // If not logged in, login as a new anonymous user
             LoginActivity logout = new LoginActivity();
@@ -68,7 +80,13 @@ public class ChatActivity extends ActionBarActivity {
             startActivity(ToLogIn);//login();
         }
         // Run the runnable object defined every 100ms
-        handler.postDelayed(runnable, 100);
+      // handler.postDelayed(runnable, 100);
+    }
+    public void onResume() {
+        super.onResume();
+        filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
+        registerReceiver(myReceiver, filter1);
+        //registerReceiver(myReceiver, filter1);
     }
 
     // Get the userId from the cached currentUser object
@@ -78,7 +96,7 @@ public class ChatActivity extends ActionBarActivity {
     }
 
     // Create an anonymous user using ParseAnonymousUtils and set sUserId
-    private void login() {
+    /*private void login() {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -89,7 +107,7 @@ public class ChatActivity extends ActionBarActivity {
                 }
             }
         });
-    }
+    }*/
 
     // Setup button event handler which posts the entered message to Parse
     private void setupMessagePosting() {
@@ -109,10 +127,26 @@ public class ChatActivity extends ActionBarActivity {
                 Message message = new Message();
                 message.setUserId(sUserId);
                 message.setBody(body);
+                Intent localIntent = new Intent("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
+                sendBroadcast(localIntent);
+                /*ParsePush push = new ParsePush();
+                //push.subscribeInBackground("Message");
+                //push.setChannel("Message");
+
+                push.setMessage("this is my message");*/
+
+                //push.sendInBackground();
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        receiveMessage();
+                        //receiveMessage();
+                        ParsePush push = new ParsePush();
+                //push.subscribeInBackground("Message");
+                //push.setChannel("Message");
+                       // receiveMessage();
+                        push.setMessage("this is my message");
+
+                        push.sendInBackground();
                     }
                 });
                 etMessage.setText("");
@@ -147,7 +181,11 @@ public class ChatActivity extends ActionBarActivity {
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        Log.d("me", ParseUser.getCurrentUser().getUsername().toString());
+        String[] names = {ParseUser.getCurrentUser().getUsername().toString(), profile.displayProfile.getUserName()};
+        query.whereContainedIn("userId", Arrays.asList(names));
         query.orderByAscending("createdAt");
+        // TODO only query messages with id of person talking to
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {
@@ -164,5 +202,32 @@ public class ChatActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+    private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            Log.d("in br", "yesdgfffffffffffffffffffffffffffffff");
+            if(intent.getAction().equalsIgnoreCase("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED"))
+            {
+                Log.d("DEFINITELY HERE", "YES");
+                receiveMessage();
+            }
+
+        }
+    };
+    /*public final class Receiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent){
+            receiveMessage();
+
+        }
+    }*/
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(myReceiver);
+
     }
 }

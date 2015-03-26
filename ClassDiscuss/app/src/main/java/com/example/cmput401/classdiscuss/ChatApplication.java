@@ -17,6 +17,6 @@ public class ChatApplication extends Application {
         Parse.enableLocalDatastore(this);
         // Register your parse models here
         ParseObject.registerSubclass(Message.class);
-        //Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
+        Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
     }
 }

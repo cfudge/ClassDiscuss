@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.parse.ParsePush;
+
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
@@ -39,6 +41,11 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                //ParsePush push = new ParsePush();
+
+
+                //push.setMessage("this is my message");
+               // push.sendInBackground();
                 Intent addChannels = new Intent();
                 addChannels.setClass(getApplicationContext(), ChannelsAddActivity.class);
                 startActivity(addChannels);

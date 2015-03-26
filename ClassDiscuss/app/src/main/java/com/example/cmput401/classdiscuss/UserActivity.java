@@ -60,7 +60,8 @@ public class UserActivity extends sideBarMenuActivity {
                 profiles.displayProfile = displayProfile;
 
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), ProfileActivity.class);
+                //intent.setClass(getApplicationContext(), ProfileActivity.class);
+                intent.setClass(getApplicationContext(), ChatActivity.class);
                 startActivity(intent);
             }
         });
