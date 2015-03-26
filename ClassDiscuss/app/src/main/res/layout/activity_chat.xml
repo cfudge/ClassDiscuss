@@ -35,7 +35,7 @@
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageButton"
+                    android:id="@+id/btPicAdd"
                     android:src="@drawable/ic_action_camera"
                     android:paddingRight="10dp"
                     android:contentDescription="@string/camera_icon_desc"/>
