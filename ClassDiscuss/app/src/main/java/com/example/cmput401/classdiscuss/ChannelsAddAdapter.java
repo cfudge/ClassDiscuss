@@ -6,6 +6,7 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,16 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
         TextView listText = (TextView) channelAddView.findViewById(R.id.add_channel_name);
         //final TextView name = (TextView) channelAddView.findViewById(R.id.add_channel_button);
 
-
         Button addButton = (Button) channelAddView.findViewById(R.id.add_channel_button);
+
+        /*Changing button to red if already added, based on:
+         *http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color/1726352#1726352
+         */
+        if (myChannels.ifContains(getItem(position)))
+            addButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+        else
+            addButton.getBackground().setColorFilter(null);
+
 
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +74,9 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
         myChannels.addChannel(getItem(position));
+        this.notifyDataSetChanged();
 
     }
 

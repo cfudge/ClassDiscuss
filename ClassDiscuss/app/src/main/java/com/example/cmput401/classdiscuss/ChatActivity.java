@@ -1,5 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -60,8 +61,11 @@ public class ChatActivity extends ActionBarActivity {
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
         } else { // If not logged in, login as a new anonymous user
-            //TODO don't log in anonymously, log them out
-            login();
+            LoginActivity logout = new LoginActivity();
+            logout.onPlusClientSignOut();
+            Intent ToLogIn = new Intent();
+            ToLogIn.setClass(getApplicationContext(), MainActivity.class);
+            startActivity(ToLogIn);//login();
         }
         // Run the runnable object defined every 100ms
         handler.postDelayed(runnable, 100);

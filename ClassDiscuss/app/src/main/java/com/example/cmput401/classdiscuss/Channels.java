@@ -15,7 +15,6 @@ public class Channels {
     ArrayList<String> availableChannelList = new ArrayList<>();
     private static Channels instance = null;
     public ArrayList<String> displayMessage;
-    public Profile userProfile;
 
     protected Channels() {
         availableChannelList.add("CMPUT 101");
@@ -31,7 +30,7 @@ public class Channels {
         availableChannelList.add("STS 450");
         availableChannelList.add("EAS 100");
 
-        displayMessage = new ArrayList<String>();
+        //displayMessage = new ArrayList<String>();
     }
     public static Channels getInstance() {
         if(instance == null) {

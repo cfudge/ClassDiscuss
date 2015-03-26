@@ -241,17 +241,17 @@ public abstract class PlusBaseActivity extends Activity
 
         //grab user's information
         String currentEmail = mPlusClient.getAccountName();
-        String currentUser = currentEmail.replace("@ualberta.ca", "");
+        //String currentUser = currentEmail.replace("@ualberta.ca", "");
 
         //set User's information
-        Profile user = Profile.getInstance();
-        user.setUserName(currentUser);
+        //Profile user = Profile.getInstance();
+        //user.setUserName(currentUser);
 
         updateConnectButtonState();
 
-        Intent myProfile = new Intent();
-        myProfile.setClass(getApplicationContext(), ConnectToParseActivity.class);
-        startActivity(myProfile);
+        Intent parseConnect = new Intent();
+        //parseConnect.setClass(getApplicationContext(), ConnectToParseActivity.class);
+        startActivity(parseConnect);
         setProgressBarVisible(false);
         onPlusClientSignIn();
         //onPlusClientSignOut();
