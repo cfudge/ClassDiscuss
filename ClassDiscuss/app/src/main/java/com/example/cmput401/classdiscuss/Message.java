@@ -23,4 +23,5 @@ public class Message extends ParseObject {
     public void setBody(String body) {
         put("body", body);
     }
+    public void setReceiver(String receiver) { put("Receiver", receiver);}
 }

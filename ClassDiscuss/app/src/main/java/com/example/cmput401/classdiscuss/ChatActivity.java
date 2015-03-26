@@ -127,6 +127,7 @@ public class ChatActivity extends ActionBarActivity {
                 Message message = new Message();
                 message.setUserId(sUserId);
                 message.setBody(body);
+                message.setReceiver(profile.displayProfile.getUserName());
                 Intent localIntent = new Intent("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
                 sendBroadcast(localIntent);
                 /*ParsePush push = new ParsePush();
@@ -184,8 +185,8 @@ public class ChatActivity extends ActionBarActivity {
         Log.d("me", ParseUser.getCurrentUser().getUsername().toString());
         String[] names = {ParseUser.getCurrentUser().getUsername().toString(), profile.displayProfile.getUserName()};
         query.whereContainedIn("userId", Arrays.asList(names));
+        query.whereContainedIn("Receiver", Arrays.asList(names));
         query.orderByAscending("createdAt");
-        // TODO only query messages with id of person talking to
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {
