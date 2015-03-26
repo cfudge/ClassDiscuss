@@ -2,7 +2,6 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,36 +32,24 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.chat_item, parent, false);
             final ViewHolder holder = new ViewHolder();
-            holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivChatPicLeft);
-            holder.imageRight = (ImageView)convertView.findViewById(R.id.ivChatPicRight);
+            holder.image = (ImageView)convertView.findViewById(R.id.chatPic);
             holder.body = (TextView)convertView.findViewById(R.id.tvBody);
-            holder.postTime = (TextView)convertView.findViewById(R.id.postUsername);
+            holder.postStats = (TextView)convertView.findViewById(R.id.postStats);
             convertView.setTag(holder);
         }
         final Message message = (Message)getItem(position);
         final ViewHolder holder = (ViewHolder)convertView.getTag();
-        final boolean isMe = message.getUserId().equals(mUserId);
-        // Show-hide image based on the logged-in user.
-        // Display the profiles image to the right for our user, left for other users.
-        if (isMe) {
-            holder.imageRight.setVisibility(View.VISIBLE);
-            holder.imageLeft.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        } else {
-            holder.imageLeft.setVisibility(View.VISIBLE);
-            holder.imageRight.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        }
-        final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
+
+        final ImageView picView = holder.image;
         Bitmap messagePic = message.getPic();
         if(messagePic == null) {
-            Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
+            Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
         }
         else{
-            profileView.setImageBitmap(messagePic);
+            picView.setImageBitmap(messagePic);
         }
         holder.body.setText(message.getBody());
-        holder.postTime.setText(message.getPostTime());
+        holder.postStats.setText(message.getPostTime()+" by "+message.getUserId());
         return convertView;
     }
 
@@ -81,10 +68,9 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
     }
 
     final class ViewHolder {
-        public ImageView imageLeft;
-        public ImageView imageRight;
+        public ImageView image;
         public TextView body;
-        public TextView postTime;
+        public TextView postStats;
     }
 
 }

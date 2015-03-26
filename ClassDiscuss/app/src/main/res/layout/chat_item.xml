@@ -2,18 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
     <ImageView
-        android:id="@+id/ivChatPicLeft"
+        android:id="@+id/chatPic"
         android:contentDescription="@string/profile_other"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
 
         <TextView
             android:textSize="18sp"
@@ -31,13 +25,5 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="64dp"
             android:lines="1"
-            android:id="@+id/postUsername"/>
+            android:id="@+id/postStats"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/ivChatPicRight"
-        android:contentDescription="@string/profile_me"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
