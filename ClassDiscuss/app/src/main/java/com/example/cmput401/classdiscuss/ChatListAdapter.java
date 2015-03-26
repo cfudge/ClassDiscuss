@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
@@ -43,7 +41,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         final ImageView picView = holder.image;
         Bitmap messagePic = message.getPic();
         if(messagePic == null) {
-            Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
+            //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
         }
         else{
             picView.setImageBitmap(messagePic);
