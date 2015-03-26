@@ -9,6 +9,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -39,7 +40,9 @@ public class Message extends ParseObject {
         }
         try {
             byte[] image = picFile.getData();
-            Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length);
+            BitmapFactory.Options op = new BitmapFactory.Options();
+            op.inSampleSize = 8;
+            Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
             return pic;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -58,6 +61,11 @@ public class Message extends ParseObject {
         ParseFile file = new ParseFile("comment_pic.png", image);
 
         put("picture", file);
+    }
+
+    public String getPostTime(){
+        Date creationTime = getCreatedAt();
+        return creationTime.toString();
     }
 
 }

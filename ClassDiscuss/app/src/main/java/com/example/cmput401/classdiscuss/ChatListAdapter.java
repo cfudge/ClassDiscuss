@@ -1,6 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +33,10 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.chat_item, parent, false);
             final ViewHolder holder = new ViewHolder();
-            holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivProfileLeft);
-            holder.imageRight = (ImageView)convertView.findViewById(R.id.ivProfileRight);
+            holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivChatPicLeft);
+            holder.imageRight = (ImageView)convertView.findViewById(R.id.ivChatPicRight);
             holder.body = (TextView)convertView.findViewById(R.id.tvBody);
+            holder.postTime = (TextView)convertView.findViewById(R.id.postUsername);
             convertView.setTag(holder);
         }
         final Message message = (Message)getItem(position);
@@ -52,8 +54,15 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
+        Bitmap messagePic = message.getPic();
+        if(messagePic == null) {
+            Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
+        }
+        else{
+            profileView.setImageBitmap(messagePic);
+        }
         holder.body.setText(message.getBody());
+        holder.postTime.setText(message.getPostTime());
         return convertView;
     }
 
@@ -75,6 +84,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         public ImageView imageLeft;
         public ImageView imageRight;
         public TextView body;
+        public TextView postTime;
     }
 
 }
