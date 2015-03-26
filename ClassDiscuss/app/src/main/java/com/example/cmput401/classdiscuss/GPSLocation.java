@@ -40,6 +40,7 @@ public class GPSLocation {
 
             @Override
             public void onLocationChanged(Location location) {
+
             }
         });
         }
