@@ -4,26 +4,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
-import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,14 +37,18 @@ public class ChatActivity extends ActionBarActivity {
 
     private EditText etMessage;
     private Button btSend;
+    private ImageButton btPicAdd;
+
+    private static final int SELECT_PICTURE = 1;
 
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
     IntentFilter filter1;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private Message message = new Message();
 
-    Profiles profile = Profiles.getInstance();
+    Profiles profiles = Profiles.getInstance();
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
@@ -115,6 +120,7 @@ public class ChatActivity extends ActionBarActivity {
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
+        btPicAdd = (ImageButton) findViewById(R.id.btPicAdd);
         mMessages = new ArrayList<Message>();
         mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
         lvChat.setAdapter(mAdapter);
@@ -124,10 +130,9 @@ public class ChatActivity extends ActionBarActivity {
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
                 // Use Message model to create new messages now
-                Message message = new Message();
                 message.setUserId(sUserId);
                 message.setBody(body);
-                message.setReceiver(profile.displayProfile.getUserName());
+                message.setReceiver(profiles.displayProfile.getUserName());
                 Intent localIntent = new Intent("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
                 sendBroadcast(localIntent);
                 /*ParsePush push = new ParsePush();
@@ -153,6 +158,29 @@ public class ChatActivity extends ActionBarActivity {
                 etMessage.setText("");
             }
         });
+        btPicAdd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent imageSelect = new Intent();
+                imageSelect.setType("image/*");
+                imageSelect.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(imageSelect, "Select Picture"), SELECT_PICTURE);
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                try {
+                    message.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -183,7 +211,7 @@ public class ChatActivity extends ActionBarActivity {
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         Log.d("me", ParseUser.getCurrentUser().getUsername().toString());
-        String[] names = {ParseUser.getCurrentUser().getUsername().toString(), profile.displayProfile.getUserName()};
+        String[] names = {ParseUser.getCurrentUser().getString("username"), profiles.displayProfile.getUserName()};
         query.whereContainedIn("userId", Arrays.asList(names));
         query.whereContainedIn("Receiver", Arrays.asList(names));
         query.orderByAscending("createdAt");

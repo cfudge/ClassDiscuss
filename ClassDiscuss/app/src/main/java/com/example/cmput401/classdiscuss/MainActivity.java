@@ -201,7 +201,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Updating the UI, showing/hiding buttons and profile layout
+     * Updating the UI, showing/hiding buttons and profiles layout
      * */
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
@@ -218,7 +218,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Fetching user's information name, email, profile pic
+     * Fetching user's information name, email, profiles pic
      * */
     private void getProfileInformation() {
         try {
@@ -237,7 +237,7 @@ public class MainActivity extends Activity implements OnClickListener,
                 txtName.setText(personName);
                 txtEmail.setText(email);
 
-                // by default the profile url gives 50x50 px image only
+                // by default the profiles url gives 50x50 px image only
                 // we can replace the value with whatever dimension we want by
                 // replacing sz=X
                 personPhotoUrl = personPhotoUrl.substring(0,
@@ -334,7 +334,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Background Async task to load user profile picture from url
+     * Background Async task to load user profiles picture from url
      * */
     private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
