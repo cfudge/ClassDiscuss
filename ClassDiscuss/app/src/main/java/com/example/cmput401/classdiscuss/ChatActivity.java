@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -16,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
-import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
@@ -43,7 +40,7 @@ public class ChatActivity extends ActionBarActivity {
     IntentFilter filter1;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
-    Profiles profile = Profiles.getInstance();
+    Profiles profiles = Profiles.getInstance();
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
@@ -127,7 +124,7 @@ public class ChatActivity extends ActionBarActivity {
                 Message message = new Message();
                 message.setUserId(sUserId);
                 message.setBody(body);
-                message.setReceiver(profile.displayProfile.getUserName());
+                message.setReceiver(profiles.displayProfile.getUserName());
                 Intent localIntent = new Intent("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
                 sendBroadcast(localIntent);
                 /*ParsePush push = new ParsePush();
@@ -183,7 +180,7 @@ public class ChatActivity extends ActionBarActivity {
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         Log.d("me", ParseUser.getCurrentUser().getUsername().toString());
-        String[] names = {ParseUser.getCurrentUser().getUsername().toString(), profile.displayProfile.getUserName()};
+        String[] names = {ParseUser.getCurrentUser().getString("username"), profiles.displayProfile.getUserName()};
         query.whereContainedIn("userId", Arrays.asList(names));
         query.whereContainedIn("Receiver", Arrays.asList(names));
         query.orderByAscending("createdAt");

@@ -41,7 +41,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         final ViewHolder holder = (ViewHolder)convertView.getTag();
         final boolean isMe = message.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
-        // Display the profile image to the right for our user, left for other users.
+        // Display the profiles image to the right for our user, left for other users.
         if (isMe) {
             holder.imageRight.setVisibility(View.VISIBLE);
             holder.imageLeft.setVisibility(View.GONE);
