@@ -20,18 +20,13 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
     Context context;
     ArrayList<String> listItems;
-   // Activity activity;
 
 
-    //PopupListAdapter(Context context, ArrayList<String> listItems, Activity activity) {
     PopupListAdapter(Context context, ArrayList<String> listItems) {
         super(context, R.layout.popup_list, listItems);
         this.context = context;
         this.listItems = listItems;
-       // this.activity = activity;
-
     }
-
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -44,12 +39,12 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
         listText.setText(classes);
 
-        onCheckBoxClicked(customView);
+       // onCheckBoxClicked(customView);
 
         return customView;
     }
 
-      public void onCheckBoxClicked(View view){
+     /* public void onCheckBoxClicked(View view){
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
         boolean checked = checkBox.isChecked();
 
@@ -61,6 +56,6 @@ public class PopupListAdapter extends ArrayAdapter<String> {
                 }
 
         }
-    }
+    }*/
 
 }
