@@ -44,12 +44,12 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
         listText.setText(classes);
 
-        onCheckboxClicked(customView);
+        onCheckBoxClicked(customView);
 
         return customView;
     }
 
-      public void onCheckboxClicked(View view){
+      public void onCheckBoxClicked(View view){
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
         boolean checked = checkBox.isChecked();
 

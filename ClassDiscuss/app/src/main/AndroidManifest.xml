@@ -37,8 +37,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <permission android:protectionLevel="signature"
-        android:name="com.example.cmput401.classdiscuss.C2D_MESSAGE" />
-    <uses-permission android:name="com.example.cmput401.classdiscuss.C2D_MESSAGE" />
+        android:name="com.example.cmput401.classdiscuss.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.example.cmput401.classdiscuss.permission.C2D_MESSAGE" />
     <!--end of parse -->
 
     <application
@@ -132,24 +132,37 @@
             android:value="AIzaSyBtGkcgmQYbdOl12fcVVSk74q4Up7wwvzA"/>
         <!--android:value="@string/google_maps_key" -->
 
-   <!-- information needed for Parse.com -->
+   <!-- information needed for Parse.com-->
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+        <!--<receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
+        </receiver>-->
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.RECEIVE_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
         </receiver>
+       <!-- <receiver android:name="com.example.cmput401.classdiscuss.ChatActivity$Receiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.example.cmput401.classdiscuss.UPDATE_STATUS" />
+            </intent-filter>
+        </receiver> -->
         <receiver android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-
                 <category android:name="com.example.cmput401.classdiscuss" />
             </intent-filter>
         </receiver>
+<!--
         <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -157,7 +170,8 @@
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <!-- End of Parse-->
+
+         End of Parse-->
 
         <!-- replace @drawable/push_icon with your push icon identifier -->
        <!-- <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_green"/>

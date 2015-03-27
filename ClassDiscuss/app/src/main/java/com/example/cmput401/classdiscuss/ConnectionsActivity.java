@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     }
 
     //http://developer.android.com/guide/topics/ui/controls/checkbox.html
-   /* public void onCheckboxClicked(View view){
+   public void onCheckBoxClicked(View view){
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
         boolean checked = checkBox.isChecked();
 
@@ -151,7 +152,7 @@ public class ConnectionsActivity extends ActionBarActivity {
                 }
 
         }
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

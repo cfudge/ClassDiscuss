@@ -30,6 +30,8 @@ import com.google.android.gms.plus.model.people.Person;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -74,8 +76,13 @@ public class MainActivity extends Activity implements OnClickListener,
         //parse initialization
         String App_ID = "OuWwbxVpRVfWh0v3jHEvYeKuuNijBd6M1fVBlkWA";
         String Client_ID= "pYhzGaediLuDVUgQmkuMDkA1DUdKIBtzSziLBdnQ";
-
+//        Parse.enableLocalDatastore(this);
         Parse.initialize(this, App_ID, Client_ID);
+
+
+        // Register your parse models here
+        ParseObject.registerSubclass(Message.class);
+
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
@@ -194,7 +201,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Updating the UI, showing/hiding buttons and profile layout
+     * Updating the UI, showing/hiding buttons and profiles layout
      * */
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
@@ -211,7 +218,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Fetching user's information name, email, profile pic
+     * Fetching user's information name, email, profiles pic
      * */
     private void getProfileInformation() {
         try {
@@ -230,7 +237,7 @@ public class MainActivity extends Activity implements OnClickListener,
                 txtName.setText(personName);
                 txtEmail.setText(email);
 
-                // by default the profile url gives 50x50 px image only
+                // by default the profiles url gives 50x50 px image only
                 // we can replace the value with whatever dimension we want by
                 // replacing sz=X
                 personPhotoUrl = personPhotoUrl.substring(0,
@@ -327,7 +334,7 @@ public class MainActivity extends Activity implements OnClickListener,
     }
 
     /**
-     * Background Async task to load user profile picture from url
+     * Background Async task to load user profiles picture from url
      * */
     private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
