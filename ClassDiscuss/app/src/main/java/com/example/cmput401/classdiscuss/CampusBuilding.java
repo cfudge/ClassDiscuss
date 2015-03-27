@@ -14,7 +14,7 @@ public class CampusBuilding {
 
     public CampusBuilding(LatLng southwest, LatLng northeast, Marker mark)
     {
-        numPeople = 0;
+        setNumPeople(0);
         marker = mark;
         bounds = new LatLngBounds(southwest,northeast);
     }
@@ -33,5 +33,14 @@ public class CampusBuilding {
 
     public void setNumPeople(int numPeople) {
         this.numPeople = numPeople;
+        /*
+        if (getNumPeople() == 0)
+        {
+            marker.setVisible(false);
+        }
+        else
+        {
+            marker.setVisible(true);
+        }*/
     }
 }
