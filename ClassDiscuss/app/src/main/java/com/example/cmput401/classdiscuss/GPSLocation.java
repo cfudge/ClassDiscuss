@@ -7,6 +7,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.parse.ParseUser;
+
 /**
  * Created by Kelsey on 22/03/2015.
  * Get the location from the user's phone
@@ -19,8 +21,12 @@ public class GPSLocation {
     private LocationManager locationManager;
     private static GPSLocation instance;
     private String provider;
+    private ParseUser currentUser = ParseUser.getCurrentUser();
+    private Profile currentUserProfile;
 
     private GPSLocation(Context context){
+        currentUserProfile = new Profile();
+        currentUserProfile.setParseEntry(currentUser);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         provider = locationManager.getBestProvider(criteria, true);
@@ -40,6 +46,7 @@ public class GPSLocation {
 
             @Override
             public void onLocationChanged(Location location) {
+                currentUserProfile.setLocation(location.getLatitude(), location.getLongitude());
             }
         });
         }
@@ -66,6 +73,7 @@ public class GPSLocation {
             location.setLatitude(0.0);
             location.setLongitude(0.0);
         }
+        currentUserProfile.setLocation(location.getLatitude(), location.getLongitude());
         return location;
     }
 

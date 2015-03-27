@@ -6,6 +6,7 @@
     tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
 
     <TextView android:text="@string/my_channels"
+        android:id="@+id/channelScreenTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"

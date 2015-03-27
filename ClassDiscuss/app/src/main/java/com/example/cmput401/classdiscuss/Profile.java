@@ -84,6 +84,12 @@ public class Profile{
         parseEntry.saveInBackground();
     }
 
+    public void setLocation(double lat, double lon){
+        parseEntry.put("Latitude", lat);
+        parseEntry.put("Longitude", lon);
+        parseEntry.saveInBackground();
+    }
+
     public ArrayList<String> getChannels() {
         List<ParseObject> ob = null;
         ArrayList<String> channelsList = new ArrayList<String>();

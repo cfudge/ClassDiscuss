@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+
 
 import com.parse.ParsePush;
 
@@ -34,7 +36,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         Log.d("score", "update view in MyChannelsActivity");
         //update list
         channelAdapter.notifyDataSetChanged();
-
 
         //set add button listener
         Button addButton = (Button) findViewById(R.id.add_new_channel);
