@@ -31,7 +31,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
 
-   Users users =  Users.getInstance();
+    Users users =  Users.getInstance();
     PopupWindow popup;
     PopupListAdapter popupAdapter;
     ListView popupList;
@@ -132,10 +132,20 @@ public class ConnectionsActivity extends ActionBarActivity {
                     }
                 });
 
-                EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
+                final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
 
+                //Send button
+                Button sendButton = (Button) view.findViewById(R.id.sendButton);
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       // myConnections.displayMessage.add(enterMessage.getText().toString());
 
-            }
+                        Toast.makeText(ConnectionsActivity.this, enterMessage.getText().toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+           }
         });
     }
 

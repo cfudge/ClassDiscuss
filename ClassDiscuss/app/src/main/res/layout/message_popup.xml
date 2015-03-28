@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <ImageButton
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
@@ -11,8 +15,9 @@
         android:layout_gravity="right"
         android:background="@drawable/ic_delete"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/sendButton"
-        android:layout_toStartOf="@+id/sendButton" />
+        android:layout_alignParentRight="true"
+
+       />
 
     <TextView
         android:id="@+id/list_people"
@@ -23,7 +28,9 @@
         android:paddingTop="10dp"
         android:text="Users"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+       <!-- android:layout_weight="7"-->
 
 
     <ListView
@@ -35,6 +42,7 @@
         android:scrollbarSize="6dp"
         android:scrollbars="vertical"
         android:textColor="#333333"
+        android:layout_weight="3"
         />
 
     <RelativeLayout
@@ -49,12 +57,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="SEND"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_weight="10"/>
 
     <EditText
         android:id="@+id/enterMessage"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:inputType="textMultiLine"
         android:text="Enter Message"
         />
     </RelativeLayout>
