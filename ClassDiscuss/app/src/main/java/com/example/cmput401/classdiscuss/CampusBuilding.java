@@ -42,6 +42,8 @@ public class CampusBuilding {
         else
         {
             marker.setVisible(true);
+            marker.setTitle(String.valueOf(numPeople));
+            marker.showInfoWindow();
         }
     }
 }
