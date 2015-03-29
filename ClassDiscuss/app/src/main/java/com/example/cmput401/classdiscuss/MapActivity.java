@@ -1,26 +1,21 @@
 package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
-import android.location.Location;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.google.android.gms.maps.model.Marker;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -73,6 +68,11 @@ public class MapActivity extends FragmentActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        if(ParseUser.getCurrentUser() == null){
+            MainActivity out = new MainActivity();
+            out.signOutFromGplus();
+            getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
         setUpMapIfNeeded();
     }
 

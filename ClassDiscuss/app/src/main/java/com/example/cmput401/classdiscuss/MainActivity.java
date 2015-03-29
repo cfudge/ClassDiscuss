@@ -303,7 +303,7 @@ public class MainActivity extends Activity implements OnClickListener,
     /**
      * Sign-out from google
      * */
-    private void signOutFromGplus() {
+    public void signOutFromGplus() {
         if (mGoogleApiClient.isConnected()) {
             if(ParseUser.getCurrentUser() != null){
                 ParseUser.logOut();
