@@ -24,7 +24,6 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
-    MyChannels myChannels = MyChannels.getInstance();
 
     MyChannelsAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
@@ -53,30 +52,29 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         statusButton.setText("0");
 
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View v) {
-
-                    alert(position);
-                    //test.setText(String.valueOf(position));
-                }
-            });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                alert(position);
+                //test.setText(String.valueOf(position));
+            }
+        });
 
         statusButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                String item = listItems.get(position);
                 if (statusButton.getTag().equals("Active")){
                     confirm(position, statusButton, inactivePic);
-                    //test.setText(String.valueOf(position));
+                    MyChannels.getInstance().unSubscribeToChannels(item);
                 }
                 else {
                     statusButton.setText("0");
                     statusButton.setTag("Active");
                     statusButton.setBackgroundDrawable(activePic);
+                    MyChannels.getInstance().subscribeToChannels(item);
                 }
             }
         });
-
 
         listText.setText(classes);
         return customView;
@@ -96,8 +94,8 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
                 //remove from view
                 listItems.remove(position);
 
-                //update parse.com
-                myChannels.deleteChannel();
+                //update locally and to parse
+                MyChannels.getInstance().deleteChannel(item);
 
                 notifyDataSetChanged();
             }

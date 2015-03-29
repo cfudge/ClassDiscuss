@@ -10,7 +10,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,12 +34,12 @@ public class ParseDatabase extends Activity {
     }
 
     public void Initiate() {
-        createNewChannelsToParse();
-        setDataLocally();
+        initiateChannels();
+        setProfileDataLocally();
     }
 
-    private void createNewChannelsToParse() {
-
+    private void initiateChannels() {
+            //create new channels to parse only if the user is new
             //get the object id now and save it for future use
             ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
             query.whereEqualTo("userID", Profiles.getInstance().loginEmail);
@@ -51,7 +50,7 @@ public class ParseDatabase extends Activity {
                     if (object == null) {
                         //make a new object for the user in the database
                         ParseObject Channels = new ParseObject(ChannelsClass);
-                        Channels.put("channels", Arrays.asList());
+                        Channels.put("channels", "");
                         Channels.put("userID", Profiles.getInstance().loginEmail);
                         //get the object id now and save it for future uses
                         setMyChannelObjectId(Channels.getObjectId());
@@ -63,14 +62,10 @@ public class ParseDatabase extends Activity {
                         setMyChannelObjectId(object.getObjectId());
 
                         //set the subscribed channels list locally
-                        List channelList = object.getList("channels");
+                        String channelList = object.getString("channels");
                         MyChannels subscriptionList = MyChannels.getInstance();
-                        for (int x = 0; x < channelList.size(); x++) {
-                            if (!subscriptionList.ifContains(channelList.get(x).toString())) {
-                                subscriptionList.addChannel(channelList.get(x).toString());
-                            }
+                        subscriptionList.initiateLocalChannelsList(channelList);
 
-                        }
                         Log.d("score", "subscription list updated");
                     }
                 }
@@ -106,7 +101,7 @@ public class ParseDatabase extends Activity {
         this.myChannelObjectId = ID;
     }
 
-    public void addChannelsToParse(final String item) {
+    /*public void UpdateChannelsToParse(final String item) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
 
         // Retrieve the object by id
@@ -114,23 +109,22 @@ public class ParseDatabase extends Activity {
             public void done(ParseObject ParseChannels, ParseException e) {
                 if (e == null) {
 
-                    ParseChannels.addUnique("channels", item);
+                    ParseChannels.add("channels", item);
                     ParseChannels.saveInBackground();
                 }
             }
         });
-    }
+    }*/
 
-    public void deleteChannelFromParse() {
+    public void UpdateChannelsToParse(final String HashMapStrings) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
         // Retrieve the object by id
         query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject ParseChannels, ParseException e) {
                 if (e == null) {
                     MyChannels list = MyChannels.getInstance();
-                    //instead of deleting item of an array, we are just gonna update the
-                    //array
-                    ParseChannels.put("channels", list.getSubscribedList());
+                    //we are just gonna update the string
+                    ParseChannels.put("channels", HashMapStrings);
                     ParseChannels.saveInBackground();
                 }
             }
@@ -138,7 +132,7 @@ public class ParseDatabase extends Activity {
     }
 
     //call this every time you update an image, so it updates the information
-    public void setDataLocally() {
+    public void setProfileDataLocally() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.findInBackground(new FindCallback<ParseUser>() {
             public void done(List<ParseUser> objects, ParseException e) {
@@ -178,11 +172,13 @@ public class ParseDatabase extends Activity {
                     UsersClass.put("Image", image);
                     UsersClass.saveInBackground();
 
-                    setDataLocally();
+                    setProfileDataLocally();
 
                 }
             }
         });
     }
+
+
 
 }

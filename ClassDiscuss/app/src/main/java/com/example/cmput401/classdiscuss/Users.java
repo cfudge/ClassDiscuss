@@ -46,7 +46,7 @@ public class Users{
     }
 
     public void updateUsersList(){
-        parseUsers.setDataLocally();
+        parseUsers.setProfileDataLocally();
     }
 
     public void clearUsersList(){

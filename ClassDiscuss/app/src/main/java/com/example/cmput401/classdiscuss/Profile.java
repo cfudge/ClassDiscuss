@@ -2,7 +2,6 @@ package com.example.cmput401.classdiscuss;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -91,10 +90,11 @@ public class Profile{
     }
 
     public ArrayList<String> getChannels() {
+        //channels is in hashmap now, this needs to be updated
         List<ParseObject> ob = null;
         ArrayList<String> channelsList = new ArrayList<String>();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Channels");
-        query.whereEqualTo("userID", getEmail());
+        /*query.whereEqualTo("userID", getEmail());
         try {
             ob = query.find();
         } catch (ParseException e) {
@@ -103,7 +103,7 @@ public class Profile{
         }
         for (ParseObject channels : ob) {
             channelsList = (ArrayList<String>) channels.get("channels");
-        }
+        }*/
         return channelsList;
     }
 
