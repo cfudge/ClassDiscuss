@@ -81,6 +81,9 @@ public class Profile{
 
         parseEntry.put("ProfilePic", file);
         parseEntry.saveInBackground();
+
+        //update users List
+        Users.getInstance().updateUsersInfo();
     }
 
     public void setLocation(double lat, double lon){

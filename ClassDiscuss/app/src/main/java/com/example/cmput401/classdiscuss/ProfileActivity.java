@@ -1,6 +1,9 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +41,12 @@ public class ProfileActivity extends sideBarMenuActivity{
         TextView textChannelTitle = (TextView) findViewById(R.id.textChannelTitle);
         ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
 
+        if(displayProfile.getPic() == null){
+            Context context= this;
+            Bitmap icon= BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.ic_noimage);
+            displayProfile.setPic(icon);
+        }
         profilePicView.setImageBitmap(displayProfile.getPic());
 
         textUserName.setText(displayProfile.getUserName());
