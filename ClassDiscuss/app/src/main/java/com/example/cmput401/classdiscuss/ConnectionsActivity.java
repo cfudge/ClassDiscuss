@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -139,7 +140,8 @@ public class ConnectionsActivity extends ActionBarActivity {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // myConnections.displayMessage.add(enterMessage.getText().toString());
+                        myConnections.displayMessage.add(enterMessage.getText().toString());
+
 
                         Toast.makeText(ConnectionsActivity.this, enterMessage.getText().toString(),
                                 Toast.LENGTH_SHORT).show();
@@ -147,21 +149,6 @@ public class ConnectionsActivity extends ActionBarActivity {
                 });
            }
         });
-    }
-
-    //http://developer.android.com/guide/topics/ui/controls/checkbox.html
-   public void onCheckBoxClicked(View view){
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-        boolean checked = checkBox.isChecked();
-
-        switch (view.getId()){
-            case R.id.checkBox:
-                if(checked){
-                    Toast.makeText(this, "Checked",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-        }
     }
 
     @Override
