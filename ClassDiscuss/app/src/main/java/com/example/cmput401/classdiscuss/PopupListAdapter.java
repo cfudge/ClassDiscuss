@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +21,14 @@ public class PopupListAdapter extends ArrayAdapter<String> {
 
     Context context;
     ArrayList<String> listItems;
+    Connections myConnections;
 
 
     PopupListAdapter(Context context, ArrayList<String> listItems) {
         super(context, R.layout.popup_list, listItems);
         this.context = context;
         this.listItems = listItems;
+        myConnections = Connections.getInstance();
     }
 
     @Override
@@ -34,10 +37,22 @@ public class PopupListAdapter extends ArrayAdapter<String> {
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
         String classes = getItem(position);
-        TextView listText = (TextView) customView.findViewById(R.id.popupText);
-
+        final TextView listText = (TextView) customView.findViewById(R.id.popupText);
+        final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
         listText.setText(classes);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
+                  //  myConnections.myConnections.add(listText.getText().toString());
+                }
+            }
+        });
+
+
 
        // onCheckBoxClicked(customView);
 
