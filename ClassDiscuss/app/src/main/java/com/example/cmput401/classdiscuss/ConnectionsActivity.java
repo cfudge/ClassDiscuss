@@ -32,11 +32,6 @@ public class ConnectionsActivity extends ActionBarActivity {
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
 
-    Users users =  Users.getInstance();
-    PopupWindow popup;
-    PopupListAdapter popupAdapter;
-    ListView popupList;
-
 
     ArrayList<Integer> messageTimes = new ArrayList<Integer>();
 
@@ -57,15 +52,18 @@ public class ConnectionsActivity extends ActionBarActivity {
 
         listView = (ListView) findViewById(R.id.channel_list_view);
         listView.setAdapter(connectionsAdapter);
-
-        popupMenu();
-
     }
 
     @Override
     protected void onStart(){
         super.onStart();
         addConnections();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        connectionsAdapter.notifyDataSetChanged();
     }
 
     public void addConnections(){
@@ -103,53 +101,6 @@ public class ConnectionsActivity extends ActionBarActivity {
         noMessage.setText(messageTimes.toString());
     }
 
-    //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
-    //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
-    public void popupMenu(){
-        //Button to test popup menu
-
-        popupAdapter = new PopupListAdapter(this, users.getUsersList());
-
-        final Button popupButton = (Button) findViewById(R.id.popup_button);
-        popupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.message_popup, null);
-                popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-
-                popupList = (ListView) view.findViewById(R.id.popup_list_view);
-                popupList.setAdapter(popupAdapter);
-
-                popup.showAtLocation(view, Gravity.CENTER, 0,0);
-
-                ImageButton closeButton = (ImageButton) view.findViewById(R.id.close_button);
-                closeButton.setOnClickListener(new ImageButton.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popup.dismiss();
-                    }
-                });
-
-                final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
-
-                //Send button
-                Button sendButton = (Button) view.findViewById(R.id.sendButton);
-                sendButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myConnections.displayMessage.add(enterMessage.getText().toString());
-
-
-                        Toast.makeText(ConnectionsActivity.this, enterMessage.getText().toString(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-           }
-        });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

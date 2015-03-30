@@ -47,30 +47,13 @@ public class PopupListAdapter extends ArrayAdapter<String> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
-                  //  myConnections.myConnections.add(listText.getText().toString());
+                   myConnections.myConnections.add(listText.getText().toString());
+
+
                 }
             }
         });
-
-
-
-       // onCheckBoxClicked(customView);
-
-        return customView;
+      return customView;
     }
-
-     /* public void onCheckBoxClicked(View view){
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-        boolean checked = checkBox.isChecked();
-
-        switch (view.getId()){
-            case R.id.checkBox:
-                if(checked){
-                    Toast.makeText(getContext(), "Checked",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-        }
-    }*/
 
 }
