@@ -47,9 +47,10 @@ public class PopupListAdapter extends ArrayAdapter<String> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
+
+                   if(myConnections.myConnections.contains(listText.getText()));
+                   else
                    myConnections.myConnections.add(listText.getText().toString());
-
-
                 }
             }
         });
