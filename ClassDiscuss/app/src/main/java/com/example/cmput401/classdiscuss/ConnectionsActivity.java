@@ -95,6 +95,8 @@ public class ConnectionsActivity extends ActionBarActivity {
         }
 
         sortList();
+        TextView noMessage = (TextView) findViewById(R.id.no_messages);
+        noMessage.setText(myConnections.myConnections.size() + " Connections");
 
     }
 
@@ -106,8 +108,6 @@ public class ConnectionsActivity extends ActionBarActivity {
                 return lhs.compareTo(rhs);
             }
         });
-        TextView noMessage = (TextView) findViewById(R.id.no_messages);
-        noMessage.setText(messageTimes.toString());
     }
 
 

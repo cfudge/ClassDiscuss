@@ -1,6 +1,8 @@
 package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -70,6 +72,11 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
         myConnections = myConnections.getInstance();
         popupMenu();
+
+        //http://stackoverflow.com/questions/28081709/null-pointer-exception-at-actionbar
+        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#6CCECB"));
+        actionBar.setBackgroundDrawable(colorDraw);
     }
 
     @Override
@@ -112,6 +119,12 @@ public class MyChannelsActivity extends sideBarMenuActivity {
                 });
 
                 final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
+               enterMessage.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       enterMessage.setText("");
+                   }
+               });
 
                 //Send button
                 Button sendButton = (Button) view.findViewById(R.id.sendButton);

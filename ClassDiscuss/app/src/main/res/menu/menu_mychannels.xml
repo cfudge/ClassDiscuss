@@ -6,7 +6,10 @@
         android:icon="@drawable/ic_myconnections"
         android:orderInCategory="100" app:showAsAction="ifRoom" />
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:icon="@drawable/perm_group_personal_info"
+        android:orderInCategory="100" app:showAsAction="ifRoom"/>
+    <!--<item android:id="@+id/action_profile" android:title="@string/menu_profile"
+        android:orderInCategory="100" app:showAsAction="never" />-->
     <item android:id="@+id/action_users" android:title="@string/menu_users"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_chat" android:title="@string/menu_chat"

@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context="com.example.cmput401.classdiscuss.ConnectionList">
 
+    <ImageView
+        android:id="@+id/imageUserProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_noimage"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="10dp"
+        android:layout_column="35" />
+
+
     <TextView
         android:id="@+id/listText"
-        android:text="Messages"
+        android:text="Name"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333333"
         android:textSize="20sp"
         android:paddingBottom="8sp"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageUserProfile"
+        android:layout_toEndOf="@+id/imageUserProfile" />
+
 
     <TextView
         android:id="@+id/secondText"
@@ -23,9 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:paddingBottom="5sp"/>
+        android:layout_alignBottom="@+id/imageUserProfile"
+        android:layout_toRightOf="@+id/imageUserProfile"
+        android:layout_toEndOf="@+id/imageUserProfile"
+        android:text="Message"/>
 
 
-
-
-</LinearLayout>
+</RelativeLayout>
