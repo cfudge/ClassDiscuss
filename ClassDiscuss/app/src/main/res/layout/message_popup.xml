@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:weightSum="1">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/niceGreen">
 
     <ImageButton
         android:id="@+id/close_button"
@@ -28,22 +30,22 @@
         android:paddingTop="10dp"
         android:text="Users"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+       />
     </RelativeLayout>
-       <!-- android:layout_weight="7"-->
+
 
 
     <ListView
         android:id="@+id/popup_list_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="287dp"
         android:divider="#33CCFF"
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
         android:scrollbars="vertical"
         android:textColor="#333333"
-        android:layout_weight="3"
-        />
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -57,14 +59,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="SEND"
-        android:layout_gravity="right"
-        android:layout_weight="10"/>
+        android:layout_gravity="right"/>
 
     <EditText
         android:id="@+id/enterMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
         android:inputType="textMultiLine"
         android:text="Enter Message"
         />
