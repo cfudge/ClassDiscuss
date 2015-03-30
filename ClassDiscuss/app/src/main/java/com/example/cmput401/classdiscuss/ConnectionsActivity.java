@@ -1,5 +1,8 @@
 package com.example.cmput401.classdiscuss;
 
+import android.app.ActionBar;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
@@ -52,6 +55,12 @@ public class ConnectionsActivity extends ActionBarActivity {
 
         listView = (ListView) findViewById(R.id.channel_list_view);
         listView.setAdapter(connectionsAdapter);
+
+
+        //http://stackoverflow.com/questions/28081709/null-pointer-exception-at-actionbar
+        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#6CCECB"));
+        actionBar.setBackgroundDrawable(colorDraw);
     }
 
     @Override

@@ -20,7 +20,6 @@
         android:id="@+id/channel_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#33CCFF"
         android:dividerHeight="2dp"
         android:scrollbarSize="6dp"
         android:scrollbars="vertical"

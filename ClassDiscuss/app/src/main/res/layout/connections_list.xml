@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:textColor="#333333"
     tools:context="com.example.cmput401.classdiscuss.ConnectionList">
 
     <TextView
@@ -14,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#333333"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:paddingBottom="8sp"
         />
 
