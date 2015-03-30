@@ -1,6 +1,7 @@
 package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Bitmap;
@@ -31,7 +32,6 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -41,6 +41,7 @@ import java.io.InputStream;
  */
 public class MainActivity extends Activity implements OnClickListener,
         ConnectionCallbacks, OnConnectionFailedListener {
+    private static Context context;
 
     private static final int RC_SIGN_IN = 0;
     // Logcat tag
@@ -171,8 +172,8 @@ public class MainActivity extends Activity implements OnClickListener,
     @Override
     public void onConnected(Bundle arg0) {
         mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
         if (mGoogleApiClient.isConnected()) {
+            Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
             //  if (loggedIn) {
             String currentEmail = Plus.AccountApi.getAccountName(mGoogleApiClient);
             if (currentEmail.contains("@ualberta.ca")) {
@@ -302,7 +303,7 @@ public class MainActivity extends Activity implements OnClickListener,
     /**
      * Sign-out from google
      * */
-    private void signOutFromGplus() {
+    public void signOutFromGplus() {
         if (mGoogleApiClient.isConnected()) {
             if(ParseUser.getCurrentUser() != null){
                 ParseUser.logOut();
@@ -374,6 +375,9 @@ public class MainActivity extends Activity implements OnClickListener,
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
+                    //add default profile pic if user has no profile pic
+                    Bitmap picBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage);
+                    ParseDatabase.getInstance().setDefaultProfilePic(picBitmap);
                     ParseDatabase.getInstance().Initiate();
                     startApp();
                 } else {

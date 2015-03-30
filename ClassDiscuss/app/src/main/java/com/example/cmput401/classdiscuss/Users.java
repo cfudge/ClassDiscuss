@@ -1,8 +1,11 @@
 package com.example.cmput401.classdiscuss;
 
+import android.graphics.Bitmap;
+
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -15,22 +18,26 @@ public class Users{
     private static final Users usersInstance = new Users();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
-    ArrayList<String> users;
+    private HashMap<String, Bitmap> usersInfo;
+    ArrayList<Bitmap> profileImages;
 
     private Users() {
-        users = new ArrayList<String>();
+        usersInfo = new HashMap<String, Bitmap>();
     }
 
-    public ArrayList<String> getUsers(){
+    public ArrayList<String> getUsersList(){
+        ArrayList<String> users = new ArrayList<String>(usersInfo.keySet());
         return users;
     }
+    public ArrayList<Bitmap> getUsersImageList(){
+        ArrayList<Bitmap> usersImage = new ArrayList<>(usersInfo.values());
+        return usersImage;
+    }
 
-    public void addNewUser(String name){
+    public void addNewUser(String name, Bitmap profilePic){
         boolean foundUser= false;
-        for(int x =0; x < users.size(); x++){
-            if(users.get(x).equals(name)){
-                foundUser = true;
-            }
+        if (usersInfo.get(name) !=null){
+            foundUser= true;
         }
         if(ParseUser.getCurrentUser() != null){
             if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
@@ -38,19 +45,18 @@ public class Users{
                 foundUser = true;
             }
         }
-
         //add new users
         if (!foundUser){
-            users.add(name);
+            usersInfo.put(name, profilePic );
         }
     }
 
-    public void updateUsersList(){
-        parseUsers.setDataLocally();
+    public void updateUsersInfo(){
+        parseUsers.setUsersDataLocally();
     }
 
     public void clearUsersList(){
-        users.clear();
+        usersInfo.clear();
     }
 
 

@@ -56,7 +56,7 @@ public class OldProfile {
     }
 
     public void setProfilePicURI(Uri profilePicURI) {
-        ParseDatabase.getInstance().setUsersImageToParse(this.name, profilePicURI.toString());
+        //ParseDatabase.getInstance().setUsersImageToParse(this.name, profilePicURI.toString());
 
         //need to save it in profiles as it is faster than waiting for parse to update
         this.profilePicURI = profilePicURI;

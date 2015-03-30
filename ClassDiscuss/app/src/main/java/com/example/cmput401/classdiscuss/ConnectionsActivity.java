@@ -108,7 +108,7 @@ public class ConnectionsActivity extends ActionBarActivity {
     public void popupMenu(){
         //Button to test popup menu
 
-        popupAdapter = new PopupListAdapter(this, users.getUsers());
+        popupAdapter = new PopupListAdapter(this, users.getUsersList());
 
         final Button popupButton = (Button) findViewById(R.id.popup_button);
         popupButton.setOnClickListener(new View.OnClickListener() {

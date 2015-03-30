@@ -22,7 +22,7 @@
                 android:id="@+id/imageUserProfile"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/ic_noimage"
                 android:layout_column="35" />
         </TableRow>
 

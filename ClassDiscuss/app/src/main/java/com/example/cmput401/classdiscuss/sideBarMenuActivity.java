@@ -46,14 +46,10 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 else{
                     profiles.displayProfile = null;
                 }
-                Intent myProfile = new Intent();
-                myProfile.setClass(getApplicationContext(), ProfileActivity.class);
-                startActivity(myProfile);
+                getApplicationContext().startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
             case R.id.action_myChannels:
-                Intent myChannels = new Intent();
-                myChannels.setClass(getApplicationContext(), MyChannelsActivity.class);
-                startActivity(myChannels);
+                getApplicationContext().startActivity(new Intent(getApplicationContext(), MyChannelsActivity.class));
                 break;
             case R.id.action_myConnections:
                 Intent activity = new Intent();
@@ -86,11 +82,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
             // Clearly doesn't work right now.  the login activity has saved your
             // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:
-                LoginActivity out = new LoginActivity();
-                out.onPlusClientSignOut();
-                Intent logout = new Intent();
-                logout.setClass(getApplicationContext(), LoginActivity.class);
-                startActivity(logout);
+                MainActivity out = new MainActivity();
+                out.signOutFromGplus();
+                Intent login = new Intent();
+                login.setClass(getApplicationContext(), MainActivity.class);
+                startActivity(login);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

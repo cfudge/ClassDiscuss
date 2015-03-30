@@ -7,10 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-
-import com.parse.ParsePush;
+import com.parse.ParseUser;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -64,6 +62,11 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         channelAdapter.notifyDataSetChanged();
+        if(ParseUser.getCurrentUser() == null){
+            MainActivity out = new MainActivity();
+            out.signOutFromGplus();
+            getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
     }
 
     public void initializeChannels(){
