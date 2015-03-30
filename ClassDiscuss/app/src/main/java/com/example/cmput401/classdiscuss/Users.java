@@ -7,8 +7,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -21,27 +21,28 @@ public class Users{
     private static final Users usersInstance = new Users();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
-    private HashMap<String, List<String>> usersInfo;
+    private HashMap<String, List<String>> usersInfoMap;
     ArrayList<String> usersValues;
-    ArrayList<Bitmap> profileImages;
+    HashMap<String, Bitmap> profileImagesMap;
     util Util = new util();
 
     private Users() {
-        usersInfo = new HashMap<String, List<String>>();
+        usersInfoMap = new HashMap<String, List<String>>();
         usersValues = new ArrayList<>();
+        profileImagesMap = new HashMap<>();
     }
 
     public ArrayList<String> getUsersList(){
-        ArrayList<String> users = new ArrayList<String>(usersInfo.keySet());
+        ArrayList<String> users = new ArrayList<String>(profileImagesMap.keySet());
         return users;
     }
 
     public int getUsersLatitudeByUserName(String username){
         int latitudeNum= 0;
         String latitude = "0";
-        if(usersInfo.get(username)!=null){
-            if(usersInfo.get(username).get(2) !=null) {
-                latitude = usersInfo.get(username).get(2).toString();
+        if(usersInfoMap.get(username)!=null){
+            if(usersInfoMap.get(username).get(1) !=null) {
+                latitude = usersInfoMap.get(username).get(1).toString();
             }
         }
 
@@ -56,9 +57,9 @@ public class Users{
     public int getUsersLongitudeByUserName(String username){
         int LongitudeNum= 0;
         String Longitude = "0";
-        if(usersInfo.get(username)!=null){
-            if(usersInfo.get(username).get(1) !=null) {
-                Longitude = usersInfo.get(username).get(1).toString();
+        if(usersInfoMap.get(username)!=null){
+            if(usersInfoMap.get(username).get(0) !=null) {
+                Longitude = usersInfoMap.get(username).get(0).toString();
                 Log.e("score", "Longitude = " + Longitude + "n");
             }
         }
@@ -75,9 +76,9 @@ public class Users{
         HashMap<String, String> subscribedChannelList = new HashMap<String, String>();
 
         String channels = "";
-        if(usersInfo.get(username)!=null){
-            if(usersInfo.get(username).get(3) !=null) {
-                channels = usersInfo.get(username).get(3).toString();
+        if(usersInfoMap.get(username)!=null){
+            if(usersInfoMap.get(username).get(2) !=null) {
+                channels = usersInfoMap.get(username).get(2).toString();
             }
         }
 
@@ -89,36 +90,36 @@ public class Users{
         return subscribedChannelList;
     }
 
-    public ArrayList getUsersChannelsList(String username){
+    public ArrayList getUsersActiveList(String username){
         HashMap<String, String> usersChannelMap = getUsersChannelsHashMap(username);
-        ArrayList<String> usersChannel = new ArrayList<String>(usersChannelMap.keySet());
-        return usersChannel;
+        ArrayList<String> usersActiveChannel = new ArrayList<String>();
+
+        Iterator<String> keySetIterator = usersChannelMap.keySet().iterator();
+
+        while(keySetIterator.hasNext()){
+            String key = keySetIterator.next();
+            if(usersChannelMap.get(key).contains("active")){
+                usersActiveChannel.add(usersChannelMap.get(key));
+            };
+        }
+
+        return usersActiveChannel;
     }
 
     public ArrayList<Bitmap> getUsersImageList(){
-        ArrayList<Bitmap> usersImage = new ArrayList<>();
-        // iterate and display values
-        for (Map.Entry<String, List<String>> entry : usersInfo.entrySet()) {
-            List<String> values = entry.getValue();
-            Bitmap image = Util.StringToBitMap(values.get(0));
-            usersImage.add(image);
-        }
-        Log.e("score", "getUsersLongitudeByUserName = " + getUsersLongitudeByUserName("kwicento") + "n");
-        Log.e("score", "getUsersLatitudeByUserName = " + getUsersLatitudeByUserName("kwicento") + "n");
+        ArrayList<Bitmap> usersImage = new ArrayList<>(profileImagesMap.values());
         return usersImage;
+
     }
 
     public Bitmap getUsersImageByUserName(String username){
-        String image = usersInfo.get(username).get(0);
-        Bitmap ProfilePic = Util.StringToBitMap(image);
-        return ProfilePic;
+        return profileImagesMap.get(username);
     }
 
-    public void addOrUpdateUser(String name, String BitmapPic, String longitude, String latitude, String Channels ){
+    public void UpdateUserLocationInfo(String name, String longitude, String latitude, String Channels ){
         boolean foundUser= false;
         // create list one and store values
         List<String> usersDetailValues = new ArrayList<String>();
-        usersDetailValues.add(BitmapPic);
         usersDetailValues.add(longitude);
         usersDetailValues.add(latitude);
         usersDetailValues.add(Channels);
@@ -131,7 +132,22 @@ public class Users{
         //add/update new users
         if (!foundUser){
             Log.e("score", "Longitude string = " + longitude + "n");
-            usersInfo.put(name, usersDetailValues );
+            usersInfoMap.put(name, usersDetailValues );
+        }
+    }
+
+    public void UpdateUserImageInfo(String name, Bitmap pic){
+        boolean foundUser= false;
+
+        if(ParseUser.getCurrentUser() != null){
+            if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
+                //don't add current user to list
+                foundUser = true;
+            }
+        }
+        //add/update new users
+        if (!foundUser && pic !=null){
+            profileImagesMap.put(name, pic );
         }
     }
 
@@ -139,8 +155,8 @@ public class Users{
         parseUsers.setUsersDataLocally();
     }
 
-    public void clearUsersList(){
-        usersInfo.clear();
+    public void clearUsersInfoMap(){
+        usersInfoMap.clear();
     }
 
 

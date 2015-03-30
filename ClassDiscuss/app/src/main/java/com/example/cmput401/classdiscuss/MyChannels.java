@@ -40,14 +40,14 @@ public class MyChannels {
     }
 
     private void updateChannelsToParse(){
-        String HashMapStrings = MapUtil.mapToString(subscribedChannelList);
+        String HashMapStrings = util.mapToString(subscribedChannelList);
         ParseDatabase.getInstance().UpdateChannelsToParse(HashMapStrings);
     }
 
     public void initiateLocalChannelsList(String items){
         //the string has to be hashmap compatible
         this.subscribedChannelList.clear();
-        this.subscribedChannelList = MapUtil.stringToMap(items);
+        this.subscribedChannelList = util.stringToMap(items);
     }
 
     public void unSubscribeToChannels(String Channel){

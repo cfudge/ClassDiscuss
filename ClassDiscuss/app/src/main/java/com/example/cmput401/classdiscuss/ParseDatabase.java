@@ -147,17 +147,12 @@ public class ParseDatabase extends Activity {
                     if (e == null) {
                         // The query was successful.
                         Users usersList = Users.getInstance();
-                        usersList.clearUsersList();
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
                             //image
                             ParseFile picFile = objects.get(x).getParseFile("ProfilePic");
                             Bitmap picBitmap = Util.convertFileToBitmap(picFile);
-                            String pic ="";
-                            if (picBitmap != null){
-                                pic = Util.BitMapToString(picBitmap);
-                            }
 
                             //location
                             String latitude="";
@@ -177,8 +172,11 @@ public class ParseDatabase extends Activity {
                                 channels = objects.get(x).get("channels").toString();
                             }
 
+                            String username = objects.get(x).getUsername();
+
                             //add info to users list
-                            usersList.addOrUpdateUser(objects.get(x).getUsername(), pic, longitude, latitude, channels);
+                            usersList.UpdateUserLocationInfo(username, longitude, latitude, channels);
+                            usersList.UpdateUserImageInfo(username, picBitmap);
 
                             //this will be added to users list next time.
                             if(picBitmap == null){
