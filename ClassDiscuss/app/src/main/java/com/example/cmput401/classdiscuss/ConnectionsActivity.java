@@ -61,6 +61,7 @@ public class ConnectionsActivity extends ActionBarActivity {
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
         ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#6CCECB"));
         actionBar.setBackgroundDrawable(colorDraw);
+        connectionsAdapter.notifyDataSetChanged();
     }
 
     @Override
