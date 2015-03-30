@@ -19,7 +19,7 @@ public class UserActivity extends sideBarMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        //populate the list
+        //populate the list// this won't take affect until next time activity starts
         users.updateUsersInfo();
 
         UsersAdapter adapter = new
