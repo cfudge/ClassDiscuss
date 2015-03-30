@@ -8,7 +8,6 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -22,8 +21,7 @@ import java.util.List;
 public class ParseDatabase extends Activity {
     private static final ParseDatabase parseInstance = new ParseDatabase();
     util Util = new util();
-    String ChannelsClass= "Channels";//classes in class
-    String ImageClass= "Image";//classes in class
+    //String ChannelsClass= "Channels";//classes in class
     String UserClass = "_User";//classes in class
     String myChannelObjectId;
     List channelList;
@@ -54,21 +52,18 @@ public class ParseDatabase extends Activity {
     private void initiateChannels() {
             //create new channels to parse only if the user is new
             //get the object id now and save it for future use
-            ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
-            query.whereEqualTo("userID", Profiles.getInstance().loginEmail);
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo("email", Profiles.getInstance().loginEmail);
 
-            //check if userID already existed in database
-            query.getFirstInBackground(new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
+            //check if email already existed in database
+            query.getFirstInBackground(new GetCallback<ParseUser>() {
+                public void done(ParseUser object, ParseException e) {
                     if (object == null) {
-                        //make a new object for the user in the database
-                        ParseObject Channels = new ParseObject(ChannelsClass);
-                        Channels.put("channels", "");
-                        Channels.put("userID", Profiles.getInstance().loginEmail);
                         //get the object id now and save it for future uses
-                        setMyChannelObjectId(Channels.getObjectId());
+                        setMyChannelObjectId(object.getObjectId());
+                        object.put("channels", "");
 
-                        Channels.saveInBackground();
+                        object.saveInBackground();
                     } else {
                         //already exists
                         //get the object id now and save it for future uses
@@ -89,7 +84,7 @@ public class ParseDatabase extends Activity {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
         query.whereEqualTo("username", OldProfile.getInstance().getUserName());
 
-        //check if userID already existed in database
+        //check if email already existed in database
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (object == null) {
@@ -130,10 +125,10 @@ public class ParseDatabase extends Activity {
     }*/
 
     public void UpdateChannelsToParse(final String HashMapStrings) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         // Retrieve the object by id
-        query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseObject>() {
-            public void done(ParseObject ParseChannels, ParseException e) {
+        query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseUser>() {
+            public void done(ParseUser ParseChannels, ParseException e) {
                 if (e == null) {
                     MyChannels list = MyChannels.getInstance();
                     //we are just gonna update the string
@@ -156,9 +151,36 @@ public class ParseDatabase extends Activity {
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
+                            //image
                             ParseFile picFile = objects.get(x).getParseFile("ProfilePic");
                             Bitmap picBitmap = Util.convertFileToBitmap(picFile);
-                            usersList.addNewUser(objects.get(x).getUsername(), picBitmap);
+                            String pic ="";
+                            if (picBitmap != null){
+                                pic = Util.BitMapToString(picBitmap);
+                            }
+
+                            //location
+                            String latitude="";
+                            String longitude="";
+                            if(objects.get(x).get("Latitude") != null){
+                                int intlatitude = objects.get(x).getInt("Latitude");
+                                latitude = Integer.toString(intlatitude);
+                            }
+                            if(objects.get(x).get("Longitude") != null){
+                                int intLatitude = objects.get(x).getInt("Longitude");
+                                longitude = Integer.toString(intLatitude);
+                            }
+
+                            //channels
+                            String channels = "";
+                            if(objects.get(x).get("channels") != null){
+                                channels = objects.get(x).get("channels").toString();
+                            }
+
+                            //add info to users list
+                            usersList.addOrUpdateUser(objects.get(x).getUsername(), pic, longitude, latitude, channels);
+
+                            //this will be added to users list next time.
                             if(picBitmap == null){
                                 //add default profile pic if user has no profile pic
                                 ParseFile picParseFile = Util.convertBitmapToParseFile(defaultProfilePic);

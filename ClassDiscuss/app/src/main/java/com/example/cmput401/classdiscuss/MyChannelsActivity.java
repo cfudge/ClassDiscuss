@@ -55,6 +55,9 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        if(ParseUser.getCurrentUser() == null){
+            getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
 
     }
 
@@ -62,11 +65,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         channelAdapter.notifyDataSetChanged();
-        if(ParseUser.getCurrentUser() == null){
-            MainActivity out = new MainActivity();
-            out.signOutFromGplus();
-            getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
     }
 
     public void initializeChannels(){
