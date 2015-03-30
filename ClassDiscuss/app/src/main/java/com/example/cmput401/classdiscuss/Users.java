@@ -90,6 +90,12 @@ public class Users{
         return subscribedChannelList;
     }
 
+    public ArrayList getChannelsListByUsername(String username){
+        HashMap<String, String> usersChannelMap = getUsersChannelsHashMap(username);
+        ArrayList<String> usersChannelList = new ArrayList<String>(usersChannelMap.keySet());
+        return usersChannelList;
+    }
+
     public ArrayList getUsersActiveList(String username){
         HashMap<String, String> usersChannelMap = getUsersChannelsHashMap(username);
         ArrayList<String> usersActiveChannel = new ArrayList<String>();
