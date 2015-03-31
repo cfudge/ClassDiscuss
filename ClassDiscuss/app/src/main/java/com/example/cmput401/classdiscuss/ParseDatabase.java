@@ -147,12 +147,19 @@ public class ParseDatabase extends Activity {
                     if (e == null) {
                         // The query was successful.
                         OtherUsers usersList = OtherUsers.getInstance();
+                        usersList.clear();
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
                             //image
                             ParseFile picFile = objects.get(x).getParseFile("ProfilePic");
-                            Bitmap picBitmap = Util.convertFileToBitmap(picFile);
+                            Bitmap picBitmap = null;
+                            if(picFile == null){
+                                picBitmap = defaultProfilePic;
+                            }
+                            else{
+                                picBitmap = Util.convertFileToBitmap(picFile);
+                            }
 
                             //location
                             String latitude="";

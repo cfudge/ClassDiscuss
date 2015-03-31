@@ -25,15 +25,19 @@ public class Profile{
     private ParseUser parseEntry;
 
     public String getEmail() {
-        if(parseEntry.getString("email")!=null){
-            return parseEntry.getString("email");
+        if(parseEntry!=null) {
+            if (parseEntry.getString("email") != null) {
+                return parseEntry.getString("email");
+            }
         }
         return "unknown";
     }
 
     public String getUserName() {
-        if(parseEntry.getString("username")!=null){
-            return parseEntry.getString("username");
+        if(parseEntry!=null){
+            if(parseEntry.getString("username")!=null){
+                return parseEntry.getString("username");
+            }
         }
         return "unknown";
     }
@@ -55,7 +59,7 @@ public class Profile{
         try {
             parseEntry = (ParseUser) query.find().get(0);
         } catch (ParseException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return parseEntry;
     }
@@ -66,9 +70,11 @@ public class Profile{
 
     public Bitmap getPic(){
         ParseFile picFile=null;
-        if(parseEntry.getParseFile("ProfilePic")!=null){
-            picFile = parseEntry.getParseFile("ProfilePic");
-        };
+        if(parseEntry!=null){
+            if(parseEntry.getParseFile("ProfilePic")!=null){
+                picFile = parseEntry.getParseFile("ProfilePic");
+            };
+        }
 
         if(picFile == null){
             return null;
@@ -93,8 +99,10 @@ public class Profile{
         // Create the ParseFile
         ParseFile file = new ParseFile("userPic.png", image);
 
-        parseEntry.put("ProfilePic", file);
-        parseEntry.saveInBackground();
+        if(parseEntry!=null){
+            parseEntry.put("ProfilePic", file);
+            parseEntry.saveInBackground();
+        }
 
         //update users List
         OtherUsers.getInstance().updateUsersInfo();

@@ -46,9 +46,12 @@ public class ProfileActivity extends sideBarMenuActivity{
             Bitmap icon= BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.ic_noimage);
             displayProfile.setPic(icon);
+            profilePicView.setImageBitmap(icon);
         }
-        profilePicView.setImageBitmap(displayProfile.getPic());
-
+        else{
+            profilePicView.setImageBitmap(displayProfile.getPic());
+        }
+        
         textUserName.setText(displayProfile.getUserName());
         textUserEmail.setText(displayProfile.getEmail());
 

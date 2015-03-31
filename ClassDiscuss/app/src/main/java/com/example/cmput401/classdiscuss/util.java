@@ -21,12 +21,15 @@ public class util {
         }
         try {
             byte[] image = picFile.getData();
-            Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length);
-            return pic;
+            if(image!=null){
+                Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length);
+                return pic;
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
     public ParseFile convertBitmapToParseFile( Bitmap bitmap){
         // Convert it to byte

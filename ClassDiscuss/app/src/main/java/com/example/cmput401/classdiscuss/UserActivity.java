@@ -21,6 +21,9 @@ public class UserActivity extends sideBarMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        //populate the list// this won't take affect until next time activity starts
+        users.updateUsersInfo();
+
         UsersAdapter adapter = new
                 UsersAdapter(UserActivity.this, users.getUsersList(), users.getUsersImageList());
 
@@ -57,17 +60,8 @@ public class UserActivity extends sideBarMenuActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        if(ParseUser.getCurrentUser() == null){
+        if(ParseUser.getCurrentUser().getUsername() == null){
             getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-
-
     }
-    @Override
-    protected void onResume(){
-        super.onResume();
-        //populate the list// this won't take affect until next time activity starts
-        users.updateUsersInfo();
-    }
-
 }

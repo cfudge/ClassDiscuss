@@ -33,12 +33,23 @@ public class OtherUsers{
     }
 
     public ArrayList<String> getUsersList(){
+        if(profileImagesMap.containsKey(ParseUser.getCurrentUser().getUsername())){
+            profileImagesMap.remove(ParseUser.getCurrentUser().getUsername());
+        }
         ArrayList<String> users = new ArrayList<String>(profileImagesMap.keySet());
         return users;
     }
 
-    public int getUsersLatitudeByUserName(String username){
-        int latitudeNum= 0;
+    public ArrayList<Bitmap> getUsersImageList(){
+        if(profileImagesMap.containsKey(ParseUser.getCurrentUser().getUsername())){
+            profileImagesMap.remove(ParseUser.getCurrentUser().getUsername());
+        }
+        ArrayList<Bitmap> usersImage = new ArrayList<>(profileImagesMap.values());
+        return usersImage;
+    }
+
+    public double getUsersLatitudeByUserName(String username){
+        double latitudeNum= 0;
         String latitude = "0";
         if(usersInfoMap.get(username)!=null){
             if(usersInfoMap.get(username).get(1) !=null) {
@@ -47,15 +58,15 @@ public class OtherUsers{
         }
 
         try {
-            latitudeNum = Integer.parseInt(latitude);
+            latitudeNum = Double.parseDouble(latitude);
         } catch(NumberFormatException nfe) {
             System.out.println("Could not parse " + nfe);
         }
         return latitudeNum;
     }
 
-    public int getUsersLongitudeByUserName(String username){
-        int LongitudeNum= 0;
+    public double getUsersLongitudeByUserName(String username){
+        double LongitudeNum= 0;
         String Longitude = "0";
         if(usersInfoMap.get(username)!=null){
             if(usersInfoMap.get(username).get(0) !=null) {
@@ -65,7 +76,7 @@ public class OtherUsers{
         }
 
         try {
-            LongitudeNum = Integer.parseInt(Longitude);
+            LongitudeNum = Double.parseDouble(Longitude);
         } catch(NumberFormatException nfe) {
             System.out.println("Could not parse " + nfe);
         }
@@ -112,12 +123,6 @@ public class OtherUsers{
         return usersActiveChannel;
     }
 
-    public ArrayList<Bitmap> getUsersImageList(){
-        ArrayList<Bitmap> usersImage = new ArrayList<>(profileImagesMap.values());
-        return usersImage;
-
-    }
-
     public Bitmap getUsersImageByUserName(String username){
         return profileImagesMap.get(username);
     }
@@ -138,6 +143,7 @@ public class OtherUsers{
         //add/update new users
         if (!foundUser){
             Log.e("score", "Longitude string = " + longitude + "n");
+            Log.e("score", "getUsersLatitudeByUserName(name); = " + getUsersLatitudeByUserName(name) + "n");
             usersInfoMap.put(name, usersDetailValues );
         }
     }
@@ -161,8 +167,9 @@ public class OtherUsers{
         parseUsers.setUsersDataLocally();
     }
 
-    public void clearUsersInfoMap(){
+    public void clear(){
         usersInfoMap.clear();
+        profileImagesMap.clear();
     }
 
 
