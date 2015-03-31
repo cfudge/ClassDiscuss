@@ -41,6 +41,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         final ImageView picView = holder.image;
         Bitmap messagePic = message.getPic();
         if(messagePic == null) {
+            picView.setImageBitmap(null);
             //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
         }
         else{
