@@ -26,26 +26,27 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final Message message = (Message)getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.chat_item, parent, false);
             final ViewHolder holder = new ViewHolder();
             holder.image = (ImageView)convertView.findViewById(R.id.chatPic);
+            final ImageView picView = holder.image;
+            Bitmap messagePic = message.getPic();
+            if(messagePic == null) {
+                //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
+            }
+            else{
+                picView.setImageBitmap(messagePic);
+            }
             holder.body = (TextView)convertView.findViewById(R.id.tvBody);
             holder.postStats = (TextView)convertView.findViewById(R.id.postStats);
             convertView.setTag(holder);
         }
-        final Message message = (Message)getItem(position);
+
         final ViewHolder holder = (ViewHolder)convertView.getTag();
 
-        final ImageView picView = holder.image;
-        Bitmap messagePic = message.getPic();
-        if(messagePic == null) {
-            //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
-        }
-        else{
-            picView.setImageBitmap(messagePic);
-        }
         holder.body.setText(message.getBody());
         holder.postStats.setText(message.getPostTime()+" by "+message.getUserId());
         return convertView;
