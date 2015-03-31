@@ -21,15 +21,14 @@ public class OtherUsers{
     private static final OtherUsers usersInstance = new OtherUsers();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
-    private HashMap<String, List<String>> usersInfoMap;
-    ArrayList<String> usersValues;
-    HashMap<String, Bitmap> profileImagesMap;
-    util Util = new util();
+    private HashMap<String, List<Double>> usersLocationMap;
+    private HashMap<String, Bitmap> profileImagesMap;
+    private HashMap<String, String> usersChannelsMap;
 
     private OtherUsers() {
-        usersInfoMap = new HashMap<String, List<String>>();
-        usersValues = new ArrayList<>();
+        usersLocationMap = new HashMap<>();
         profileImagesMap = new HashMap<>();
+        usersChannelsMap = new HashMap<>();
     }
 
     public ArrayList<String> getUsersList(){
@@ -48,49 +47,33 @@ public class OtherUsers{
         return usersImage;
     }
 
-    public double getUsersLatitudeByUserName(String username){
+    public double getUsersLatitudeByUserName(double username){
         double latitudeNum= 0;
-        String latitude = "0";
-        if(usersInfoMap.get(username)!=null){
-            if(usersInfoMap.get(username).get(1) !=null) {
-                latitude = usersInfoMap.get(username).get(1).toString();
+        if(usersLocationMap.get(username)!=null){
+            if(usersLocationMap.get(username).get(0) !=null) {
+                latitudeNum = usersLocationMap.get(username).get(0).doubleValue();
             }
-        }
-
-        try {
-            latitudeNum = Double.parseDouble(latitude);
-        } catch(NumberFormatException nfe) {
-            System.out.println("Could not parse " + nfe);
         }
         return latitudeNum;
     }
 
     public double getUsersLongitudeByUserName(String username){
         double LongitudeNum= 0;
-        String Longitude = "0";
-        if(usersInfoMap.get(username)!=null){
-            if(usersInfoMap.get(username).get(0) !=null) {
-                Longitude = usersInfoMap.get(username).get(0).toString();
-                Log.e("score", "Longitude = " + Longitude + "n");
+        if(usersLocationMap.get(username)!=null){
+            if(usersLocationMap.get(username).get(0) !=null) {
+                LongitudeNum = usersLocationMap.get(username).get(0).doubleValue();
+                Log.e("score", "Longitude = " + LongitudeNum + "n");
             }
-        }
-
-        try {
-            LongitudeNum = Double.parseDouble(Longitude);
-        } catch(NumberFormatException nfe) {
-            System.out.println("Could not parse " + nfe);
         }
         return LongitudeNum;
     }
 
     public HashMap getUsersChannelsHashMap(String username){
-        HashMap<String, String> subscribedChannelList = new HashMap<String, String>();
+        HashMap<String, String> subscribedChannelList = new HashMap<>();
 
         String channels = "";
-        if(usersInfoMap.get(username)!=null){
-            if(usersInfoMap.get(username).get(2) !=null) {
-                channels = usersInfoMap.get(username).get(2).toString();
-            }
+        if(usersChannelsMap.get(username)!=null){
+            channels = usersChannelsMap.get(username);
         }
 
         try {
@@ -127,49 +110,45 @@ public class OtherUsers{
         return profileImagesMap.get(username);
     }
 
-    public void UpdateUserLocationInfo(String name, String longitude, String latitude, String Channels ){
-        boolean foundUser= false;
-        // create list one and store values
-        List<String> usersDetailValues = new ArrayList<String>();
-        usersDetailValues.add(longitude);
-        usersDetailValues.add(latitude);
-        usersDetailValues.add(Channels);
+    public void updateOtherUsersInfo(String name, double latitude, double longitude, String Channels,Bitmap pic ){
         if(ParseUser.getCurrentUser() != null){
-            if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
+            if(!ParseUser.getCurrentUser().getUsername().toString().equals(name)){
                 //don't add current user to list
-                foundUser = true;
+                UpdateUsersLocationInfo(name, latitude, longitude);
+                UpdateUsersChannelsInfo(name, Channels);
+                UpdateUserImageInfo(name, pic);
             }
-        }
-        //add/update new users
-        if (!foundUser){
-            Log.e("score", "Longitude string = " + longitude + "n");
-            Log.e("score", "getUsersLatitudeByUserName(name); = " + getUsersLatitudeByUserName(name) + "n");
-            usersInfoMap.put(name, usersDetailValues );
         }
     }
 
-    public void UpdateUserImageInfo(String name, Bitmap pic){
+    private void UpdateUsersLocationInfo(String name, double longitude, double latitude){
         boolean foundUser= false;
+        // create list one and store values
+        ArrayList<Double> usersLocation = new ArrayList<Double>();
+        usersLocation.add(longitude);
+        usersLocation.add(latitude);
 
-        if(ParseUser.getCurrentUser() != null){
-            if(ParseUser.getCurrentUser().getUsername().toString().equals(name)){
-                //don't add current user to list
-                foundUser = true;
-            }
-        }
         //add/update new users
-        if (!foundUser && pic !=null){
+        Log.e("score", "Longitude string = " + longitude + "n");
+        usersLocationMap.put(name, usersLocation );
+    }
+
+    private void UpdateUsersChannelsInfo(String name, String Channels ){
+        //add/update new users
+        usersChannelsMap.put(name, Channels );
+    }
+
+    private void UpdateUserImageInfo(String name, Bitmap pic){
+        //add/update new users
+        if (pic !=null){
             profileImagesMap.put(name, pic );
         }
     }
 
-    public void updateUsersInfo(){
-        parseUsers.setUsersDataLocally();
-    }
-
     public void clear(){
-        usersInfoMap.clear();
+        usersLocationMap.clear();
         profileImagesMap.clear();
+        usersChannelsMap.clear();
     }
 
 

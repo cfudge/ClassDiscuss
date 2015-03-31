@@ -1,25 +1,13 @@
 package com.example.cmput401.classdiscuss;
 
-import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -59,7 +47,7 @@ public class ConnectionsActivity extends ActionBarActivity {
 
         //http://stackoverflow.com/questions/28081709/null-pointer-exception-at-actionbar
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
-        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#6CCECB"));
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
         actionBar.setBackgroundDrawable(colorDraw);
         connectionsAdapter.notifyDataSetChanged();
     }

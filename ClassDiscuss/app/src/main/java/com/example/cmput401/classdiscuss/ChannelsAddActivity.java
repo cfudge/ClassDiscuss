@@ -2,6 +2,8 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
@@ -25,6 +27,11 @@ public class ChannelsAddActivity extends sideBarMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_channel_screen);
+        //topbar color
+        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
+        actionBar.setBackgroundDrawable(colorDraw);
+
         channels = Channels.getInstance();
         channelAdapter = new ChannelsAddAdapter(this, channels.availableChannelList, ChannelsAddActivity.this);
 

@@ -75,7 +75,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
         //http://stackoverflow.com/questions/28081709/null-pointer-exception-at-actionbar
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
-        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#6CCECB"));
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
         actionBar.setBackgroundDrawable(colorDraw);
     }
 

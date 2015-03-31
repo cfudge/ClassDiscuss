@@ -12,10 +12,6 @@
         android:orderInCategory="100" app:showAsAction="never" />-->
     <item android:id="@+id/action_users" android:title="@string/menu_users"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_chat" android:title="@string/menu_chat"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_settings" android:title="@string/menu_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_logout" android:title="@string/logout"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

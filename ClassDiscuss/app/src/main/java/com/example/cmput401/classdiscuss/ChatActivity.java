@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -69,6 +71,11 @@ public class ChatActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        //topbar color
+        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
+        actionBar.setBackgroundDrawable(colorDraw);
 
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user

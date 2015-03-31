@@ -151,10 +151,18 @@ public class ParseDatabase extends Activity {
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
-                            //image
-                            ParseFile picFile = objects.get(x).getParseFile("ProfilePic");
+
                             Bitmap picBitmap = null;
-                            if(picFile == null){
+                            double latitude=0.0;
+                            double longitude=0.0;
+
+                            ParseFile picFile = objects.get(x).getParseFile("ProfilePic");
+
+                            //image
+                            if(picFile == null && defaultProfilePic !=null){
+                                //add default profile pic if user has no profile pic
+                                ParseFile picParseFile = Util.convertBitmapToParseFile(defaultProfilePic);
+                                objects.get(x).put("ProfilePic", picParseFile);
                                 picBitmap = defaultProfilePic;
                             }
                             else{
@@ -162,15 +170,11 @@ public class ParseDatabase extends Activity {
                             }
 
                             //location
-                            String latitude="";
-                            String longitude="";
                             if(objects.get(x).get("Latitude") != null){
-                                int intlatitude = objects.get(x).getInt("Latitude");
-                                latitude = Integer.toString(intlatitude);
+                                latitude = objects.get(x).getDouble("Latitude");
                             }
                             if(objects.get(x).get("Longitude") != null){
-                                int intLatitude = objects.get(x).getInt("Longitude");
-                                longitude = Integer.toString(intLatitude);
+                                longitude = objects.get(x).getDouble("Longitude");
                             }
 
                             //channels
@@ -182,16 +186,11 @@ public class ParseDatabase extends Activity {
                             String username = objects.get(x).getUsername();
 
                             //add info to users list
-                            usersList.UpdateUserLocationInfo(username, longitude, latitude, channels);
-                            usersList.UpdateUserImageInfo(username, picBitmap);
+                            usersList.updateOtherUsersInfo(username, longitude, latitude, channels, picBitmap);
 
-                            //this will be added to users list next time.
-                            if(picBitmap == null && defaultProfilePic !=null){
-                                //add default profile pic if user has no profile pic
-                                ParseFile picParseFile = Util.convertBitmapToParseFile(defaultProfilePic);
-                                objects.get(x).put("ProfilePic", picParseFile);
-                                objects.get(x).saveInBackground();
-                            }
+                            //save default image
+                            objects.get(x).saveInBackground();
+
                         }
                         Log.d("score", "updated users info");
                     } else {

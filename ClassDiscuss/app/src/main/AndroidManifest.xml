@@ -124,7 +124,8 @@
         </activity>
         <activity
             android:name=".UserActivity"
-            android:label="Other Users" >
+            android:label="Other Users"
+            android:parentActivityName=".MyChannelsActivity" >
         </activity>
 
         <meta-data

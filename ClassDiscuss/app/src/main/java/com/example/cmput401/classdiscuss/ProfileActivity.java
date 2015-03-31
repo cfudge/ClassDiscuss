@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +34,11 @@ public class ProfileActivity extends sideBarMenuActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        //topbar color
+        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
+        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
+        actionBar.setBackgroundDrawable(colorDraw);
+
         //Folowing https://www.parse.com/docs/android_guide#queries-basic
         //final ArrayList<User> foundUsers = new ArrayList<User>();
         Profile displayProfile = profiles.displayProfile;
@@ -51,7 +58,7 @@ public class ProfileActivity extends sideBarMenuActivity{
         else{
             profilePicView.setImageBitmap(displayProfile.getPic());
         }
-        
+
         textUserName.setText(displayProfile.getUserName());
         textUserEmail.setText(displayProfile.getEmail());
 
