@@ -63,14 +63,6 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 edit.setClass(getApplicationContext(), ProfileEditActivity.class);
                 startActivity(edit);
                 break;*/
-            case R.id.action_settings:
-            case R.id.action_chat:
-                Profiles.getInstance().displayProfile = new Profile();
-                Profiles.getInstance().displayProfile.setParseEntry(ParseUser.getCurrentUser());
-                Intent chatIntent = new Intent();
-                chatIntent.setClass(getApplicationContext(), ChatActivity.class);
-                startActivity(chatIntent);
-                break;
             case R.id.action_users:
                 Intent usersIntent = new Intent();
                 usersIntent.setClass(getApplicationContext(), UserActivity.class);
