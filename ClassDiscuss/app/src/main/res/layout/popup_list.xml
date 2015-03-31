@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:textColor="#333333"
-    tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
+    tools:context="com.example.cmput401.classdiscuss.MyChannelScreen"
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/popupText"

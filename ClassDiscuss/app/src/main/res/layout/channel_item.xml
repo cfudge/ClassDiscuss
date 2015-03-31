@@ -4,6 +4,7 @@ android:id="@+id/text"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 android:padding="5sp"
+android:background="#ffffff"
 android:textSize="20sp" >
 
 </TextView>

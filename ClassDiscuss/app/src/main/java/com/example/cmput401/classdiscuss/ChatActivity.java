@@ -162,6 +162,7 @@ public class ChatActivity extends ActionBarActivity {
                         push.sendInBackground();
                     }
                 });
+                message = new Message();
                 etMessage.setText("");
             }
         });

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="9dp"
+    android:background="#ffffff"
     android:paddingBottom="9dp">
     <TableRow>
         <ImageView
