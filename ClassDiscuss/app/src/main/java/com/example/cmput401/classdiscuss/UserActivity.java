@@ -6,21 +6,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.parse.ParseUser;
+
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class UserActivity extends sideBarMenuActivity {
     ListView listView ;
-    Users users = Users.getInstance();
+    OtherUsers users = OtherUsers.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
-        //populate the list// this won't take affect until next time activity starts
-        users.updateUsersInfo();
 
         UsersAdapter adapter = new
                 UsersAdapter(UserActivity.this, users.getUsersList(), users.getUsersImageList());
@@ -53,6 +52,22 @@ public class UserActivity extends sideBarMenuActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(ParseUser.getCurrentUser() == null){
+            getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //populate the list// this won't take affect until next time activity starts
+        users.updateUsersInfo();
     }
 
 }

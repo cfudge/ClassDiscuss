@@ -16,9 +16,9 @@ import java.util.List;
  *
  */
 
-public class Users{
+public class OtherUsers{
 
-    private static final Users usersInstance = new Users();
+    private static final OtherUsers usersInstance = new OtherUsers();
     ParseDatabase parseUsers = ParseDatabase.getInstance();
 
     private HashMap<String, List<String>> usersInfoMap;
@@ -26,7 +26,7 @@ public class Users{
     HashMap<String, Bitmap> profileImagesMap;
     util Util = new util();
 
-    private Users() {
+    private OtherUsers() {
         usersInfoMap = new HashMap<String, List<String>>();
         usersValues = new ArrayList<>();
         profileImagesMap = new HashMap<>();
@@ -166,7 +166,7 @@ public class Users{
     }
 
 
-    public static Users getInstance(){
+    public static OtherUsers getInstance(){
         return usersInstance;
     }
 

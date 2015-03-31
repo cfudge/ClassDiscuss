@@ -376,13 +376,17 @@ public class MainActivity extends Activity implements OnClickListener,
                 if (e == null) {
                     // Hooray! Let them use the app now.
                     //add default profile pic if user has no profile pic
-                    Bitmap picBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage);
-                    ParseDatabase.getInstance().setDefaultProfilePic(picBitmap);
-                    ParseDatabase.getInstance().Initiate();
+                    //this is needed for parseDatabase adding default image to parse
+                    handle_no_profile_pic();
+
                     startApp();
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
+                    //add default profile pic if user has no profile pic
+                    //this is needed for parseDatabase adding default image to parse
+                    handle_no_profile_pic();
+
                     login();
                 }
             }
@@ -409,6 +413,14 @@ public class MainActivity extends Activity implements OnClickListener,
         Intent mapIntent = new Intent();
         mapIntent.setClass(getApplicationContext(), MapActivity.class);
         startActivity(mapIntent);
+    }
+
+    public void handle_no_profile_pic(){
+        //add default profile pic if user has no profile pic
+        //this is needed for parseDatabase adding default image to parse
+        Bitmap picBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage);
+        ParseDatabase.getInstance().setDefaultProfilePic(picBitmap);
+        ParseDatabase.getInstance().Initiate();
     }
 }
 

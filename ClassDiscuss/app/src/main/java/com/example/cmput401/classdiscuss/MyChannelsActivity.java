@@ -30,7 +30,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
     private Connections myConnections;
 
-    Users users =  Users.getInstance();
+    OtherUsers users =  OtherUsers.getInstance();
     PopupWindow popup;
     PopupListAdapter popupAdapter;
     ListView popupList;
@@ -85,7 +85,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         if(ParseUser.getCurrentUser() == null){
             getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-
     }
 
     //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu

@@ -54,7 +54,7 @@ public class ProfileActivity extends sideBarMenuActivity{
 
 
         myChannels = myChannels.getInstance();
-        ArrayList<String> channelsList = Users.getInstance().getChannelsListByUsername(displayProfile.getUserName());
+        ArrayList<String> channelsList = OtherUsers.getInstance().getChannelsListByUsername(displayProfile.getUserName());
         listview = (ListView) findViewById(R.id.channelListview);
         adapter = new ArrayAdapter<String>(ProfileActivity.this,
                 R.layout.channel_item);

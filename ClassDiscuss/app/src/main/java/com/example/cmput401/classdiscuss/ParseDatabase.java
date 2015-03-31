@@ -146,7 +146,7 @@ public class ParseDatabase extends Activity {
             public void done(List<ParseUser> objects, ParseException e) {
                     if (e == null) {
                         // The query was successful.
-                        Users usersList = Users.getInstance();
+                        OtherUsers usersList = OtherUsers.getInstance();
                         int userSize = objects.size();
                         for(int x =0; x < userSize; x++  ){
                             //set users list
@@ -179,7 +179,7 @@ public class ParseDatabase extends Activity {
                             usersList.UpdateUserImageInfo(username, picBitmap);
 
                             //this will be added to users list next time.
-                            if(picBitmap == null){
+                            if(picBitmap == null && defaultProfilePic !=null){
                                 //add default profile pic if user has no profile pic
                                 ParseFile picParseFile = Util.convertBitmapToParseFile(defaultProfilePic);
                                 objects.get(x).put("ProfilePic", picParseFile);

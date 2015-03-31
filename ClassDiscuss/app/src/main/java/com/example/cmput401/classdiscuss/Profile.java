@@ -24,9 +24,19 @@ public class Profile{
 
     private ParseUser parseEntry;
 
-    public String getEmail() {return parseEntry.getString("email");}
+    public String getEmail() {
+        if(parseEntry.getString("email")!=null){
+            return parseEntry.getString("email");
+        }
+        return "unknown";
+    }
 
-    public String getUserName() {return parseEntry.getString("username");}
+    public String getUserName() {
+        if(parseEntry.getString("username")!=null){
+            return parseEntry.getString("username");
+        }
+        return "unknown";
+    }
 
     public void setUserName(String userName){
         parseEntry.put("username", userName);
@@ -55,7 +65,11 @@ public class Profile{
     }
 
     public Bitmap getPic(){
-        ParseFile picFile = parseEntry.getParseFile("ProfilePic");
+        ParseFile picFile=null;
+        if(parseEntry.getParseFile("ProfilePic")!=null){
+            picFile = parseEntry.getParseFile("ProfilePic");
+        };
+
         if(picFile == null){
             return null;
         }
@@ -83,7 +97,7 @@ public class Profile{
         parseEntry.saveInBackground();
 
         //update users List
-        Users.getInstance().updateUsersInfo();
+        OtherUsers.getInstance().updateUsersInfo();
     }
 
     public void setLocation(double lat, double lon){
