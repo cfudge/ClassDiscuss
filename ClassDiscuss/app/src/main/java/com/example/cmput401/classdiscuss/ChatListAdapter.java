@@ -26,6 +26,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
                     inflate(R.layout.chat_item, parent, false);
@@ -36,10 +37,19 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             convertView.setTag(holder);
         }
         final Message message = (Message)getItem(position);
+
         final ViewHolder holder = (ViewHolder)convertView.getTag();
 
         final ImageView picView = holder.image;
         Bitmap messagePic = message.getPic();
+
+        if(!Profiles.getInstance().loginEmail.replace("@ualberta.ca", "").equals(message.getUserId())){
+            convertView.setBackgroundResource(R.drawable.speech_bubble_pink);
+        }
+        else{
+            convertView.setBackgroundResource(R.drawable.speech_bubble_blue);
+        }
+
         if(messagePic == null) {
             picView.setImageBitmap(null);
             //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
