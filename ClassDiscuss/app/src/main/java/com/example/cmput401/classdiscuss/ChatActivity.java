@@ -267,4 +267,11 @@ public class ChatActivity extends ActionBarActivity {
         unregisterReceiver(myReceiver);
 
     }
+
+    @Override
+    public void onDestroy(){
+        //So that profile pics update if the chat is left and
+        //re-entered
+        profiles.profilePics.clear();
+    }
 }

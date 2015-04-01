@@ -1,6 +1,9 @@
 package com.example.cmput401.classdiscuss;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by CMDF_Alien on 3/25/2015.
@@ -11,6 +14,7 @@ public class Profiles {
     public Profile thisUser;
     public Profile displayProfile;
     public String loginEmail;
+    public HashMap<String, Bitmap> profilePics = new HashMap<String, Bitmap>();
 
     public static Profiles getInstance(){
         if(instance == null){

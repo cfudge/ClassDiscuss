@@ -22,6 +22,7 @@ public class Message extends ParseObject {
     private Bitmap proPic = null;
     private boolean triedProFetch = false;
     private boolean triedPostPicFetch = false;
+    private Profiles profiles = Profiles.getInstance();
     public String getUserId() {
         return getString("userId");
     }
@@ -65,8 +66,13 @@ public class Message extends ParseObject {
         if(triedProFetch){
             return proPic;
         }
-        triedProFetch = true;
         Bitmap result;
+        triedProFetch = true;
+        if(profiles.profilePics.containsKey(getUserId())){
+            result = profiles.profilePics.get(getUserId());
+            proPic = result;
+            return result;
+        }
         ParseFile picFile = null;
         ParseUser sender = null;
         ParseQuery query = ParseUser.getQuery();
@@ -84,6 +90,7 @@ public class Message extends ParseObject {
         }
         if(picFile != null) {
             result = bitmapFromPicFile(picFile, 100, 100);
+            profiles.profilePics.put(getUserId(), result);
             proPic = result;
             return result;
         }
