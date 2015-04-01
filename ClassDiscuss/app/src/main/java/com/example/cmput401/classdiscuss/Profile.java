@@ -93,7 +93,7 @@ public class Profile{
         // Convert it to byte
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         // Compress image to lower quality scale 1 - 100
-        pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        pic.compress(Bitmap.CompressFormat.PNG, 20, stream);
         byte[] image = stream.toByteArray();
 
         // Create the ParseFile

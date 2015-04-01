@@ -18,6 +18,10 @@ import java.util.Date;
  */
 @ParseClassName("Message")
 public class Message extends ParseObject {
+    private Bitmap postPic = null;
+    private Bitmap proPic = null;
+    private boolean triedProFetch = false;
+    private boolean triedPostPicFetch = false;
     public String getUserId() {
         return getString("userId");
     }
@@ -36,18 +40,79 @@ public class Message extends ParseObject {
     public void setReceiver(String receiver) { put("Receiver", receiver);}
 
     public Bitmap getPic() {
+        if(triedPostPicFetch){
+            return postPic;
+        }
+        triedPostPicFetch = true;
         ParseFile picFile = getParseFile("picture");
         if (picFile == null) {
             return null;
         }
+        else {
+            Bitmap result = bitmapFromPicFile(picFile, 300, 300);
+            try {
+                this.pin();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            triedPostPicFetch = true;
+            postPic = result;
+            return result;
+        }
+    }
+
+    public Bitmap getPosterPic(){
+        if(triedProFetch){
+            return proPic;
+        }
+        triedProFetch = true;
+        Bitmap result;
+        ParseFile picFile = null;
+        ParseUser sender = null;
+        ParseQuery query = ParseUser.getQuery();
+        query.fromLocalDatastore();
+        query.whereEqualTo("username", getUserId());
+        try {
+            sender = (ParseUser) query.find().get(0);
+            sender.pin();
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+
+        if(sender != null) {
+            picFile = sender.getParseFile("ProfilePic");
+        }
+        if(picFile != null) {
+            result = bitmapFromPicFile(picFile, 100, 100);
+            proPic = result;
+            return result;
+        }
+        else{
+            return null;
+        }
+    }
+
+    private Bitmap bitmapFromPicFile(ParseFile picFile, int reqWidth, int reqHeight){
         try {
             byte[] image = picFile.getData();
             BitmapFactory.Options op = new BitmapFactory.Options();
             op.inJustDecodeBounds = true;
             BitmapFactory.decodeByteArray(image, 0, image.length, op);
             op.inJustDecodeBounds = false;
-            op.inSampleSize = calculateInSampleSize(op, 300, 300);
+            op.inSampleSize = calculateInSampleSize(op, reqWidth, reqHeight);
             Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            pic.compress(Bitmap.CompressFormat.JPEG, 30, os);
+
+            //compressing bitmap like here:
+            //http://android.okhelp.cz/compressing-a-bitmap-to-jpg-format-android-example/
+            image = os.toByteArray();
+            op = new BitmapFactory.Options();
+            op.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(image, 0, image.length, op);
+            op.inJustDecodeBounds = false;
+            op.inSampleSize = calculateInSampleSize(op, reqWidth, reqHeight);
+            pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
             return pic;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -55,38 +120,6 @@ public class Message extends ParseObject {
         }
     }
 
-    public Bitmap getPosterPic(){
-        ParseFile picFile = null;
-        ParseUser sender = null;
-        ParseQuery query = ParseUser.getQuery();
-        query.whereEqualTo("username", getUserId());
-        try {
-            sender = (ParseUser) query.find().get(0);
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-        if(sender != null) {
-            picFile = sender.getParseFile("ProfilePic");
-        }
-        if(picFile != null) {
-            try {
-                byte[] image = picFile.getData();
-                BitmapFactory.Options op = new BitmapFactory.Options();
-                op.inJustDecodeBounds = true;
-                BitmapFactory.decodeByteArray(image, 0, image.length, op);
-                op.inJustDecodeBounds = false;
-                op.inSampleSize = calculateInSampleSize(op, 100, 100);
-                Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
-                return pic;
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        else{
-            return null;
-        }
-    }
 
     //from developer.android: http://developer.android.com/training/displaying-bitmaps/load-bitmap.html
     public static int calculateInSampleSize(
@@ -116,7 +149,7 @@ public class Message extends ParseObject {
         // Convert it to byte
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         // Compress image to lower quality scale 1 - 100
-        pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        pic.compress(Bitmap.CompressFormat.PNG, 20, stream);
         byte[] image = stream.toByteArray();
 
         // Create the ParseFile
