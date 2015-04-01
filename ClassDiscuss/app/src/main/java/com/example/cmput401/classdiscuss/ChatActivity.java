@@ -172,7 +172,7 @@ public class ChatActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent imageSelect = new Intent();
                 imageSelect.setType("image/*");
-                imageSelect.setAction(Intent.ACTION_GET_CONTENT);
+                imageSelect.setAction(MediaStore.ACTION_IMAGE_CAPTURE); //Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(imageSelect, "Select Picture"), SELECT_PICTURE);
             }
         });
