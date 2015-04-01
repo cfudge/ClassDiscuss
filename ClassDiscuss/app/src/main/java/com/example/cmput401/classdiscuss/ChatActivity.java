@@ -270,6 +270,7 @@ public class ChatActivity extends ActionBarActivity {
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         //So that profile pics update if the chat is left and
         //re-entered
         profiles.profilePics.clear();
