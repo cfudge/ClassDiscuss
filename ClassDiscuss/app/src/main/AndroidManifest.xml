@@ -59,7 +59,11 @@
         </activity>
         <activity
             android:name=".MyChannelsActivity"
-            android:label="@string/title_activity_channel_screen" >
+            android:label="@string/title_activity_channel_screen"
+            android:parentActivityName=".MapActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.MyChannelsActivity" />
         </activity>
         <activity
             android:name=".ProfileActivity"
@@ -67,7 +71,7 @@
             android:parentActivityName=".MyChannelsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.cmput401.classdiscuss.MainActivity" />
+                android:value="com.example.cmput401.classdiscuss.MyChannelsActivity" />
         </activity>
         <activity
             android:name=".sideBarMenuActivity"
@@ -94,7 +98,7 @@
         </activity>
         <activity
             android:name=".ConnectionsActivity"
-            android:label="@string/my_connections"
+            android:label=""
             android:parentActivityName=".MyChannelsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -116,7 +120,7 @@
         </activity>
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map">
         </activity>
         <activity
             android:name=".TestActivity"
