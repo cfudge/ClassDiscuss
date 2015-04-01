@@ -76,7 +76,6 @@ public class Message extends ParseObject {
         ParseFile picFile = null;
         ParseUser sender = null;
         ParseQuery query = ParseUser.getQuery();
-        query.fromLocalDatastore();
         query.whereEqualTo("username", getUserId());
         try {
             sender = (ParseUser) query.find().get(0);

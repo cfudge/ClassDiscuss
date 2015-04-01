@@ -47,6 +47,8 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         Bitmap messagePic = message.getPic();
 
         if(!Profiles.getInstance().loginEmail.replace("@ualberta.ca", "").equals(message.getUserId())){
+            //If the user that posted is not the current user, use the left side for profile pic and
+            //use pink, left-facing bubble
             ((ViewGroup) convertView).getChildAt(1).setBackgroundResource(R.drawable.speech_bubble_pink);
             proPic = holder.othersProPic;
             ((ImageView) convertView.findViewById(R.id.chatProfilePicSelf)).setVisibility(View.INVISIBLE);
@@ -54,6 +56,8 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             ((ImageView) convertView.findViewById(R.id.chatProfilePicOther)).setVisibility(View.VISIBLE);
         }
         else{
+            //If the current user posted this message, use the right side for profile pic and use blue,
+            //right-facing bubble.
             ((ViewGroup) convertView).getChildAt(1).setBackgroundResource(R.drawable.speech_bubble_blue);
             proPic = holder.selfProPic;
             ((ImageView) convertView.findViewById(R.id.chatProfilePicOther)).setVisibility(View.INVISIBLE);
