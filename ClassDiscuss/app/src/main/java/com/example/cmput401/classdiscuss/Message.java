@@ -7,6 +7,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -33,9 +35,9 @@ public class Message extends ParseObject {
     }
     public void setReceiver(String receiver) { put("Receiver", receiver);}
 
-    public Bitmap getPic(){
+    public Bitmap getPic() {
         ParseFile picFile = getParseFile("picture");
-        if(picFile == null){
+        if (picFile == null) {
             return null;
         }
         try {
@@ -49,6 +51,39 @@ public class Message extends ParseObject {
             return pic;
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Bitmap getPosterPic(){
+        ParseFile picFile = null;
+        ParseUser sender = null;
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("username", getUserId());
+        try {
+            sender = (ParseUser) query.find().get(0);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        if(sender != null) {
+            picFile = sender.getParseFile("ProfilePic");
+        }
+        if(picFile != null) {
+            try {
+                byte[] image = picFile.getData();
+                BitmapFactory.Options op = new BitmapFactory.Options();
+                op.inJustDecodeBounds = true;
+                BitmapFactory.decodeByteArray(image, 0, image.length, op);
+                op.inJustDecodeBounds = false;
+                op.inSampleSize = calculateInSampleSize(op, 100, 100);
+                Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
+                return pic;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        else{
             return null;
         }
     }

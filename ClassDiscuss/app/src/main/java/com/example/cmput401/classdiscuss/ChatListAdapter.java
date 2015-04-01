@@ -34,20 +34,40 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             holder.image = (ImageView)convertView.findViewById(R.id.chatPic);
             holder.body = (TextView)convertView.findViewById(R.id.tvBody);
             holder.postStats = (TextView)convertView.findViewById(R.id.postStats);
+            holder.selfProPic = (ImageView)convertView.findViewById(R.id.chatProfilePicSelf);
+            holder.othersProPic = (ImageView)convertView.findViewById(R.id.chatProfilePicOther);
             convertView.setTag(holder);
         }
         final Message message = (Message)getItem(position);
 
         final ViewHolder holder = (ViewHolder)convertView.getTag();
 
+        final ImageView proPic;
         final ImageView picView = holder.image;
         Bitmap messagePic = message.getPic();
 
         if(!Profiles.getInstance().loginEmail.replace("@ualberta.ca", "").equals(message.getUserId())){
-            convertView.setBackgroundResource(R.drawable.speech_bubble_pink);
+            ((ViewGroup) convertView).getChildAt(1).setBackgroundResource(R.drawable.speech_bubble_pink);
+            proPic = holder.othersProPic;
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicSelf)).setVisibility(View.INVISIBLE);
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicSelf)).setImageBitmap(null);
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicOther)).setVisibility(View.VISIBLE);
         }
         else{
-            convertView.setBackgroundResource(R.drawable.speech_bubble_blue);
+            ((ViewGroup) convertView).getChildAt(1).setBackgroundResource(R.drawable.speech_bubble_blue);
+            proPic = holder.selfProPic;
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicOther)).setVisibility(View.INVISIBLE);
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicOther)).setImageBitmap(null);
+            ((ImageView) convertView.findViewById(R.id.chatProfilePicSelf)).setVisibility(View.VISIBLE);
+        }
+
+
+        Bitmap mProPic = message.getPosterPic();
+        if(mProPic == null){
+            proPic.setImageBitmap(null);
+        }
+        else{
+            proPic.setImageBitmap(mProPic);
         }
 
         if(messagePic == null) {
@@ -58,7 +78,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             picView.setImageBitmap(messagePic);
         }
         holder.body.setText(message.getBody());
-        holder.postStats.setText(message.getPostTime()+" by "+message.getUserId());
+        holder.postStats.setText(message.getPostTime());
         return convertView;
     }
 
@@ -78,6 +98,8 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
 
     final class ViewHolder {
         public ImageView image;
+        public ImageView selfProPic;
+        public ImageView othersProPic;
         public TextView body;
         public TextView postStats;
     }
