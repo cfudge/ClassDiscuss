@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * Left/right swiping follows example here:
  * http://stackoverflow.com/questions/14965124/how-to-change-activity-with-left-right-swipe
  */
-public class MapActivity extends FragmentActivity {
+public class MapActivity extends sideBarMenuActivity {
     static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ArrayList<CampusBuilding> buildings;
@@ -57,7 +57,7 @@ public class MapActivity extends FragmentActivity {
         setUpMapIfNeeded();
         updateUserLocation();
 
-        //set channel button listener
+        /*//set channel button listener
         Button channelButton = (Button) findViewById(R.id.channel_map_btn);
         channelButton.setOnClickListener(new View.OnClickListener() {
 
@@ -77,7 +77,7 @@ public class MapActivity extends FragmentActivity {
                 myConnections.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(myConnections);
             }
-        });
+        });*/
     }
     @Override
     protected void onResume(){
@@ -431,6 +431,14 @@ public class MapActivity extends FragmentActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_map, menu);
+
+        return true;
     }
 
 

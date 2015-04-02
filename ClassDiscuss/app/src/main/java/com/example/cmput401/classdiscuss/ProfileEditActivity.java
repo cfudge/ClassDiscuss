@@ -2,8 +2,6 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,11 +33,6 @@ public class ProfileEditActivity extends sideBarMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofile);
-
-        //topbar color
-        android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
-        ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
-        actionBar.setBackgroundDrawable(colorDraw);
         
         currentUserProfile = new Profile();
         currentUserProfile.setParseEntry(currentUser);

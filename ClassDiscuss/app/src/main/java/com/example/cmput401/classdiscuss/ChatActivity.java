@@ -84,9 +84,7 @@ public class ChatActivity extends ActionBarActivity {
 
             //registerReceiver(myReceiver, filter1);
             startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
-            LoginActivity logout = new LoginActivity();
-            logout.onPlusClientSignOut();
+        } else {
             Intent ToLogIn = new Intent();
             ToLogIn.setClass(getApplicationContext(), MainActivity.class);
             startActivity(ToLogIn);//login();
