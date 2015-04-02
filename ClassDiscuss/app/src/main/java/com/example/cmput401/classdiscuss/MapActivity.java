@@ -4,8 +4,16 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +43,11 @@ public class MapActivity extends FragmentActivity {
     private ArrayList<CampusBuilding> buildings;
     private ArrayList<Marker> markers;
     private Location currentLocation;
+    private Connections myConnections;
+    OtherUsers users =  OtherUsers.getInstance();
+    PopupWindow popup;
+    PopupListAdapter popupAdapter;
+    ListView popupList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +131,15 @@ public class MapActivity extends FragmentActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         placeBuildingMarkers();
         setPeopleInBuildings();
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                          @Override
+                                          public boolean onMarkerClick(Marker marker) {
+                                              myConnections = myConnections.getInstance();
+                                              popupMenu();
+                                              return true;
+                                          }
+                                      }
+        );
     }
 
     private void updateUserLocation() {
@@ -363,6 +385,50 @@ public class MapActivity extends FragmentActivity {
         }
 
 
+    }
+
+    public void popupMenu(){
+        popupAdapter = new PopupListAdapter(this, users.getUsersList());
+        LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.message_popup, null);
+        popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        popupList = (ListView) view.findViewById(R.id.popup_list_view);
+        popupList.setAdapter(popupAdapter);
+
+        popup.showAtLocation(view, Gravity.CENTER, 0,0);
+
+        ImageButton closeButton = (ImageButton) view.findViewById(R.id.close_button);
+        closeButton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+
+        final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
+        enterMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterMessage.setText("");
+            }
+        });
+
+        //Send button
+        Button sendButton = (Button) view.findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent connectionsIntent = new Intent();
+                connectionsIntent.setClass(getApplicationContext(), ConnectionsActivity.class);
+                startActivity(connectionsIntent);
+
+                myConnections.displayMessage.add(enterMessage.getText().toString());
+
+                Toast.makeText(MapActivity.this, enterMessage.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
