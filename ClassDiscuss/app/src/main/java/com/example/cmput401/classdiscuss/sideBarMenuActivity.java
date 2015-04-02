@@ -51,7 +51,9 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(myProfile);
                 break;
             case R.id.action_myChannels:
-                getApplicationContext().startActivity(new Intent(getApplicationContext(), MyChannelsActivity.class));
+                Intent channel = new Intent();
+                channel.setClass(getApplicationContext(), MyChannelsActivity.class);
+                startActivity(channel);
                 break;
             case R.id.action_myConnections:
                 Intent activity = new Intent();
