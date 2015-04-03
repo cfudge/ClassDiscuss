@@ -47,7 +47,7 @@ public class OtherUsers{
         return usersImage;
     }
 
-    public double getUsersLatitudeByUserName(double username){
+    public double getUsersLatitudeByUserName(String username){
         double latitudeNum= 0;
         if(usersLocationMap.get(username)!=null){
             if(usersLocationMap.get(username).get(0) !=null) {

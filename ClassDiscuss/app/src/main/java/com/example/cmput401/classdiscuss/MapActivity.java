@@ -22,8 +22,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /*
@@ -49,6 +51,7 @@ public class MapActivity extends sideBarMenuActivity {
     PopupWindow popup;
     PopupListAdapter popupAdapter;
     ListView popupList;
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -366,31 +369,59 @@ public class MapActivity extends sideBarMenuActivity {
 
     public void setPeopleInBuildings()
     {
-        ArrayList<LatLng> testList = new ArrayList<LatLng>();
-        testList.add((new LatLng(53.527220, -113.524684)));
-        testList.add((new LatLng(53.526799, -113.527195)));
-        testList.add((new LatLng(53.526799, -113.527034)));
-        testList.add((new LatLng(53.526767, -113.520801)));
+        Marker marker = mMap.addMarker(
+                new MarkerOptions().position(new LatLng(53.525366, -113.527133))
+        );
 
-        for (int i=0; i < testList.size(); i++)
+        String username = currentUser.getUsername();
+        ArrayList<String> myChannels = users.getUsersActiveList(username);
+        ArrayList<String> otherUsernames = users.getUsersList();
+        ArrayList<OtherUserMapInfo> usersToCheck = new ArrayList<OtherUserMapInfo>();
+
+        //Remove yourself from the list
+        if (otherUsernames.contains(username))
+        {
+            otherUsernames.remove(username);
+        }
+
+        //Get users in common channels and set a list to mark on the map
+        for (int a=0; a < otherUsernames.size(); a++)
+        {
+            String otherName = otherUsernames.get(a);
+            ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
+            ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            commonChannels.retainAll(myChannels);
+
+            if (commonChannels.isEmpty())
+            {
+                continue;
+            }
+
+            OtherUserMapInfo mapUser = new OtherUserMapInfo((users.getUsersLatitudeByUserName(otherName)),
+                    (users.getUsersLongitudeByUserName(otherName)), otherName);
+            mapUser.addChannel(commonChannels);
+
+            usersToCheck.add(mapUser);
+        }
+
+        for (int i=0; i < usersToCheck.size(); i++)
         {
             for (int a=0; a < buildings.size(); a++)
             {
                 CampusBuilding building = buildings.get(a);
-                if (building.getBounds().contains(testList.get(i)))
+                if (building.getBounds().contains(usersToCheck.get(i).getLatLng()))
                 {
                     building.setNumPeople(building.getNumPeople()+1);
-                    //need to add in storing the user in building as well
+                    building.addUser(usersToCheck.get(i));
                     break;
                 }
             }
         }
-
-
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, users.getUsersList());
+        popupAdapter = new PopupListAdapter(this, users.getUsersActiveList("kwicento"));
+        //popupAdapter = new PopupListAdapter(this, users.getUsersList());
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

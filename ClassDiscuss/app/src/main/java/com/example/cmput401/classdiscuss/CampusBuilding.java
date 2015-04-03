@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Kelsey on 25/03/2015.
@@ -25,6 +27,7 @@ public class CampusBuilding {
     private GoogleMap mMap;
     private Marker marker;
     private Context context;
+    private ArrayList<OtherUserMapInfo> usersInBuilding;
 
     public CampusBuilding(LatLng southwest, LatLng northeast, LatLng center, GoogleMap map, Context c)
     {
@@ -35,6 +38,7 @@ public class CampusBuilding {
         );
         setNumPeople(0);
         bounds = new LatLngBounds(southwest,northeast);
+        usersInBuilding = new ArrayList<OtherUserMapInfo>();
     }
 
     public LatLngBounds getBounds() {
@@ -74,5 +78,10 @@ public class CampusBuilding {
         BitmapDrawable draw = new BitmapDrawable(context.getResources(), markerImage);
         Bitmap drawBmp = draw.getBitmap();
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(drawBmp));
+    }
+
+    public void addUser(OtherUserMapInfo user)
+    {
+        usersInBuilding.add(user);
     }
 }
