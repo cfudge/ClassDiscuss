@@ -62,7 +62,7 @@ public class OtherUsers{
         if(usersLocationMap.get(username)!=null){
             if(usersLocationMap.get(username).get(0) !=null) {
                 LongitudeNum = usersLocationMap.get(username).get(0).doubleValue();
-                Log.e("score", "Longitude = " + LongitudeNum + "n");
+                Log.e("score", "Longitude ** = " + LongitudeNum + "n");
             }
         }
         return LongitudeNum;
@@ -99,7 +99,7 @@ public class OtherUsers{
         while(keySetIterator.hasNext()){
             String key = keySetIterator.next();
             if(usersChannelMap.get(key).contains("active")){
-                usersActiveChannel.add(usersChannelMap.get(key));
+                usersActiveChannel.add(key);
             };
         }
 
