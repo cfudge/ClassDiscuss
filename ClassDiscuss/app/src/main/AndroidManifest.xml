@@ -170,7 +170,7 @@
                 <category android:name="com.example.cmput401.classdiscuss" />
             </intent-filter>
         </receiver>
-<!--
+
         <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -179,7 +179,7 @@
             </intent-filter>
         </receiver>
 
-         End of Parse-->
+         <!--End of Parse-->
 
         <!-- replace @drawable/push_icon with your push icon identifier -->
        <!-- <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_green"/>

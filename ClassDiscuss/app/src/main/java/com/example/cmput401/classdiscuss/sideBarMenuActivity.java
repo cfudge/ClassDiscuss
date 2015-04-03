@@ -84,8 +84,8 @@ public class sideBarMenuActivity extends ActionBarActivity {
             // Clearly doesn't work right now.  the login activity has saved your
             // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:
-                MainActivity out = new MainActivity();
-                out.signOutFromGplus();
+                //MainActivity out = new MainActivity();
+               // out.signOutFromGplus();
                 Intent login = new Intent();
                 login.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(login);

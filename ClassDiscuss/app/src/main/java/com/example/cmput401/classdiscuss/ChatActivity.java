@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -81,7 +82,10 @@ public class ChatActivity extends ActionBarActivity {
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             refreshMessages();
             //filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-
+// Associate the device with a user
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put("user",ParseUser.getCurrentUser());
+            installation.saveInBackground();
             //registerReceiver(myReceiver, filter1);
             startWithCurrentUser();
         } else {
@@ -94,8 +98,8 @@ public class ChatActivity extends ActionBarActivity {
     }
     public void onResume() {
         super.onResume();
-        filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-        registerReceiver(myReceiver, filter1);
+       // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
+        //registerReceiver(myReceiver, filter1);
         //registerReceiver(myReceiver, filter1);
     }
 
@@ -138,26 +142,29 @@ public class ChatActivity extends ActionBarActivity {
                 message.setUserId(sUserId);
                 message.setBody(body);
                 message.setReceiver(profiles.displayProfile.getUserName());
-                Intent localIntent = new Intent("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-                sendBroadcast(localIntent);
-                /*ParsePush push = new ParsePush();
-                //push.subscribeInBackground("Message");
-                //push.setChannel("Message");
-
-                push.setMessage("this is my message");*/
-
-                //push.sendInBackground();
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        //receiveMessage();
-                        ParsePush push = new ParsePush();
-                //push.subscribeInBackground("Message");
-                //push.setChannel("Message");
-                       // receiveMessage();
-                        push.setMessage("this is my message");
+                        /*ParsePush push = new ParsePush();
+                        push.setChannel(profiles.displayProfile.getUserName().toString());
+                        push.setMessage("New Message!");
+                        push.sendInBackground();*/
+                        // Find users near a given location
+                        ParseQuery userQuery = ParseUser.getQuery();
+                        userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
+                        if (userQuery == null)
+                            Log.d("user query is", "null");
 
+                        ParseQuery pushQuery = ParseInstallation.getQuery();
+                        pushQuery.whereMatchesQuery("user", userQuery);
+
+// Send push notification to query
+                        ParsePush push = new ParsePush();
+                        push.setQuery(pushQuery); // Set our Installation query
+                        push.setMessage("New Message!");
                         push.sendInBackground();
+                        receiveMessage();
+
                     }
                 });
                 message = new Message();
@@ -262,7 +269,7 @@ public class ChatActivity extends ActionBarActivity {
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(myReceiver);
+       // unregisterReceiver(myReceiver);
 
     }
 
