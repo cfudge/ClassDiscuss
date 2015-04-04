@@ -50,7 +50,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         final TextView test = (TextView) customView.findViewById(R.id.test);
 
 
-        ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
+        //ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
         final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_button_grey);
         final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active_blue);
@@ -64,12 +64,12 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
 
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        /*deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 alert(position);
                 //test.setText(String.valueOf(position));
             }
-        });
+        });*/
 
         statusButton.setOnClickListener(new View.OnClickListener() {
 
@@ -98,7 +98,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
                 return true;
             }
         });
-        
+
         listText.setText(classes);
         return customView;
     }
