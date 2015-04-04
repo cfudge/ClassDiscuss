@@ -41,30 +41,25 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
-       final String users = getItem(position).getUsername();
+        final String users = getItem(position).getUsername();
         final TextView listText = (TextView) customView.findViewById(R.id.popupText);
         final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
 
-                listText.setText(users);
+        listText.setText(users);
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked){
-
-
                    if(myConnections.myConnections.contains(users));
                    else
                    myConnections.myConnections.add(listText.getText().toString());
 
-                 //  myConnections.displayMessage.add(listText.getText().toString());
-                    //checkBox.setChecked(true);
-                }
+               }
             }
         });
-
       return customView;
     }
-
 }
