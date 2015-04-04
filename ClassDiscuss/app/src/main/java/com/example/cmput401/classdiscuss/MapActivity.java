@@ -22,9 +22,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -42,18 +45,22 @@ public class MapActivity extends sideBarMenuActivity {
     static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ArrayList<CampusBuilding> buildings;
-    private ArrayList<Marker> markers;
     private Location currentLocation;
     private Connections myConnections;
     OtherUsers users =  OtherUsers.getInstance();
     PopupWindow popup;
     PopupListAdapter popupAdapter;
     ListView popupList;
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    MyChannels myChannels = MyChannels.getInstance();
+    ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        myConnections = myConnections.getInstance();
+
         setUpMapIfNeeded();
         updateUserLocation();
 
@@ -135,7 +142,13 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
                                           public boolean onMarkerClick(Marker marker) {
-                                              myConnections = myConnections.getInstance();
+                                              for (CampusBuilding build : buildings)
+                                              {
+                                                  if (build.getMarker().equals(marker))
+                                                  {
+                                                      inPopUpBuilding = build.getUsersInBuilding();
+                                                  }
+                                              }
                                               popupMenu();
                                               return true;
                                           }
@@ -164,7 +177,6 @@ public class MapActivity extends sideBarMenuActivity {
     private void placeBuildingMarkers() {
 
         buildings = new ArrayList<CampusBuilding>();
-        markers = new ArrayList<Marker>();
         Context context = getApplicationContext();
 
         CampusBuilding comSci = new CampusBuilding((new LatLng(53.526428, -113.527560)),
@@ -366,31 +378,47 @@ public class MapActivity extends sideBarMenuActivity {
 
     public void setPeopleInBuildings()
     {
-        ArrayList<LatLng> testList = new ArrayList<LatLng>();
-        testList.add((new LatLng(53.527220, -113.524684)));
-        testList.add((new LatLng(53.526799, -113.527195)));
-        testList.add((new LatLng(53.526799, -113.527034)));
-        testList.add((new LatLng(53.526767, -113.520801)));
+        ArrayList<String> otherUsernames = users.getUsersList();
+        ArrayList<String> activeChannels = myChannels.getSubscribedList();
+        ArrayList<OtherUserMapInfo> usersToCheck = new ArrayList<OtherUserMapInfo>();
 
-        for (int i=0; i < testList.size(); i++)
+        //Get users in common channels and set a list to mark on the map
+        for (int a=0; a<otherUsernames.size(); a++)
+        {
+            String otherName = otherUsernames.get(a);
+            ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
+            ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            commonChannels.retainAll(activeChannels);
+
+            if (commonChannels.isEmpty())
+            {
+                continue;
+            }
+
+            OtherUserMapInfo mapUser = new OtherUserMapInfo((users.getUsersLatitudeByUserName(otherName)),
+                    (users.getUsersLongitudeByUserName(otherName)), otherName);
+            mapUser.addChannel(commonChannels);
+
+            usersToCheck.add(mapUser);
+        }
+
+        for (int i=0; i < usersToCheck.size(); i++)
         {
             for (int a=0; a < buildings.size(); a++)
             {
                 CampusBuilding building = buildings.get(a);
-                if (building.getBounds().contains(testList.get(i)))
+                if (building.getBounds().contains(usersToCheck.get(i).getLatLng()))
                 {
                     building.setNumPeople(building.getNumPeople()+1);
-                    //need to add in storing the user in building as well
+                    building.addUser(usersToCheck.get(i));
                     break;
                 }
             }
         }
-
-
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, users.getUsersList());
+        popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

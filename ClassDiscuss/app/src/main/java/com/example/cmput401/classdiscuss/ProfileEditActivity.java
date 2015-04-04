@@ -1,9 +1,14 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +20,10 @@ import android.widget.TextView;
 
 import com.parse.ParseUser;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -28,6 +36,7 @@ public class ProfileEditActivity extends sideBarMenuActivity {
     final Profiles profiles = Profiles.getInstance();
     ParseUser currentUser = ParseUser.getCurrentUser();
     Profile currentUserProfile;
+    private Uri outputFileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +73,37 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         profilePicView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent imageSelect = new Intent();
-                imageSelect.setType("image/*");
-                imageSelect.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(imageSelect, "Select Picture"), SELECT_PICTURE);
+                //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+
+                // Determine Uri of camera image to save.
+                final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+                root.mkdirs();
+                final String fname = "nimPic";
+                final File sdImageMainDirectory = new File(root, fname);
+                outputFileUri = Uri.fromFile(sdImageMainDirectory);
+
+                final List<Intent> cameraIntents = new ArrayList<Intent>();
+                final Intent getPic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                final PackageManager packageManager = getPackageManager();
+                final List<ResolveInfo> listCam = packageManager.queryIntentActivities(getPic, 0);
+                for(ResolveInfo res: listCam){
+                    final String packageName = res.activityInfo.packageName;
+                    final Intent intent = new Intent(getPic);
+                    intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
+                    intent.setPackage(packageName);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                    cameraIntents.add(intent);
+                }
+
+                final Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+                final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
+
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
+
+                startActivityForResult(chooserIntent, SELECT_PICTURE);
             }
         });
 
@@ -84,17 +120,38 @@ public class ProfileEditActivity extends sideBarMenuActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
+                //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+                final boolean isCamera;
+                if(data == null){
+                    //if the camera was used, the image was saved to storage instead, so no data.
+                    isCamera = true;
+                }
+                else{
+                    final String action = data.getAction();
+                    if (action == null){
+                        //if the camera intent was picked, then the action is
+                        //MediaStore.ACTION_IMAGE_CAPTURE, and thus cannot be null
+                        isCamera = false;
+                    }
+                    else{
+                        isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+                Uri selectedImageUri;
+                if(isCamera){
+                    selectedImageUri = outputFileUri;
+                }else{
+                    selectedImageUri = data == null ? null : data.getData();
+                }
                 try {
+                    ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+                    profilePicView.setImageBitmap(currentUserProfile.getPic());
                     currentUserProfile.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
                 } catch (IOException e) {
                     e.printStackTrace();
 
                 }
-                //myProfile.setProfilePicURI(selectedImageUri);
-                ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
-                //profilePicView.setImageURI(myProfile.getProfilePicURI());
-                profilePicView.setImageBitmap(currentUserProfile.getPic());
+
             }
         }
     }
