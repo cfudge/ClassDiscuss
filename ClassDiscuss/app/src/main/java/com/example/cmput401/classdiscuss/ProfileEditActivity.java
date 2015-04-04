@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -122,7 +121,6 @@ public class ProfileEditActivity extends sideBarMenuActivity {
 
         new Thread(new Runnable() {
             public void run() {
-                Log.e("inside runnable", "inside runnable");
                 if (resultCode == RESULT_OK) {
                     if (requestCode == SELECT_PICTURE) {
                         //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
@@ -155,15 +153,13 @@ public class ProfileEditActivity extends sideBarMenuActivity {
                             currentUserProfile.setPic(newProPic);
                             profilePicView.post(new Runnable() {
                                 public void run(){
-                                    Log.e("inside runnable2", "inside runnable2");
+                                    //can't set imageview outside UI thread:
                                     profilePicView.setImageBitmap(currentUserProfile.getPic());
                                 }
                             });
                         } catch (IOException e) {
                             e.printStackTrace();
-
                         }
-
                     }
                 }
             }
