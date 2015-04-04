@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
+    ArrayList<String> subscribedChannels;
 
     MyChannelsAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
@@ -36,6 +39,9 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        final MyChannels myChannels = MyChannels.getInstance();
+        subscribedChannels = myChannels.getSubscribedList();
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.channel_list, parent, false);
 
@@ -44,42 +50,58 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         final TextView test = (TextView) customView.findViewById(R.id.test);
 
 
-        ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
+        //ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
-        final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_inactive);
-        final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active);
-        statusButton.setTag("Active");
-        statusButton.setText("0");
+        final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_button_grey);
+        final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active_blue);
+        statusButton.setText(classes);
+        statusButton.setTextColor(Color.parseColor("#ffffff"));
+
+        if (subscribedChannels.contains(classes) && !myChannels.isChannelActive(classes))
+        {
+            statusButton.setBackgroundDrawable(inactivePic);
+        }
 
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+
+        /*deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 alert(position);
                 //test.setText(String.valueOf(position));
             }
-        });
+        });*/
 
         statusButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 String item = listItems.get(position);
-                if (statusButton.getTag().equals("Active")){
-                    confirm(position, statusButton, inactivePic);
-                    MyChannels.getInstance().unSubscribeToChannels(item);
+                String className = statusButton.getText().toString();
+                if (myChannels.isChannelActive(className))
+                {
+                    //deactivate
+                    statusButton.setBackgroundDrawable(inactivePic);
+                    myChannels.unSubscribeToChannels(className);
                 }
-                else {
-                    statusButton.setText("0");
-                    statusButton.setTag("Active");
+                else
+                {
+                    //activate
                     statusButton.setBackgroundDrawable(activePic);
-                    MyChannels.getInstance().subscribeToChannels(item);
+                    myChannels.subscribeToChannels(className);
                 }
+            }
+        });
+
+        statusButton.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                alert(position);
+                return true;
             }
         });
 
         listText.setText(classes);
         return customView;
     }
-
 
 //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void alert(final int position){

@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.parse.ParseUser;
 
 /**
@@ -21,6 +22,7 @@ public class GPSLocation {
     private LocationManager locationManager;
     private static GPSLocation instance;
     private String provider;
+    private GoogleMap map;
     private ParseUser currentUser = ParseUser.getCurrentUser();
     private Profile currentUserProfile;
 
@@ -77,6 +79,13 @@ public class GPSLocation {
         return location;
     }
 
+    public void setMap(GoogleMap mMap) {
+        this.map = mMap;
+    }
+
+    public GoogleMap getMap() {
+        return map;
+    }
 }
 
 
