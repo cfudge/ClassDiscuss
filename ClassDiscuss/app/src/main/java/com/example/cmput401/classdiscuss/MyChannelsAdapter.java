@@ -39,7 +39,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        MyChannels myChannels = MyChannels.getInstance();
+        final MyChannels myChannels = MyChannels.getInstance();
         subscribedChannels = myChannels.getSubscribedList();
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -75,19 +75,30 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
             public void onClick(View v) {
                 String item = listItems.get(position);
-                if (statusButton.getTag().equals("Active")){
-                    confirm(position, statusButton, inactivePic);
-                    MyChannels.getInstance().unSubscribeToChannels(item);
+                String className = statusButton.getText().toString();
+                if (myChannels.isChannelActive(className))
+                {
+                    //deactivate
+                    statusButton.setBackgroundDrawable(inactivePic);
+                    myChannels.unSubscribeToChannels(className);
                 }
-                else {
-                    statusButton.setText("0");
-                    statusButton.setTag("Active");
+                else
+                {
+                    //activate
                     statusButton.setBackgroundDrawable(activePic);
-                    MyChannels.getInstance().subscribeToChannels(item);
+                    myChannels.subscribeToChannels(className);
                 }
             }
         });
 
+        statusButton.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                alert(position);
+                return true;
+            }
+        });
+        
         listText.setText(classes);
         return customView;
     }

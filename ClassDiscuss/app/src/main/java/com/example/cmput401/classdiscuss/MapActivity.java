@@ -381,7 +381,17 @@ public class MapActivity extends sideBarMenuActivity {
     public void setPeopleInBuildings()
     {
         ArrayList<String> otherUsernames = users.getUsersList();
-        ArrayList<String> activeChannels = myChannels.getSubscribedList();
+        ArrayList<String> allChannels = myChannels.getSubscribedList();
+        ArrayList<String> activeChannels = new ArrayList<String>();
+
+        for (String channel : allChannels)
+        {
+            if (myChannels.isChannelActive(channel))
+            {
+                activeChannels.add(channel);
+            }
+        }
+
         ArrayList<OtherUserMapInfo> usersToCheck = new ArrayList<OtherUserMapInfo>();
 
         //Get users in common channels and set a list to mark on the map
