@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +25,7 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
     ArrayList<OtherUserMapInfo> listItems;
     Connections myConnections;
 
-    ConnectionsActivity act;
-
+   boolean [] itemChecked;
 
 
     PopupListAdapter(Context context, ArrayList<OtherUserMapInfo> listItems) {
@@ -34,6 +34,7 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         this.listItems = listItems;
 
         myConnections = Connections.getInstance();
+        itemChecked = new boolean[listItems.size()];
     }
 
     @Override
@@ -41,16 +42,19 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
+        PopupListAdapter.ViewHolder holder = new ViewHolder();
+
         final String users = getItem(position).getUsername();
         final TextView listText = (TextView) customView.findViewById(R.id.popupText);
-        final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
+        holder.checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
 
         listText.setText(users);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                itemChecked[position] = isChecked;
 
                 if(isChecked){
                    if(myConnections.myConnections.contains(users));
@@ -58,8 +62,14 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
                    myConnections.myConnections.add(listText.getText().toString());
 
                }
+
             }
         });
+        holder.checkBox.setChecked(itemChecked[position]);
       return customView;
+    }
+
+    final class ViewHolder {
+       CheckBox checkBox;
     }
 }
