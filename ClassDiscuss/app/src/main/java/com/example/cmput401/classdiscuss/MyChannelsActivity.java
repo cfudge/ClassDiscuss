@@ -69,7 +69,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
 
         myConnections = myConnections.getInstance();
-        popupMenu();
+       // popupMenu();
 
     }
 
@@ -83,7 +83,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
     //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
     //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
-    public void popupMenu(){
+    /*public void popupMenu(){
         //Button to test popup menu
 
         popupAdapter = new PopupListAdapter(this, users.getUsersList());
@@ -136,7 +136,7 @@ public class MyChannelsActivity extends sideBarMenuActivity {
                 });
             }
         });
-    }
+    }*/
 
 
     @Override
