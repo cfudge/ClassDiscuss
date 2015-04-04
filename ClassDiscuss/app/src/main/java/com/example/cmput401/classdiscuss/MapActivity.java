@@ -45,7 +45,6 @@ public class MapActivity extends sideBarMenuActivity {
     static final LatLng CAMPUS = new LatLng(53.5244, -113.5244);
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ArrayList<CampusBuilding> buildings;
-    private ArrayList<Marker> markers;
     private Location currentLocation;
     private Connections myConnections;
     OtherUsers users =  OtherUsers.getInstance();
@@ -54,7 +53,6 @@ public class MapActivity extends sideBarMenuActivity {
     ListView popupList;
     ParseUser currentUser = ParseUser.getCurrentUser();
     MyChannels myChannels = MyChannels.getInstance();
-    ArrayList<String> testList = new ArrayList<String>();
     ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
     @Override
@@ -146,7 +144,7 @@ public class MapActivity extends sideBarMenuActivity {
                                           public boolean onMarkerClick(Marker marker) {
                                               for (CampusBuilding build : buildings)
                                               {
-                                                  if (build.getMarker() == marker)
+                                                  if (build.getMarker().equals(marker))
                                                   {
                                                       inPopUpBuilding = build.getUsersInBuilding();
                                                   }
@@ -179,7 +177,6 @@ public class MapActivity extends sideBarMenuActivity {
     private void placeBuildingMarkers() {
 
         buildings = new ArrayList<CampusBuilding>();
-        markers = new ArrayList<Marker>();
         Context context = getApplicationContext();
 
         CampusBuilding comSci = new CampusBuilding((new LatLng(53.526428, -113.527560)),
