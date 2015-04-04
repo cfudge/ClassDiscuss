@@ -13,6 +13,9 @@
     <string name="dialog_message">Are you sure you want to delete this channel? </string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="okay">Okay</string>
+    <string name="message_error">You cannot be subscribed to more than 5 channels</string>
+    <string name="error_title">Add Channel</string>
 
 
     <string name="menu_connections">My Connections</string>

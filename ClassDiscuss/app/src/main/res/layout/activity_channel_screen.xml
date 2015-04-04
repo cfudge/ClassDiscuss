@@ -24,6 +24,7 @@
         android:scrollbarSize="6dp"
         android:scrollbars="vertical"
         android:textColor="#333333"
+        android:layout_weight="1"
         />
 
     <LinearLayout
@@ -41,15 +42,6 @@
             android:textColor="#33CCFF"
             android:layout_alignParentTop="true" />
 
-        <Button
-       android:id="@+id/popup_button"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="left|top"
-       android:text="Popup Menu"
-       android:padding="10dp"
-       android:layout_marginTop="20dp"
-       android:paddingRight="10dp"/>
 
     </LinearLayout>
 
