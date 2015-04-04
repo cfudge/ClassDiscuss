@@ -26,6 +26,7 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
     Context context;
     ArrayList<String> listItems;
     Activity activity;
+    ArrayList<String> subscribedChannels;
 
     MyChannelsAdapter(Context context, ArrayList<String> listItems, Activity activity){
         super(context, R.layout.channel_list, listItems);
@@ -38,6 +39,9 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        MyChannels myChannels = MyChannels.getInstance();
+        subscribedChannels = myChannels.getSubscribedList();
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.channel_list, parent, false);
 
@@ -52,6 +56,12 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active_blue);
         statusButton.setText(classes);
         statusButton.setTextColor(Color.parseColor("#ffffff"));
+
+        if (subscribedChannels.contains(classes) && !myChannels.isChannelActive(classes))
+        {
+            statusButton.setBackgroundDrawable(inactivePic);
+        }
+
 
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +91,6 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
         listText.setText(classes);
         return customView;
     }
-
 
 //Alert Dialog that pops up and asks the user if they want to delete the channel
     public void alert(final int position){
