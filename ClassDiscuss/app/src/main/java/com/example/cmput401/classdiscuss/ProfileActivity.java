@@ -50,7 +50,9 @@ public class ProfileActivity extends sideBarMenuActivity{
             profilePicView.setImageBitmap(icon);
         }
         else{
-            profilePicView.setImageBitmap(displayProfile.getPic());
+            Bitmap displayPic = displayProfile.getPic();
+            displayPic = ImageOperations.compressImage(ImageOperations.getBytes(displayPic), 70, 70);
+            profilePicView.setImageBitmap(displayPic);
         }
 
         textUserName.setText(displayProfile.getUserName());

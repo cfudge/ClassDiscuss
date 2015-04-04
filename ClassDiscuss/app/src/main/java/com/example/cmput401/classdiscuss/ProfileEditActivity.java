@@ -76,9 +76,9 @@ public class ProfileEditActivity extends sideBarMenuActivity {
                 //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
 
                 // Determine Uri of camera image to save.
-                final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+                final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "NIMPics" + File.separator);
                 root.mkdirs();
-                final String fname = "nimPic";
+                final String fname = "nimPic.JPG";
                 final File sdImageMainDirectory = new File(root, fname);
                 outputFileUri = Uri.fromFile(sdImageMainDirectory);
 
@@ -145,8 +145,10 @@ public class ProfileEditActivity extends sideBarMenuActivity {
                 }
                 try {
                     ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+                    Bitmap newProPic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    newProPic = ImageOperations.compressImage(ImageOperations.getBytes(newProPic), 70, 70);
+                    currentUserProfile.setPic(newProPic);
                     profilePicView.setImageBitmap(currentUserProfile.getPic());
-                    currentUserProfile.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
                 } catch (IOException e) {
                     e.printStackTrace();
 
