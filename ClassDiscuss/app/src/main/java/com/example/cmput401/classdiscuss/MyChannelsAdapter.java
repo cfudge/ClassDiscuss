@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +48,10 @@ public class MyChannelsAdapter extends ArrayAdapter<String>{
 
         ImageButton deleteButton = (ImageButton) customView.findViewById(R.id.deleteButton);
         final Button statusButton = (Button) customView.findViewById(R.id.activeButton);
-        final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_inactive);
-        final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active);
-        statusButton.setTag("Active");
-        statusButton.setText("0");
+        final Drawable inactivePic = customView.getResources().getDrawable(R.drawable.ic_button_grey);
+        final Drawable activePic = customView.getResources().getDrawable(R.drawable.ic_active_blue);
+        statusButton.setText(classes);
+        statusButton.setTextColor(Color.parseColor("#ffffff"));
 
 
         deleteButton.setOnClickListener(new View.OnClickListener() {

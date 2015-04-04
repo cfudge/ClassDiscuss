@@ -65,8 +65,8 @@ public class MapActivity extends sideBarMenuActivity {
         updateUserLocation();
 
         /*//set channel button listener
-        Button channelButton = (Button) findViewById(R.id.channel_map_btn);
-        channelButton.setOnClickListener(new View.OnClickListener() {
+        Button channel_button = (Button) findViewById(R.id.channel_map_btn);
+        channel_button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 Intent myChannels = new Intent();
@@ -139,17 +139,17 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         placeBuildingMarkers();
         setPeopleInBuildings();
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
                                           public boolean onMarkerClick(Marker marker) {
-                                              for (CampusBuilding build : buildings)
-                                              {
-                                                  if (build.getMarker().equals(marker))
-                                                  {
+                                              for (CampusBuilding build : buildings) {
+                                                  if (build.getMarker().equals(marker)) {
                                                       inPopUpBuilding = build.getUsersInBuilding();
+                                                      popupMenu();
+                                                      break;
                                                   }
                                               }
-                                              popupMenu();
                                               return true;
                                           }
                                       }
@@ -158,7 +158,9 @@ public class MapActivity extends sideBarMenuActivity {
 
     private void updateUserLocation() {
         GPSLocation.initializeLocation(getApplicationContext());
-        currentLocation = GPSLocation.getInstance().getLocation();
+        GPSLocation gpsLocation = GPSLocation.getInstance();
+        currentLocation = gpsLocation.getLocation();
+        gpsLocation.setMap(mMap);
     }
 
     private boolean checkIfOnCampus(double lat, double lng){
