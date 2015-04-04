@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
     ArrayList<OtherUserMapInfo> listItems;
     Connections myConnections;
 
+    ConnectionsActivity act;
 
 
 
@@ -30,6 +32,7 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         super(context, R.layout.popup_list, listItems);
         this.context = context;
         this.listItems = listItems;
+
         myConnections = Connections.getInstance();
     }
 
@@ -38,24 +41,29 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
-        String classes = getItem(position).getUsername();
+       final String users = getItem(position).getUsername();
         final TextView listText = (TextView) customView.findViewById(R.id.popupText);
         final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
-        listText.setText(classes);
+
+                listText.setText(users);
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
 
-                   if(myConnections.myConnections.contains(listText.getText()));
+
+                   if(myConnections.myConnections.contains(users));
                    else
                    myConnections.myConnections.add(listText.getText().toString());
+
+                 //  myConnections.displayMessage.add(listText.getText().toString());
+                    //checkBox.setChecked(true);
                 }
             }
         });
+
       return customView;
     }
 

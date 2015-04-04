@@ -55,6 +55,8 @@ public class MapActivity extends sideBarMenuActivity {
     MyChannels myChannels = MyChannels.getInstance();
     ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
+    String msg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -444,19 +446,23 @@ public class MapActivity extends sideBarMenuActivity {
             }
         });
 
+
         //Send button
         Button sendButton = (Button) view.findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent connectionsIntent = new Intent();
                 connectionsIntent.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(connectionsIntent);
 
-                myConnections.displayMessage.add(enterMessage.getText().toString());
+                for(int i = 0; i < myConnections.myConnections.size(); i++)
+                    myConnections.displayMessage.add(enterMessage.getText().toString());
 
-                Toast.makeText(MapActivity.this, enterMessage.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
+                // myConnections.displayMessage.add(enterMessage.getText().toString());
+
+
             }
         });
     }
