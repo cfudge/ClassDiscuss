@@ -418,7 +418,7 @@ public class MapActivity extends sideBarMenuActivity {
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, users.getUsersList());
+        popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

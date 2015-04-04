@@ -17,14 +17,16 @@ import java.util.ArrayList;
 /**
  * Created by Nancy on 3/17/2015.
  */
-public class PopupListAdapter extends ArrayAdapter<String> {
+public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
 
     Context context;
-    ArrayList<String> listItems;
+    ArrayList<OtherUserMapInfo> listItems;
     Connections myConnections;
 
 
-    PopupListAdapter(Context context, ArrayList<String> listItems) {
+
+
+    PopupListAdapter(Context context, ArrayList<OtherUserMapInfo> listItems) {
         super(context, R.layout.popup_list, listItems);
         this.context = context;
         this.listItems = listItems;
@@ -36,7 +38,7 @@ public class PopupListAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
-        String classes = getItem(position);
+        String classes = getItem(position).getUsername();
         final TextView listText = (TextView) customView.findViewById(R.id.popupText);
         final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
