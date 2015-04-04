@@ -34,7 +34,7 @@ import java.util.List;
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
-public class ChatActivity extends ActionBarActivity {
+public class ChatActivity extends sideBarMenuActivity {
     private static final String TAG = ChatActivity.class.getName();
     private static String sUserId;
 

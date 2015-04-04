@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.ParseUser;
@@ -81,8 +82,6 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 ProfileActivity.setClass(getApplicationContext(), ProfileActivity.class);
                 startActivity(ProfileActivity);
                 break;
-            // Clearly doesn't work right now.  the login activity has saved your
-            // email address so if you log out it automatically signs you back in.
             case R.id.action_logout:
                 //MainActivity out = new MainActivity();
                // out.signOutFromGplus();
@@ -95,4 +94,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
         }
         return true;
     }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.removeItem(R.id.action_logout);
+        return true;
+    }
+
 }

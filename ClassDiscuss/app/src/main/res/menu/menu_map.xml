@@ -8,6 +8,9 @@
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
         android:icon="@drawable/ic_profile_icon"
         android:orderInCategory="1" />
+    <item android:id="@+id/action_chat" android:title="@string/menu_chat"
+        android:icon="@drawable/ic_newmessage"
+        android:orderInCategory="1" app:showAsAction="always" />
     <item android:id="@+id/action_myChannels" android:title="@string/my_channels"
         android:icon="@drawable/ic_mychannels_icon" app:showAsAction="always"
         android:orderInCategory="1" />
