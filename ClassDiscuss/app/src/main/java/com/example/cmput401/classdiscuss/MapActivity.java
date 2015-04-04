@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -52,11 +53,15 @@ public class MapActivity extends sideBarMenuActivity {
     PopupListAdapter popupAdapter;
     ListView popupList;
     ParseUser currentUser = ParseUser.getCurrentUser();
+    MyChannels myChannels = MyChannels.getInstance();
+    ArrayList<String> testList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        myConnections = myConnections.getInstance();
+
         setUpMapIfNeeded();
         updateUserLocation();
 
@@ -138,7 +143,6 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
                                           public boolean onMarkerClick(Marker marker) {
-                                              myConnections = myConnections.getInstance();
                                               popupMenu();
                                               return true;
                                           }
@@ -369,28 +373,17 @@ public class MapActivity extends sideBarMenuActivity {
 
     public void setPeopleInBuildings()
     {
-        Marker marker = mMap.addMarker(
-                new MarkerOptions().position(new LatLng(53.525366, -113.527133))
-        );
-
-        String username = currentUser.getUsername();
-        ArrayList<String> myChannels = users.getUsersActiveList(username);
         ArrayList<String> otherUsernames = users.getUsersList();
+        ArrayList<String> activeChannels = myChannels.getSubscribedList();
         ArrayList<OtherUserMapInfo> usersToCheck = new ArrayList<OtherUserMapInfo>();
 
-        //Remove yourself from the list
-        if (otherUsernames.contains(username))
-        {
-            otherUsernames.remove(username);
-        }
-
         //Get users in common channels and set a list to mark on the map
-        for (int a=0; a < otherUsernames.size(); a++)
+        for (int a=0; a<otherUsernames.size(); a++)
         {
             String otherName = otherUsernames.get(a);
             ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
             ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
-            commonChannels.retainAll(myChannels);
+            commonChannels.retainAll(activeChannels);
 
             if (commonChannels.isEmpty())
             {
@@ -420,8 +413,7 @@ public class MapActivity extends sideBarMenuActivity {
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, users.getUsersActiveList("kwicento"));
-        //popupAdapter = new PopupListAdapter(this, users.getUsersList());
+        popupAdapter = new PopupListAdapter(this, users.getUsersList());
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

@@ -50,8 +50,8 @@ public class OtherUsers{
     public double getUsersLatitudeByUserName(String username){
         double latitudeNum= 0;
         if(usersLocationMap.get(username)!=null){
-            if(usersLocationMap.get(username).get(0) !=null) {
-                latitudeNum = usersLocationMap.get(username).get(0).doubleValue();
+            if(usersLocationMap.get(username).get(1) !=null) {
+                latitudeNum = usersLocationMap.get(username).get(1).doubleValue();
             }
         }
         return latitudeNum;
