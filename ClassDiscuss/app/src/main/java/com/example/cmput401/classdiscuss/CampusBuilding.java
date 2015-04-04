@@ -45,6 +45,14 @@ public class CampusBuilding {
         return bounds;
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public ArrayList<OtherUserMapInfo> getUsersInBuilding() {
+        return usersInBuilding;
+    }
+
     public int getNumPeople() {
         return numPeople;
     }

@@ -55,6 +55,7 @@ public class MapActivity extends sideBarMenuActivity {
     ParseUser currentUser = ParseUser.getCurrentUser();
     MyChannels myChannels = MyChannels.getInstance();
     ArrayList<String> testList = new ArrayList<String>();
+    ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,13 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
                                           public boolean onMarkerClick(Marker marker) {
+                                              for (CampusBuilding build : buildings)
+                                              {
+                                                  if (build.getMarker() == marker)
+                                                  {
+                                                      inPopUpBuilding = build.getUsersInBuilding();
+                                                  }
+                                              }
                                               popupMenu();
                                               return true;
                                           }
