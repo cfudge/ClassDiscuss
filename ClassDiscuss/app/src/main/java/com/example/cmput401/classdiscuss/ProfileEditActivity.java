@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -117,45 +118,56 @@ public class ProfileEditActivity extends sideBarMenuActivity {
      * Referenced the code laid out here:
      * http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
-                final boolean isCamera;
-                if(data == null){
-                    //if the camera was used, the image was saved to storage instead, so no data.
-                    isCamera = true;
-                }
-                else{
-                    final String action = data.getAction();
-                    if (action == null){
-                        //if the camera intent was picked, then the action is
-                        //MediaStore.ACTION_IMAGE_CAPTURE, and thus cannot be null
-                        isCamera = false;
-                    }
-                    else{
-                        isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
-                    }
-                }
-                Uri selectedImageUri;
-                if(isCamera){
-                    selectedImageUri = outputFileUri;
-                }else{
-                    selectedImageUri = data == null ? null : data.getData();
-                }
-                try {
-                    ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
-                    Bitmap newProPic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                    newProPic = ImageOperations.compressImage(ImageOperations.getBytes(newProPic), 70, 70);
-                    currentUserProfile.setPic(newProPic);
-                    profilePicView.setImageBitmap(currentUserProfile.getPic());
-                } catch (IOException e) {
-                    e.printStackTrace();
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 
-                }
+        new Thread(new Runnable() {
+            public void run() {
+                Log.e("inside runnable", "inside runnable");
+                if (resultCode == RESULT_OK) {
+                    if (requestCode == SELECT_PICTURE) {
+                        //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
+                        final boolean isCamera;
+                        if(data == null){
+                            //if the camera was used, the image was saved to storage instead, so no data.
+                            isCamera = true;
+                        }
+                        else{
+                            final String action = data.getAction();
+                            if (action == null){
+                                //if the camera intent was picked, then the action is
+                                //MediaStore.ACTION_IMAGE_CAPTURE, and thus cannot be null
+                                isCamera = false;
+                            }
+                            else{
+                                isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+                            }
+                        }
+                        Uri selectedImageUri;
+                        if(isCamera){
+                            selectedImageUri = outputFileUri;
+                        }else{
+                            selectedImageUri = data == null ? null : data.getData();
+                        }
+                        try {
+                            final ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+                            Bitmap newProPic = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                            newProPic = ImageOperations.compressImage(ImageOperations.getBytes(newProPic), 70, 70);
+                            currentUserProfile.setPic(newProPic);
+                            profilePicView.post(new Runnable() {
+                                public void run(){
+                                    Log.e("inside runnable2", "inside runnable2");
+                                    profilePicView.setImageBitmap(currentUserProfile.getPic());
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
 
+                        }
+
+                    }
+                }
             }
-        }
+        }).start();
     }
 
     @Override
