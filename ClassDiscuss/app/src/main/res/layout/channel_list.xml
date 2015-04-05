@@ -7,15 +7,15 @@
     android:background="#ffffff"
     tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
 
-<TextView
-    android:id="@+id/listText"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="#333333"
-    android:textSize="18sp"
-    android:paddingLeft="70sp"
-    />
+    <TextView
+        android:id="@+id/listText"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:paddingLeft="70sp"
+        />
 
     <TextView
         android:id="@+id/test"
@@ -24,22 +24,15 @@
         android:layout_height="match_parent"
         android:textSize="18sp"/>
 
-    <ImageButton
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_delete"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        />
-
     <Button
         android:id="@+id/activeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/deleteButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/ic_active"/>
+        android:background="@drawable/ic_active_blue"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

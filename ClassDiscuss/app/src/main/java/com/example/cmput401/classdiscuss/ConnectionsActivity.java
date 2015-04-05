@@ -73,6 +73,7 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     protected void onStart(){
         super.onStart();
         addConnections();
+
     }
 
     @Override

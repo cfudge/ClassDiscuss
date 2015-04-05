@@ -2,7 +2,6 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +25,16 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
     ArrayList<OtherUserMapInfo> listItems;
     Connections myConnections;
 
-
+    boolean [] itemChecked;
 
 
     PopupListAdapter(Context context, ArrayList<OtherUserMapInfo> listItems) {
         super(context, R.layout.popup_list, listItems);
         this.context = context;
         this.listItems = listItems;
+
         myConnections = Connections.getInstance();
+        itemChecked = new boolean[listItems.size()];
     }
 
     @Override
@@ -39,36 +42,38 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.popup_list, parent, false);
 
-        String classes = getItem(position).getUsername();
+        PopupListAdapter.ViewHolder holder = new ViewHolder();
+
+        final String users = getItem(position).getUsername();
         final TextView listText = (TextView) customView.findViewById(R.id.popupText);
-        final CheckBox checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
+        holder.checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
-        listText.setText(classes);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        listText.setText(users);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                itemChecked[position] = isChecked;
 
                 if(isChecked){
-                    Log.d("isChecked", "yes");
-                    Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
-
-                   if(myConnections.myConnections.contains(listText.getText()));
-                   else {
-                       myConnections.myConnections.add(listText.getText().toString());
-                   }
-                    if(!myConnections.tempConnections.contains(listText.getText()))
+                    if(myConnections.myConnections.contains(users));
+                    else
+                        myConnections.myConnections.add(listText.getText().toString());
+                    if(!myConnections.tempConnections.contains(users))
                         myConnections.tempConnections.add(listText.getText().toString());
 
                 }
-                else {
-                    Log.d("isChecked", "no");
+                else
                     myConnections.tempConnections.remove(listText.getText().toString());
 
-                }
             }
         });
-      return customView;
+        holder.checkBox.setChecked(itemChecked[position]);
+        return customView;
     }
 
+    final class ViewHolder {
+        CheckBox checkBox;
+    }
 }

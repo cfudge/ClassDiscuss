@@ -5,7 +5,9 @@ package com.example.cmput401.classdiscuss;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,9 +72,31 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
                     Toast.LENGTH_SHORT).show();
             return;
         }
-
+        if(myChannels.getSubscribedList().size() >= 5) {
+            alert(position);
+            return;
+        }
         myChannels.addChannel(getItem(position));
         this.notifyDataSetChanged();
+
+    }
+
+    //Alert Dialog that pops up and asks the user if they want to delete the channel
+    public void alert(final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.message_error).setTitle(R.string.error_title);
+
+        builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+
+        });
+
+        //Get alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 

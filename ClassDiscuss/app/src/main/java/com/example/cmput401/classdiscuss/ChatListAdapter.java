@@ -44,7 +44,6 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
 
         final ImageView proPic;
         final ImageView picView = holder.image;
-        Bitmap messagePic = message.getPic();
 
         if(!Profiles.getInstance().loginEmail.replace("@ualberta.ca", "").equals(message.getUserId())){
             //If the user that posted is not the current user, use the left side for profile pic and
@@ -65,22 +64,51 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             ((ImageView) convertView.findViewById(R.id.chatProfilePicSelf)).setVisibility(View.VISIBLE);
         }
 
+        //get pics on separate threads:
+        new Thread(new Runnable() {
+            public void run() {
+                final Bitmap mProPic = message.getPosterPic();
+                if (mProPic == null) {
+                    proPic.post(new Runnable() {
+                        public void run() {
+                            //can't set imageview outside UI thread:
+                            proPic.setImageBitmap(null);
+                        }
+                    });
+                } else {
+                    proPic.post(new Runnable() {
+                        public void run() {
+                            //can't set imageview outside UI thread:
+                            proPic.setImageBitmap(mProPic);
+                        }
+                    });
+                }
+            }
+        }).start();
 
-        Bitmap mProPic = message.getPosterPic();
-        if(mProPic == null){
-            proPic.setImageBitmap(null);
-        }
-        else{
-            proPic.setImageBitmap(mProPic);
-        }
+        new Thread(new Runnable() {
+            public void run() {
+                final Bitmap messagePic = message.getPic();
+                if (messagePic == null) {
+                    picView.post(new Runnable() {
+                        public void run() {
+                            //can't set imageview outside UI thread:
+                            picView.setImageBitmap(null);
+                            //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);                        }
+                        }
+                    });
+                } else {
+                    picView.post(new Runnable() {
+                        public void run() {
+                            //can't set imageview outside UI thread:
+                            picView.setImageBitmap(messagePic);
+                        }
+                    });
+                }
 
-        if(messagePic == null) {
-            picView.setImageBitmap(null);
-            //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(picView);
-        }
-        else{
-            picView.setImageBitmap(messagePic);
-        }
+            }
+        }).start();
+
         holder.body.setText(message.getBody());
         holder.postStats.setText(message.getPostTime());
         return convertView;

@@ -64,7 +64,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
 
         myConnections = myConnections.getInstance();
-       // popupMenu();
 
     }
 
@@ -76,62 +75,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         }
     }
 
-    //http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
-    //http://android-er.blogspot.ca/2012/03/example-of-using-popupwindow.html
-    /*public void popupMenu(){
-        //Button to test popup menu
-
-        popupAdapter = new PopupListAdapter(this, users.getUsersList());
-
-        final Button popupButton = (Button) findViewById(R.id.popup_button);
-        popupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.message_popup, null);
-                popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-                popupList = (ListView) view.findViewById(R.id.popup_list_view);
-                popupList.setAdapter(popupAdapter);
-
-                popup.showAtLocation(view, Gravity.CENTER, 0,0);
-
-                ImageButton closeButton = (ImageButton) view.findViewById(R.id.close_button);
-                closeButton.setOnClickListener(new ImageButton.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popup.dismiss();
-                    }
-                });
-
-                final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
-               enterMessage.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       enterMessage.setText("");
-                   }
-               });
-
-                //Send button
-                Button sendButton = (Button) view.findViewById(R.id.sendButton);
-                sendButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent connectionsIntent = new Intent();
-                        connectionsIntent.setClass(getApplicationContext(), ConnectionsActivity.class);
-                        startActivity(connectionsIntent);
-
-                        myConnections.displayMessage.add(enterMessage.getText().toString());
-
-                        Toast.makeText(MyChannelsActivity.this, enterMessage.getText().toString(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-    }*/
 
 
     @Override
