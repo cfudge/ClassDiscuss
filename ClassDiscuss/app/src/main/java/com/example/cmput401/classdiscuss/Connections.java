@@ -16,6 +16,7 @@ public class Connections {
     public ArrayList<String>displayMessage;
     public ArrayList<String>tempConnections;
     public ArrayList<String>allConnections;
+    public ArrayList<String>messageTime;
 
     private static final Connections connInstance = new Connections();
 
@@ -27,6 +28,7 @@ public class Connections {
         myConnections = new ArrayList<String>();
         displayMessage = new ArrayList<String>();
         tempConnections = new ArrayList<String>();
+        messageTime = new ArrayList<String>();
 
     }
 

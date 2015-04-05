@@ -37,11 +37,14 @@ public class ConnectionsAdapter extends ArrayAdapter<String> {
 
         String connections = Conn.myConnections.get(position);
         String message = Conn.displayMessage.get(position);
+        String time = Conn.messageTime.get(position);
         TextView listText = (TextView) customView.findViewById(R.id.listText);
         TextView secondText = (TextView) customView.findViewById(R.id.secondText);
+        TextView timeText = (TextView) customView.findViewById(R.id.timeText);
 
        listText.setText(connections);
        secondText.setText(message);
+       timeText.setText(time);
 
         return customView;
     }

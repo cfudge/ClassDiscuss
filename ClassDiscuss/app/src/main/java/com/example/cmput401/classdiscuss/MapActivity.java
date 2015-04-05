@@ -29,6 +29,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+
+import java.lang.reflect.Array;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import java.util.ArrayList;
 
 /*
@@ -57,7 +65,10 @@ public class MapActivity extends sideBarMenuActivity {
     MyChannels myChannels = MyChannels.getInstance();
     ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
-    String msg;
+
+    long time =  System.currentTimeMillis();
+    Timestamp timeStamp =  new Timestamp(time);
+    String tStamp = timeStamp.toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -497,10 +508,20 @@ public class MapActivity extends sideBarMenuActivity {
 
             for(int i = 0; i < myConnections.myConnections.size(); i++)
                 myConnections.displayMessage.add(enterMessage.getText().toString());
+                for(int j = 0; j < myConnections.displayMessage.size(); j++)
+                 myConnections.messageTime.add(tStamp);
 
             }
         });
     }
+
+    /*public void sortList(){
+        Collections.sort(timeStamp, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return lhs.compareTo(rhs);
+            }
+        });*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
