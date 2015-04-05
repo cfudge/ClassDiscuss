@@ -31,9 +31,7 @@ import com.google.android.gms.plus.model.people.Person;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -415,7 +413,7 @@ public class MainActivity extends Activity implements OnClickListener,
         //this is needed for parseDatabase adding default image to parse
         Bitmap picBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_noimage);
         ParseDatabase.getInstance().setDefaultProfilePic(picBitmap);
-        ParseDatabase.getInstance().Initiate();
+        ParseDatabase.getInstance().updateData();
     }
 }
 
