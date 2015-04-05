@@ -2,6 +2,9 @@ package com.example.cmput401.classdiscuss;
 
 import android.widget.TextView;
 
+import com.parse.ParseQuery;
+
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /*
@@ -11,6 +14,8 @@ import java.util.ArrayList;
 public class Connections {
     public ArrayList<String> myConnections;
     public ArrayList<String>displayMessage;
+    public ArrayList<String>tempConnections;
+    public ArrayList<String>allConnections;
 
     private static final Connections connInstance = new Connections();
 
@@ -21,6 +26,7 @@ public class Connections {
     private Connections() {
         myConnections = new ArrayList<String>();
         displayMessage = new ArrayList<String>();
+        tempConnections = new ArrayList<String>();
 
     }
 

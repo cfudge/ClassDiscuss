@@ -1,10 +1,14 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -42,7 +46,28 @@ public class ConnectionsActivity extends sideBarMenuActivity {
         listView.setAdapter(connectionsAdapter);
 
         connectionsAdapter.notifyDataSetChanged();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                String  itemValue = (String) listView.getItemAtPosition(position);
+                view.setBackgroundColor(0x6CCECB);
+                Profiles profiles = Profiles.getInstance();
+                Profile displayProfile = new Profile();
+                displayProfile.getParseEntry("username", itemValue);
+                profiles.displayProfile = displayProfile;
+
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), ChatActivity.class);
+                startActivity(intent);
+
+               // Toast.makeText(getBaseContext(), itemValue, Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
+
 
     @Override
     protected void onStart(){
@@ -113,4 +138,5 @@ public class ConnectionsActivity extends sideBarMenuActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

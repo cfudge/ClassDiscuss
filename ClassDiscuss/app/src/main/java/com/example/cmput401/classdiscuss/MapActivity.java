@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -449,6 +455,29 @@ public class MapActivity extends sideBarMenuActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (String receiver:myConnections.tempConnections) {
+                    Message message = new Message();
+                    message.setUserId(ParseUser.getCurrentUser().getUsername());
+                    message.setBody(enterMessage.getText().toString());
+                    message.setReceiver(receiver);
+                    message.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                        }
+                    });
+                    ParseQuery userQuery = ParseUser.getQuery();
+                    userQuery.whereEqualTo("username", receiver);
+                    if (userQuery == null)
+                        Log.d("user query is", "null");
+                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                    pushQuery.whereMatchesQuery("user", userQuery);
+                    // Send push notification to query
+                    ParsePush push = new ParsePush();
+                    push.setQuery(pushQuery); // Set our Installation query
+                    push.setMessage("New Message!");
+                    push.sendInBackground();
+                }
+                myConnections.tempConnections.clear();
                 Intent connectionsIntent = new Intent();
                 connectionsIntent.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(connectionsIntent);

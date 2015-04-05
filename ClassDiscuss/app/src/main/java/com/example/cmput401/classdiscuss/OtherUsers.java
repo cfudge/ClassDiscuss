@@ -3,6 +3,9 @@ package com.example.cmput401.classdiscuss;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -88,6 +91,23 @@ public class OtherUsers{
         HashMap<String, String> usersChannelMap = getUsersChannelsHashMap(username);
         ArrayList<String> usersChannelList = new ArrayList<String>(usersChannelMap.keySet());
         return usersChannelList;
+    }
+
+    public ArrayList<String> getConnections(String username) {
+        List<ParseObject> ob = null;
+        ArrayList<String> connectionList = new ArrayList<String>();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Connection");
+        query.whereEqualTo("username", username);
+        try {
+            ob = query.find();
+        } catch (ParseException e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        for (ParseObject connection : ob) {
+            connectionList = (ArrayList<String>) connection.get("connections");
+        }
+        return connectionList;
     }
 
     public ArrayList getUsersActiveList(String username){

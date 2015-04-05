@@ -2,6 +2,7 @@ package com.example.cmput401.classdiscuss;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,12 +48,23 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked){
+                    Log.d("isChecked", "yes");
                     Toast.makeText(getContext(),listText.getText(),Toast.LENGTH_SHORT).show();
 
                    if(myConnections.myConnections.contains(listText.getText()));
-                   else
-                   myConnections.myConnections.add(listText.getText().toString());
+                   else {
+                       myConnections.myConnections.add(listText.getText().toString());
+                   }
+                    if(!myConnections.tempConnections.contains(listText.getText()))
+                        myConnections.tempConnections.add(listText.getText().toString());
+
+                }
+                else {
+                    Log.d("isChecked", "no");
+                    myConnections.tempConnections.remove(listText.getText().toString());
+
                 }
             }
         });

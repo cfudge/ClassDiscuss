@@ -56,11 +56,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                //ParsePush push = new ParsePush();
-
-
-                //push.setMessage("this is my message");
-               // push.sendInBackground();
                 Intent addChannels = new Intent();
                 addChannels.setClass(getApplicationContext(), ChannelsAddActivity.class);
                 startActivity(addChannels);
