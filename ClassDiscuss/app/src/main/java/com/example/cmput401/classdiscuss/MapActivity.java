@@ -457,7 +457,7 @@ public class MapActivity extends sideBarMenuActivity {
         });
 
         final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
-        enterMessage.setText("Enter Message");
+       // enterMessage.setText("Enter Message");
         enterMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
