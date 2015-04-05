@@ -42,5 +42,16 @@
         android:layout_toEndOf="@+id/imageUserProfile"
         android:text="Message"/>
 
+    <TextView
+        android:id="@+id/timeText"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Message"
+        android:layout_alignTop="@+id/secondText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>

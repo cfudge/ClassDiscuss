@@ -101,21 +101,21 @@ public class ConnectionsActivity extends sideBarMenuActivity {
             noMessage.setText("NO MESSAGES");
         }
 
-        sortList();
+      //  sortList();
         TextView noMessage = (TextView) findViewById(R.id.no_messages);
         noMessage.setText(myConnections.myConnections.size() + " Connections");
 
     }
 
 
-    public void sortList(){
+    /*public void sortList(){
         Collections.sort(messageTimes, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
                 return lhs.compareTo(rhs);
             }
         });
-    }
+    }*/
 
 
     @Override
