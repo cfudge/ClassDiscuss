@@ -31,7 +31,6 @@ import com.google.android.gms.plus.model.people.Person;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -81,20 +80,20 @@ public class MainActivity extends Activity implements OnClickListener,
         Parse.initialize(this, App_ID, Client_ID);
 
 
-        // Register your parse models here
-        ParseObject.registerSubclass(Message.class);
+        /*// Register your parse models here
+        ParseObject.registerSubclass(Message.class);*/
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+        /*btnSignOut = (Button) findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         txtName = (TextView) findViewById(R.id.txtName);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
-        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
+        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);*/
 
         // Button click listeners
         btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
+        /*btnSignOut.setOnClickListener(this);
+        btnRevokeAccess.setOnClickListener(this);*/
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -277,14 +276,14 @@ public class MainActivity extends Activity implements OnClickListener,
                 // Signin button clicked
                 signInWithGplus();
                 break;
-            case R.id.btn_sign_out:
+            /*case R.id.btn_sign_out:
                 // Signout button clicked
                 signOutFromGplus();
                 break;
             case R.id.btn_revoke_access:
                 // Revoke access button clicked
                 revokeGplusAccess();
-                break;
+                break;*/
         }
     }
 
