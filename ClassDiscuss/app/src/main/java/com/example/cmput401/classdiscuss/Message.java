@@ -114,9 +114,8 @@ public class Message extends ParseObject {
 
     }
 
-    public String getPostTime(){
-        Date creationTime = getCreatedAt();
-        return creationTime.toString();
+    public Date getPostTime(){
+        return getCreatedAt();
     }
 
 }
