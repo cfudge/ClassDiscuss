@@ -40,11 +40,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Profiles profiles = Profiles.getInstance();
 
         switch (item.getItemId()) {
             case R.id.action_profile:
                 final ParseUser user = ParseUser.getCurrentUser();
-                Profiles profiles = Profiles.getInstance();
                 if (user != null){
                     Profile displayProfile = new Profile();
                     displayProfile.getParseEntry("email", profiles.loginEmail);
@@ -88,6 +88,13 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 Intent login = new Intent();
                 login.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(login);
+                break;
+            case R.id.action_goToMap:
+                String name = profiles.displayProfile.getUserName();
+                Intent map = new Intent();
+                map.putExtra("UserName",name);
+                map.setClass(getApplicationContext(), MapActivity.class);
+                startActivity(map);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
