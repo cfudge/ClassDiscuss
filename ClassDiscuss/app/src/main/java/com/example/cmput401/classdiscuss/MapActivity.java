@@ -545,10 +545,15 @@ public class MapActivity extends sideBarMenuActivity {
 
          if (checkIfOnCampus(lat, lon))
         {
+            LatLng location = new LatLng(lat, lon);
             Marker marker = mMap.addMarker(
-                new MarkerOptions().position(new LatLng(lat, lon))
+
+                new MarkerOptions().position(location)
             );
             drawNameOnMarker(name, marker);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,18));
+            mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
         }
 
     }
