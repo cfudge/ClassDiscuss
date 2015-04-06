@@ -15,11 +15,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -47,7 +45,7 @@ public class ChatActivity extends sideBarMenuActivity {
 
 
     private EditText etMessage;
-    private Button btSend;
+    private ImageButton btSend;
     private ImageButton btPicAdd;
 
     private static final int SELECT_PICTURE = 1;
@@ -135,7 +133,7 @@ public class ChatActivity extends sideBarMenuActivity {
     private void setupMessagePosting() {
         // Find the text field and button
         etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
+        btSend = (ImageButton) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
         btPicAdd = (ImageButton) findViewById(R.id.btPicAdd);
         mMessages = new ArrayList<Message>();

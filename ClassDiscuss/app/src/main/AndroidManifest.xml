@@ -101,8 +101,7 @@
         </activity>
         <activity
             android:name=".ConnectionsActivity"
-            android:label=""
-            android:parentActivityName=".MyChannelsActivity" >
+            android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cmput401.classdiscuss.MyChannelsActivity" />
