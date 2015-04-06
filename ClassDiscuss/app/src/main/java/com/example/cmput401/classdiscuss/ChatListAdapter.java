@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -18,6 +20,7 @@ import java.util.List;
  */
 public class ChatListAdapter extends ArrayAdapter<Message> {
     private String mUserId;
+    private Calendar cal;
 
     public ChatListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
@@ -110,7 +113,45 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         }).start();
 
         holder.body.setText(message.getBody());
-        holder.postStats.setText(message.getPostTime());
+
+        cal = Calendar.getInstance();
+        Date postTime = message.getPostTime();
+
+        //date difference in milliseconds:
+        long dateDiffMS = cal.getTime().getTime() - postTime.getTime();
+        float dateDiffSecs = dateDiffMS/1000;
+        float dateDiffMins = dateDiffSecs/60;
+        float dateDiffHrs = dateDiffMins/60;
+        float dateDiffDays = dateDiffHrs/24;
+        int dayDiff = Math.abs(cal.getTime().getDay() - postTime.getDay());
+        String postTimeString = postTime.toString();
+
+
+        if(dateDiffSecs < 60){
+            holder.postStats.setText("A few seconds ago.");
+        }
+        else if(dateDiffMins < 60){
+            if(((int)dateDiffMins) == 1){
+                holder.postStats.setText("1 minute ago.");
+            }
+            else {
+                holder.postStats.setText(String.valueOf((int) dateDiffMins) + " minutes ago.");
+            }
+        }
+        else if((dateDiffHrs < 24) && (dayDiff == 0)){
+            if(((int)dateDiffHrs) == 1){
+                holder.postStats.setText("1 hour ago.");
+            }
+            else {
+                holder.postStats.setText(String.valueOf((int) dateDiffHrs) + " hours ago.");
+            }
+        }
+        else if((dateDiffHrs < 48) && (dayDiff < 2)){
+            holder.postStats.setText("Yesterday.");
+        }
+        else{
+            holder.postStats.setText(postTimeString.substring(0, postTimeString.length() - 9));
+        }
         return convertView;
     }
 
