@@ -88,7 +88,6 @@ public class MapActivity extends sideBarMenuActivity {
         ParseDatabase.getInstance().updateData();
 
         setUpMapIfNeeded();
-        updateUserLocation();
 
         /*//set channel button listener
         Button channel_button = (Button) findViewById(R.id.channel_map_btn);
@@ -151,6 +150,7 @@ public class MapActivity extends sideBarMenuActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+        updateUserLocation();
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
