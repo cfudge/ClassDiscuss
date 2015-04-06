@@ -2,7 +2,6 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,14 +125,6 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         float dateDiffDays = dateDiffHrs/24;
         int dayDiff = Math.abs(cal.getTime().getDay() - postTime.getDay());
         String postTimeString = postTime.toString();
-        Log.e("message time", message.getBody());
-        Log.e("Millisecs", String.valueOf(dateDiffMS));
-        Log.e("Secs", String.valueOf(dateDiffSecs));
-        Log.e("Mins:", String.valueOf(dateDiffMins));
-        Log.e("Hours", String.valueOf(dateDiffHrs));
-        Log.e("Days", String.valueOf(dateDiffDays));
-        Log.e("calendar", cal.getTime().toString());
-        Log.e("message", postTime.toString());
 
 
         if(dateDiffSecs < 60){
