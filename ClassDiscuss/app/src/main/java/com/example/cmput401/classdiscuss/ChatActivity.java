@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -50,6 +51,7 @@ public class ChatActivity extends sideBarMenuActivity {
 
     private static final int SELECT_PICTURE = 1;
 
+    private ImageView postPicView;
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
@@ -79,6 +81,8 @@ public class ChatActivity extends sideBarMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        postPicView = (ImageView) findViewById(R.id.postPicView);
+        postPicView.setVisibility(View.INVISIBLE);
         //topbar color
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
         ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
@@ -143,6 +147,8 @@ public class ChatActivity extends sideBarMenuActivity {
 
             @Override
             public void onClick(View v) {
+                postPicView.setImageBitmap(null);
+                postPicView.setVisibility(View.INVISIBLE);
                 String body = etMessage.getText().toString();
                 // Use Message model to create new messages now
                 message.setUserId(sUserId);
@@ -240,10 +246,16 @@ public class ChatActivity extends sideBarMenuActivity {
                 if(isCamera){
                     selectedImageUri = outputFileUri;
                 }else{
-                    selectedImageUri = data == null ? null : data.getData();
+                    selectedImageUri = data.getData();
                 }
                 try {
                     message.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                   postPicView.post(new Runnable(){
+                       public void run(){
+                            postPicView.setImageBitmap(message.getSmallPostPic());
+                            postPicView.setVisibility(View.VISIBLE);
+                       }
+                   });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
