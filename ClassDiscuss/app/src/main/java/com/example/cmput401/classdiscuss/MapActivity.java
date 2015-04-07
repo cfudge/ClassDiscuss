@@ -2,6 +2,12 @@ package com.example.cmput401.classdiscuss;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +25,11 @@ import android.widget.PopupWindow;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
@@ -80,7 +88,6 @@ public class MapActivity extends sideBarMenuActivity {
         ParseDatabase.getInstance().updateData();
 
         setUpMapIfNeeded();
-        updateUserLocation();
 
         /*//set channel button listener
         Button channel_button = (Button) findViewById(R.id.channel_map_btn);
@@ -113,6 +120,19 @@ public class MapActivity extends sideBarMenuActivity {
             getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         setUpMapIfNeeded();
+        Bundle extras = getIntent().getExtras();
+        if (mMap != null)
+        {
+            mMap.clear();
+            placeBuildingMarkers();
+            setPeopleInBuildings();
+            showMeOnMap();
+            if (extras != null)
+            {
+                String name = extras.getString("UserName");
+                placePeopleMarker(name);
+            }
+        }
     }
 
     /**
@@ -131,6 +151,7 @@ public class MapActivity extends sideBarMenuActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+        updateUserLocation();
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -157,6 +178,7 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         placeBuildingMarkers();
         setPeopleInBuildings();
+        showMeOnMap();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
@@ -179,19 +201,6 @@ public class MapActivity extends sideBarMenuActivity {
         GPSLocation gpsLocation = GPSLocation.getInstance();
         currentLocation = gpsLocation.getLocation();
         gpsLocation.setMap(mMap);
-    }
-
-    private boolean checkIfOnCampus(double lat, double lng){
-        LatLngBounds bounds = new LatLngBounds(new LatLng(53.517288, -113.533018),
-                new LatLng(53.530606, -113.511475));
-        if (bounds.contains(new LatLng(lat, lng)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     private void placeBuildingMarkers() {
@@ -535,5 +544,68 @@ public class MapActivity extends sideBarMenuActivity {
         return true;
     }
 
+
+    public void placePeopleMarker(String name){
+        double lat = users.getUsersLatitudeByUserName(name);
+        double lon = users.getUsersLongitudeByUserName(name);
+
+         if (checkIfOnCampus(lat, lon))
+        {
+            LatLng location = new LatLng(lat, lon);
+            Marker marker = mMap.addMarker(
+
+                new MarkerOptions().position(location)
+            );
+            drawNameOnMarker(name, marker);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,18));
+            mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+        }
+
+    }
+
+    private boolean checkIfOnCampus(double lat, double lng){
+        LatLngBounds bounds = new LatLngBounds(new LatLng(53.517288, -113.533018),
+                new LatLng(53.530606, -113.511475));
+        if (bounds.contains(new LatLng(lat, lng)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void drawNameOnMarker(String name, Marker marker)
+    {
+        Typeface typeface = Typeface.create("Helvetica",Typeface.NORMAL);
+        Bitmap markerImage = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_person_marker).copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(markerImage);
+        Paint paint = new Paint();
+        paint.setTextSize(16);
+        paint.setTypeface(typeface);
+        paint.setAntiAlias(true);
+        paint.setTextAlign(Paint.Align.CENTER);
+        int x = canvas.getWidth()/2;
+        int y = (markerImage.getHeight()/2) + 5;
+        canvas.drawText(name, x, y, paint); // paint defines the text color, stroke width, size
+        BitmapDrawable draw = new BitmapDrawable(getApplicationContext().getResources(), markerImage);
+        Bitmap drawBmp = draw.getBitmap();
+        marker.setIcon(BitmapDescriptorFactory.fromBitmap(drawBmp));
+    }
+
+    public void showMeOnMap()
+    {
+        double lat = currentLocation.getLatitude();
+        double lon = currentLocation.getLongitude();
+        LatLng location = new LatLng(lat, lon);
+        if (checkIfOnCampus(lat, lon)) {
+            Marker marker = mMap.addMarker(
+                    new MarkerOptions().position(location)
+            );
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_you));
+        }
+    }
 
 }

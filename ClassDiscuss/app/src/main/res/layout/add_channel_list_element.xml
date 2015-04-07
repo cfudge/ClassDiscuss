@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/add_channel_button"
             android:layout_width="70dp"
-            android:src="@drawable/ic_button_add_green"
+            android:src="@drawable/ic_add_channel"
             android:layout_height="50dp"
             android:text="Add"
             android:layout_alignParentTop="true"

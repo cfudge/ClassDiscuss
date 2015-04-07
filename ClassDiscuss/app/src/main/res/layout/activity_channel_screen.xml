@@ -15,17 +15,7 @@
         android:paddingTop="10dp"
         android:layout_gravity="center_horizontal" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="#33CCFF"
-        android:dividerHeight="2dp"
-        android:scrollbarSize="6dp"
-        android:scrollbars="vertical"
-        android:textColor="#333333"
-        android:layout_weight="1"
-        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,12 +23,23 @@
         android:layout_weight="1"
         android:gravity="center|bottom"
         android:orientation="vertical" >
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#33CCFF"
+            android:dividerHeight="2dp"
+            android:scrollbarSize="6dp"
+            android:scrollbars="vertical"
+            android:textColor="#333333"
+            android:layout_weight="1"
+            />
         <Button
             android:id="@+id/add_new_channel"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal|center"
-            android:background="@drawable/ic_green"
+            android:background="@drawable/ic_greencircle"
             android:textColor="#33CCFF"
             android:layout_alignParentTop="true" />
 
