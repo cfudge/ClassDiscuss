@@ -35,28 +35,28 @@
        />
     </RelativeLayout>
 
-
     <ExpandableListView
         android:id="@+id/expandList"
+        android:text="Mutual Courses: "
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:dividerHeight="2dp"
         android:layout_weight="1">
-        </ExpandableListView>
+    </ExpandableListView>
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-
-
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="SEND"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"/>
 
     <EditText
         android:id="@+id/enterMessage"
@@ -64,7 +64,8 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:hint="Enter Message"
-
+        android:paddingBottom="5dp"
+        android:paddingTop="10dp"
         />
     </RelativeLayout>
 

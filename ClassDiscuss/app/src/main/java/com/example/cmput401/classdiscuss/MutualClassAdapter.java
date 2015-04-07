@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * Created by Nancy on 4/6/2015.
  */
 //http://stackoverflow.com/questions/9824074/android-expandablelistview-looking-for-a-tutorial
+//https://www.youtube.com/watch?v=_h94Kqyc-Ag&feature=iv&src_vid=BkazaAeeW1Q&annotation_id=annotation_1141555157
 public class MutualClassAdapter extends BaseExpandableListAdapter {
 
     Context context;
