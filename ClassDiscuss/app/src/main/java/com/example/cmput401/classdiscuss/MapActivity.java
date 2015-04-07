@@ -515,13 +515,17 @@ public class MapActivity extends sideBarMenuActivity {
         });
     }
 
-    /*public void sortList(){
-        Collections.sort(timeStamp, new Comparator<Integer>() {
+    /*public void sortList() {
+
+        ArrayList<Integer> times = new ArrayList<Integer>();
+        times.add(timeStamp.getHours());
+        Collections.sort(times, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
                 return lhs.compareTo(rhs);
             }
-        });*/
+        });
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
