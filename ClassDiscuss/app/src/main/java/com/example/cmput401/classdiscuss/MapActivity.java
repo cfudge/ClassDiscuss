@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -73,6 +74,10 @@ public class MapActivity extends sideBarMenuActivity {
     MyChannels myChannels = MyChannels.getInstance();
     ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
+    ArrayList<String> commonChannels;
+
+    ExpandableListView expandView;
+    MutualClassAdapter expandAdapter;
 
     long time =  System.currentTimeMillis();
     Timestamp timeStamp =  new Timestamp(time);
@@ -426,7 +431,9 @@ public class MapActivity extends sideBarMenuActivity {
         {
             String otherName = otherUsernames.get(a);
             ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
-            ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            //ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            commonChannels = new ArrayList<String>(otherUserChannels);
+
             commonChannels.retainAll(activeChannels);
 
             if (commonChannels.isEmpty())
@@ -457,13 +464,18 @@ public class MapActivity extends sideBarMenuActivity {
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
+       // popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
+        expandAdapter = new MutualClassAdapter(this, inPopUpBuilding,commonChannels);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-        popupList = (ListView) view.findViewById(R.id.popup_list_view);
-        popupList.setAdapter(popupAdapter);
+/*        popupList = (ListView) view.findViewById(R.id.popup_list_view);
+        popupList.setAdapter(popupAdapter);*/
+
+        expandView = (ExpandableListView) view.findViewById(R.id.expandList);
+        expandView.setAdapter(expandAdapter);
+//        popupList.setAdapter(popupAdapter);
 
         popup.showAtLocation(view, Gravity.CENTER, 0,0);
 
@@ -476,7 +488,7 @@ public class MapActivity extends sideBarMenuActivity {
         });
 
         final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
-       // enterMessage.setText("Enter Message");
+       
         enterMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
