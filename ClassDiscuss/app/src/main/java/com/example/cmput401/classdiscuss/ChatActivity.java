@@ -81,6 +81,8 @@ public class ChatActivity extends sideBarMenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        setTitle(profiles.displayProfile.getUserName());
+
         postPicView = (ImageView) findViewById(R.id.postPicView);
         postPicView.setVisibility(View.INVISIBLE);
         //topbar color
