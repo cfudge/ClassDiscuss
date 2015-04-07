@@ -477,7 +477,7 @@ public class MapActivity extends sideBarMenuActivity {
                 message.setBody(enterMessage.getText().toString());
                 message.setReceiver(receiver);
                 message.saveInBackground(new SaveCallback() {
-                    @Override
+                @Override
                 public void done(ParseException e) {}});
                 ParseQuery userQuery = ParseUser.getQuery();
                 userQuery.whereEqualTo("username", receiver);

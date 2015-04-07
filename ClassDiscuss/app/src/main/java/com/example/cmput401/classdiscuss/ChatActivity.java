@@ -56,14 +56,14 @@ public class ChatActivity extends sideBarMenuActivity {
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
     IntentFilter filter1;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 70;
     private Message message = new Message();
 
     Profiles profiles = Profiles.getInstance();
 
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
-
+    Notice notice = Notice.getInstance();
     // Defines a runnable which is run every 10000ms
     private Runnable runnable = new Runnable() {
         @Override
@@ -80,7 +80,8 @@ public class ChatActivity extends sideBarMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
+        Notice notice = Notice.getInstance();
+        notice.iconAppear();
         //topbar color
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
         ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
@@ -106,6 +107,7 @@ public class ChatActivity extends sideBarMenuActivity {
     }
     public void onResume() {
         super.onResume();
+        notice.readNotice();
        // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
         //registerReceiver(myReceiver, filter1);
         //registerReceiver(myReceiver, filter1);
@@ -146,37 +148,38 @@ public class ChatActivity extends sideBarMenuActivity {
             @Override
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
-                // Use Message model to create new messages now
-                message.setUserId(sUserId);
-                message.setBody(body);
-                message.setReceiver(profiles.displayProfile.getUserName());
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        /*ParsePush push = new ParsePush();
-                        push.setChannel(profiles.displayProfile.getUserName().toString());
-                        push.setMessage("New Message!");
-                        push.sendInBackground();*/
-                        // Find users near a given location
-                        ParseQuery userQuery = ParseUser.getQuery();
-                        userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
-                        if (userQuery == null)
-                            Log.d("user query is", "null");
+                if (!body.isEmpty()) {
+                    // Use Message model to create new messages now
+                    message.setUserId(sUserId);
+                    message.setBody(body);
+                    message.setReceiver(profiles.displayProfile.getUserName());
+                    message.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            /*ParsePush push = new ParsePush();
+                            push.setChannel(profiles.displayProfile.getUserName().toString());
+                            push.setMessage("New Message!");
+                            push.sendInBackground();*/
+                            // Find users near a given location
+                            ParseQuery userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
+                            if (userQuery == null)
+                                Log.d("user query is", "null");
 
-                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                        pushQuery.whereMatchesQuery("user", userQuery);
+                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                            pushQuery.whereMatchesQuery("user", userQuery);
 
-// Send push notification to query
-                        ParsePush push = new ParsePush();
-                        push.setQuery(pushQuery); // Set our Installation query
-                        push.setMessage("New Message!");
-                        push.sendInBackground();
-                        receiveMessage();
-
-                    }
-                });
-                message = new Message();
-                etMessage.setText("");
+                            // Send push notification to query
+                            ParsePush push = new ParsePush();
+                            push.setQuery(pushQuery); // Set our Installation query
+                            push.setMessage("New Message!");
+                            push.sendInBackground();
+                            receiveMessage();
+                        }
+                    });
+                    message = new Message();
+                    etMessage.setText("");
+                }
             }
         });
         btPicAdd.setOnClickListener(new View.OnClickListener() {

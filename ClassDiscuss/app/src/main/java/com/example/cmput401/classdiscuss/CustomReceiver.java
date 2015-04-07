@@ -30,7 +30,10 @@ public class CustomReceiver extends BroadcastReceiver {
     private static final String TAG = "MyCustomReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent cIntent = new Intent(context, ConnectionsActivity.class);
+        Notice notice = Notice.getInstance();
+        //Notice notice = new Notice();
+        notice.iconAppear();
+        Intent cIntent = new Intent(context, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, cIntent, 0);
 
         NotificationManager mNotifM = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

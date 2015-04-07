@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,7 +25,6 @@ import com.parse.ParseUser;
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
  */
 public class sideBarMenuActivity extends ActionBarActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +89,10 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 login.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(login);
                 break;
+            case R.id.action_chat:
+                Intent connection = new Intent();
+                connection.setClass(getApplicationContext(), ConnectionsActivity.class);
+                startActivity(connection);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -97,7 +101,15 @@ public class sideBarMenuActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.removeItem(R.id.action_logout);
+        Notice notice = Notice.getInstance();
+        if (!notice.isIconThere())
+        //    Log.d("here", "yes");
+         //   MenuItem chat = menu.findItem(R.id.action_chat);
+           // chat.isVisible();
+        //}
+        //else {
+           menu.removeItem(R.id.action_chat);
+       // }
         return true;
     }
 

@@ -30,7 +30,7 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     long time =  System.currentTimeMillis();
     Timestamp timeStamp =  new Timestamp(time);
     String tStamp = timeStamp.toString();
-
+    Notice notice = Notice.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class ConnectionsActivity extends sideBarMenuActivity {
         setContentView(R.layout.activity_connections_list);
 
 
-
+        notice.iconDisappear();
         myConnections = myConnections.getInstance();
         connectionsAdapter = new ConnectionsAdapter(this, myConnections.myConnections, myConnections.displayMessage, ConnectionsActivity.this);
 
@@ -79,6 +79,7 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        notice.iconDisappear();
         connectionsAdapter.notifyDataSetChanged();
     }
 
