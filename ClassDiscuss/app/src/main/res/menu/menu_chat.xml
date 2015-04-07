@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_show_on_map"
         android:orderInCategory="100" app:showAsAction="always" />
     <item android:id="@+id/action_myConnections" android:title="@string/my_connections"
-        android:icon="@drawable/ic_myconnections"
+        android:icon="@drawable/ic_chat_icon"
         android:orderInCategory="100" app:showAsAction="always" />
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
         android:orderInCategory="100" app:showAsAction="never" />

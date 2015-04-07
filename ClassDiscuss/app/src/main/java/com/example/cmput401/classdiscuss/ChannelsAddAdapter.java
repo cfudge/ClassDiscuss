@@ -8,13 +8,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,8 +68,11 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
 
     public void add(final int position){
         if(myChannels.ifContains(getItem(position))) {
-            Toast.makeText(getContext(), "Already subscribed.",
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getContext(), "Already subscribed.",
+                    Toast.LENGTH_SHORT).show();*/
+            Log.e("ere", "hreer");
+            myChannels.deleteChannel(getItem(position));
+            this.notifyDataSetChanged();
             return;
         }
         if(myChannels.getSubscribedList().size() >= 5) {

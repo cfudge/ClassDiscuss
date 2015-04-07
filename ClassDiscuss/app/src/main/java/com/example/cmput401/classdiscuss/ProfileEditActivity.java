@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         final TextView EditUserName = (TextView) findViewById(R.id.EditUserName);
         TextView textUserEmail = (TextView) findViewById(R.id.textUserEmail);
         final ImageView profilePicView = (ImageView) findViewById(R.id.imageUserProfile);
+        final ImageButton picButton = (ImageButton) findViewById(R.id.btProPicAdd);
 
         //set user's information
         EditUserName.setText(currentUser.getString("username"));
@@ -70,7 +72,7 @@ public class ProfileEditActivity extends sideBarMenuActivity {
          * Referenced the code laid out here:
          * http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically
          */
-        profilePicView.setOnClickListener(new OnClickListener() {
+        picButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //following the code here: http://stackoverflow.com/questions/4455558/allow-user-to-select-camera-or-gallery-for-image
