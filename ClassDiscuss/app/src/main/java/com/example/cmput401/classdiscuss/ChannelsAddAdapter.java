@@ -46,7 +46,7 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
         ImageView addImageView = (ImageView) channelAddView.findViewById(R.id.add_channel_button);
 
         if (myChannels.ifContains(getItem(position))){
-            addImageView.setImageResource(R.drawable.ic_button_grey_add);
+            addImageView.setImageResource(R.drawable.ic_remove_channel);
             addImageView.getLayoutParams().height = 130;
         }
 

@@ -36,17 +36,13 @@
     </RelativeLayout>
 
 
-
-    <ListView
-        android:id="@+id/popup_list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="287dp"
-        android:divider="#33CCFF"
+    <ExpandableListView
+        android:id="@+id/expandList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:dividerHeight="2dp"
-        android:scrollbarSize="6dp"
-        android:scrollbars="vertical"
-        android:textColor="#333333"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+        </ExpandableListView>
 
     <RelativeLayout
         android:layout_width="wrap_content"

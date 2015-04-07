@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -73,6 +74,10 @@ public class MapActivity extends sideBarMenuActivity {
     MyChannels myChannels = MyChannels.getInstance();
     ArrayList<OtherUserMapInfo> inPopUpBuilding = new ArrayList<OtherUserMapInfo>();
 
+    ArrayList<String> commonChannels;
+
+    ExpandableListView expandView;
+    MutualClassAdapter expandAdapter;
 
     long time =  System.currentTimeMillis();
     Timestamp timeStamp =  new Timestamp(time);
@@ -88,7 +93,6 @@ public class MapActivity extends sideBarMenuActivity {
         ParseDatabase.getInstance().updateData();
 
         setUpMapIfNeeded();
-        updateUserLocation();
 
         /*//set channel button listener
         Button channel_button = (Button) findViewById(R.id.channel_map_btn);
@@ -127,6 +131,7 @@ public class MapActivity extends sideBarMenuActivity {
             mMap.clear();
             placeBuildingMarkers();
             setPeopleInBuildings();
+            showMeOnMap();
             if (extras != null)
             {
                 String name = extras.getString("UserName");
@@ -151,6 +156,7 @@ public class MapActivity extends sideBarMenuActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+        updateUserLocation();
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -177,6 +183,7 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         placeBuildingMarkers();
         setPeopleInBuildings();
+        showMeOnMap();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
@@ -424,7 +431,9 @@ public class MapActivity extends sideBarMenuActivity {
         {
             String otherName = otherUsernames.get(a);
             ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
-            ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            //ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
+            commonChannels = new ArrayList<String>(otherUserChannels);
+
             commonChannels.retainAll(activeChannels);
 
             if (commonChannels.isEmpty())
@@ -455,13 +464,18 @@ public class MapActivity extends sideBarMenuActivity {
     }
 
     public void popupMenu(){
-        popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
+       // popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
+        expandAdapter = new MutualClassAdapter(this, inPopUpBuilding,commonChannels);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-        popupList = (ListView) view.findViewById(R.id.popup_list_view);
-        popupList.setAdapter(popupAdapter);
+/*        popupList = (ListView) view.findViewById(R.id.popup_list_view);
+        popupList.setAdapter(popupAdapter);*/
+
+        expandView = (ExpandableListView) view.findViewById(R.id.expandList);
+        expandView.setAdapter(expandAdapter);
+//        popupList.setAdapter(popupAdapter);
 
         popup.showAtLocation(view, Gravity.CENTER, 0,0);
 
@@ -474,7 +488,7 @@ public class MapActivity extends sideBarMenuActivity {
         });
 
         final EditText enterMessage = (EditText) view.findViewById(R.id.enterMessage);
-       // enterMessage.setText("Enter Message");
+       
         enterMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -522,13 +536,17 @@ public class MapActivity extends sideBarMenuActivity {
         });
     }
 
-    /*public void sortList(){
-        Collections.sort(timeStamp, new Comparator<Integer>() {
+    /*public void sortList() {
+
+        ArrayList<Integer> times = new ArrayList<Integer>();
+        times.add(timeStamp.getHours());
+        Collections.sort(times, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
                 return lhs.compareTo(rhs);
             }
-        });*/
+        });
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -589,6 +607,17 @@ public class MapActivity extends sideBarMenuActivity {
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(drawBmp));
     }
 
-
+    public void showMeOnMap()
+    {
+        double lat = currentLocation.getLatitude();
+        double lon = currentLocation.getLongitude();
+        LatLng location = new LatLng(lat, lon);
+        if (checkIfOnCampus(lat, lon)) {
+            Marker marker = mMap.addMarker(
+                    new MarkerOptions().position(location)
+            );
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_you));
+        }
+    }
 
 }
