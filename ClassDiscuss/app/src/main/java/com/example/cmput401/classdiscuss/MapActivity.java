@@ -126,6 +126,7 @@ public class MapActivity extends sideBarMenuActivity {
             mMap.clear();
             placeBuildingMarkers();
             setPeopleInBuildings();
+            showMeOnMap();
             if (extras != null)
             {
                 String name = extras.getString("UserName");
@@ -177,6 +178,7 @@ public class MapActivity extends sideBarMenuActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         placeBuildingMarkers();
         setPeopleInBuildings();
+        showMeOnMap();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                           @Override
@@ -589,6 +591,17 @@ public class MapActivity extends sideBarMenuActivity {
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(drawBmp));
     }
 
-
+    public void showMeOnMap()
+    {
+        double lat = currentLocation.getLatitude();
+        double lon = currentLocation.getLongitude();
+        LatLng location = new LatLng(lat, lon);
+        if (checkIfOnCampus(lat, lon)) {
+            Marker marker = mMap.addMarker(
+                    new MarkerOptions().position(location)
+            );
+            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_you));
+        }
+    }
 
 }
