@@ -96,6 +96,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 map.setClass(getApplicationContext(), MapActivity.class);
                 startActivity(map);
                 break;
+            case R.id.action_Map:
+                Intent mapIntent = new Intent();
+                mapIntent.setClass(getApplicationContext(), MapActivity.class);
+                startActivity(mapIntent);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

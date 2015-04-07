@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.cmput401.classdiscuss.MyChannelScreen">
+    <item android:id="@+id/action_Map" android:title=""
+        android:icon="@drawable/ic_globe"
+        android:orderInCategory="2" app:showAsAction="always" />
     <item android:id="@+id/action_myChannels" android:title="My Channels"
         android:icon="@drawable/ic_mychannels_icon"
         android:orderInCategory="2"  />
