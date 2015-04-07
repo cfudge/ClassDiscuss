@@ -4,14 +4,12 @@
     android:layout_height="match_parent">
 
 
-
     <TextView
         android:id="@+id/list_classes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:paddingBottom="20dp"
-        android:paddingTop="10dp"
+        android:textSize="14sp"
+        android:paddingBottom="2dp"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         />
