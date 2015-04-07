@@ -26,6 +26,16 @@
                 android:layout_height="70dp"
                 android:src="@drawable/ic_launcher"
                 android:layout_column="35" />
+
+            <ImageButton
+                android:id="@+id/btProPicAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/camera_icon_desc"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_camera_resized" />
         </TableRow>
 
         <TableRow
