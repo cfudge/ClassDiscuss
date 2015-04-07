@@ -30,15 +30,11 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     long time =  System.currentTimeMillis();
     Timestamp timeStamp =  new Timestamp(time);
     String tStamp = timeStamp.toString();
-    Notice notice = Notice.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connections_list);
-
-
-        notice.iconDisappear();
         myConnections = myConnections.getInstance();
         connectionsAdapter = new ConnectionsAdapter(this, myConnections.myConnections, myConnections.displayMessage, ConnectionsActivity.this);
 
@@ -79,7 +75,6 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        notice.iconDisappear();
         connectionsAdapter.notifyDataSetChanged();
     }
 
@@ -102,21 +97,21 @@ public class ConnectionsActivity extends sideBarMenuActivity {
             noMessage.setText("NO MESSAGES");
         }
 
-        sortList();
+      //  sortList();
         TextView noMessage = (TextView) findViewById(R.id.no_messages);
         noMessage.setText(myConnections.myConnections.size() + " Connections");
 
     }
 
 
-    public void sortList(){
+    /*public void sortList(){
         Collections.sort(messageTimes, new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
                 return lhs.compareTo(rhs);
             }
         });
-    }
+    }*/
 
 
     @Override

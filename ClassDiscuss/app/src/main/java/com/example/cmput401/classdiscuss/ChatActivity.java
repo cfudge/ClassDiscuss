@@ -15,13 +15,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -31,6 +30,9 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,11 +49,12 @@ public class ChatActivity extends sideBarMenuActivity {
 
 
     private EditText etMessage;
-    private Button btSend;
+    private ImageButton btSend;
     private ImageButton btPicAdd;
 
     private static final int SELECT_PICTURE = 1;
 
+    private ImageView postPicView;
     private ListView lvChat;
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
@@ -60,7 +63,7 @@ public class ChatActivity extends sideBarMenuActivity {
     private Message message = new Message();
 
     Profiles profiles = Profiles.getInstance();
-
+    public String body;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
     Notice notice = Notice.getInstance();
@@ -80,8 +83,8 @@ public class ChatActivity extends sideBarMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Notice notice = Notice.getInstance();
-        notice.iconAppear();
+        postPicView = (ImageView) findViewById(R.id.postPicView);
+        postPicView.setVisibility(View.INVISIBLE);
         //topbar color
         android.support.v7.app.ActionBar actionBar =  getSupportActionBar();
         ColorDrawable colorDraw = new ColorDrawable(Color.parseColor("#9FBF8C"));
@@ -107,7 +110,9 @@ public class ChatActivity extends sideBarMenuActivity {
     }
     public void onResume() {
         super.onResume();
-        notice.readNotice();
+        receiveMessage();
+        if(notice.getUsername().equals(profiles.displayProfile.getUserName()));
+            notice.iconDisappear();
        // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
         //registerReceiver(myReceiver, filter1);
         //registerReceiver(myReceiver, filter1);
@@ -137,7 +142,7 @@ public class ChatActivity extends sideBarMenuActivity {
     private void setupMessagePosting() {
         // Find the text field and button
         etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
+        btSend = (ImageButton) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
         btPicAdd = (ImageButton) findViewById(R.id.btPicAdd);
         mMessages = new ArrayList<Message>();
@@ -147,7 +152,9 @@ public class ChatActivity extends sideBarMenuActivity {
 
             @Override
             public void onClick(View v) {
-                String body = etMessage.getText().toString();
+                postPicView.setImageBitmap(null);
+                postPicView.setVisibility(View.INVISIBLE);
+                body = etMessage.getText().toString();
                 if (!body.isEmpty()) {
                     // Use Message model to create new messages now
                     message.setUserId(sUserId);
@@ -168,11 +175,19 @@ public class ChatActivity extends sideBarMenuActivity {
 
                             ParseQuery pushQuery = ParseInstallation.getQuery();
                             pushQuery.whereMatchesQuery("user", userQuery);
-
+                            JSONObject obj =new JSONObject();
+                            try{
+                                obj.put("username", ParseUser.getCurrentUser().getUsername());
+                                obj.put("message", body);
+                            } catch (JSONException error) {
+                                // TODO Auto-generated catch block
+                                error.printStackTrace();
+                            }
                             // Send push notification to query
                             ParsePush push = new ParsePush();
                             push.setQuery(pushQuery); // Set our Installation query
-                            push.setMessage("New Message!");
+                            //push.setMessage("New Message!");
+                            push.setData(obj);
                             push.sendInBackground();
                             receiveMessage();
                         }
@@ -245,10 +260,16 @@ public class ChatActivity extends sideBarMenuActivity {
                 if(isCamera){
                     selectedImageUri = outputFileUri;
                 }else{
-                    selectedImageUri = data == null ? null : data.getData();
+                    selectedImageUri = data.getData();
                 }
                 try {
                     message.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
+                   postPicView.post(new Runnable() {
+                       public void run() {
+                           postPicView.setImageBitmap(message.getSmallPostPic());
+                           postPicView.setVisibility(View.VISIBLE);
+                       }
+                   });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -329,6 +350,7 @@ public class ChatActivity extends sideBarMenuActivity {
     @Override
     public void onPause() {
         super.onPause();
+        receiveMessage();
        // unregisterReceiver(myReceiver);
 
     }

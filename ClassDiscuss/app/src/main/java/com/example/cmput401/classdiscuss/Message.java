@@ -17,6 +17,7 @@ import java.util.Date;
  */
 @ParseClassName("Message")
 public class Message extends ParseObject {
+    private Bitmap smallPostPic;
     private Bitmap postPic = null;
     private Bitmap proPic = null;
     private boolean triedProFetch = false;
@@ -38,6 +39,8 @@ public class Message extends ParseObject {
         put("body", body);
     }
     public void setReceiver(String receiver) { put("Receiver", receiver);}
+
+    public Bitmap getSmallPostPic() { return smallPostPic; }
 
     public Bitmap getPic() {
         if(triedPostPicFetch){
@@ -106,13 +109,13 @@ public class Message extends ParseObject {
 
         // Create the ParseFile
         ParseFile file = new ParseFile("comment_pic.png", image);
-
+        smallPostPic = ImageOperations.bitmapFromPicFile(file, 50, 50);
         put("picture", file);
+
     }
 
-    public String getPostTime(){
-        Date creationTime = getCreatedAt();
-        return creationTime.toString();
+    public Date getPostTime(){
+        return getCreatedAt();
     }
 
 }

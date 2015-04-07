@@ -63,6 +63,7 @@ public class PopupListAdapter extends ArrayAdapter<OtherUserMapInfo> {
                     if(!myConnections.tempConnections.contains(users))
                         myConnections.tempConnections.add(listText.getText().toString());
 
+
                 }
                 else
                     myConnections.tempConnections.remove(listText.getText().toString());

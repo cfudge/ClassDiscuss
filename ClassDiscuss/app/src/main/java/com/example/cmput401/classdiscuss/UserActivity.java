@@ -22,7 +22,7 @@ public class UserActivity extends sideBarMenuActivity {
         setContentView(R.layout.activity_user);
 
         //populate the list// this won't take affect until next time activity starts
-        ParseDatabase.getInstance().setUsersDataLocally();
+        ParseDatabase.getInstance().pullParseAndSetOtherUsersData();
 
         UsersAdapter adapter = new
                 UsersAdapter(UserActivity.this, users.getUsersList(), users.getUsersImageList());

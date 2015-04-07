@@ -40,11 +40,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Profiles profiles = Profiles.getInstance();
 
         switch (item.getItemId()) {
             case R.id.action_profile:
                 final ParseUser user = ParseUser.getCurrentUser();
-                Profiles profiles = Profiles.getInstance();
                 if (user != null){
                     Profile displayProfile = new Profile();
                     displayProfile.getParseEntry("email", profiles.loginEmail);
@@ -90,9 +90,29 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(login);
                 break;
             case R.id.action_chat:
+                profiles = Profiles.getInstance();
+                Notice notice = Notice.getInstance();
+                Profile displayProfile = new Profile();
+                Log.d("notice name", notice.getUsername());
+                notice.iconDisappear();
+                displayProfile.getParseEntry("username",notice.getUsername());
+                profiles.displayProfile = displayProfile;
                 Intent connection = new Intent();
-                connection.setClass(getApplicationContext(), ConnectionsActivity.class);
+                connection.setClass(getApplicationContext(), ChatActivity.class);
                 startActivity(connection);
+                break;
+            case R.id.action_goToMap:
+                String name = profiles.displayProfile.getUserName();
+                Intent map = new Intent();
+                map.putExtra("UserName",name);
+                map.setClass(getApplicationContext(), MapActivity.class);
+                startActivity(map);
+                break;
+            case R.id.action_Map:
+                Intent mapIntent = new Intent();
+                mapIntent.setClass(getApplicationContext(), MapActivity.class);
+                startActivity(mapIntent);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -102,6 +122,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         Notice notice = Notice.getInstance();
+        Log.d("prepare", "yes");
         if (!notice.isIconThere())
         //    Log.d("here", "yes");
          //   MenuItem chat = menu.findItem(R.id.action_chat);

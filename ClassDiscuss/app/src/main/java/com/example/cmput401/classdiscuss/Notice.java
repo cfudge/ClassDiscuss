@@ -7,9 +7,11 @@ public class Notice {
     private static final Notice NoticeInstance = new Notice();
     boolean newNotice;
     boolean awake;
+    String username;
     public Notice() {
         this.newNotice = false;
         this.awake = false;
+        this.username = "";
     }
 
     public static Notice getInstance(){
@@ -34,4 +36,6 @@ public class Notice {
     public void readNotice() {
         newNotice = false;
     }
+    public void setUsername(String name) {this.username = name;}
+    public String getUsername() {return this.username;}
 }
