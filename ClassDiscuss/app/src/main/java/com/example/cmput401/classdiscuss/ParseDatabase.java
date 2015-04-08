@@ -53,7 +53,10 @@ public class ParseDatabase extends Activity {
     public void updateData() {
         initiateChannels();
         pullParseAndSetOtherUsersData();
-        pullConnectionsInfo("nbui");
+        if(ParseUser.getCurrentUser()!=null){
+            pullConnectionsInfo(ParseUser.getCurrentUser().getUsername());
+        }
+
     }
     public void updateDataInBackground(){
         initiateChannels();
