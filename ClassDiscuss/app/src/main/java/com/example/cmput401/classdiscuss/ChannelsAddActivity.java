@@ -32,6 +32,18 @@ public class ChannelsAddActivity extends sideBarMenuActivity {
         addChannelListView = (ListView) findViewById(R.id.add_channel_list_view);
         addChannelListView.setAdapter(channelAdapter);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
+    }
 
 
     @Override

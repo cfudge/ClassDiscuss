@@ -107,17 +107,20 @@ public class ChatActivity extends sideBarMenuActivity {
             startActivity(ToLogIn);//login();
         }
         // Run the runnable object defined every 100ms
-      // handler.postDelayed(runnable, 100);
+       handler.postDelayed(runnable, 100);
     }
     public void onResume() {
         super.onResume();
         receiveMessage();
-        if(notice.getUsername().equals(profiles.displayProfile.getUserName()));
+        if(notice.getUsername().equals(profiles.displayProfile.getUserName()))
             notice.iconDisappear();
+        notice.setLive(true);
        // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
         //registerReceiver(myReceiver, filter1);
         //registerReceiver(myReceiver, filter1);
     }
+
+
 
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
@@ -327,31 +330,13 @@ public class ChatActivity extends sideBarMenuActivity {
             }
         });
     }
-    private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-            Log.d("in br", "yesdgfffffffffffffffffffffffffffffff");
-            if(intent.getAction().equalsIgnoreCase("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED"))
-            {
-                Log.d("DEFINITELY HERE", "YES");
-                receiveMessage();
-            }
-
-        }
-    };
-    /*public final class Receiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent){
-            receiveMessage();
-
-        }
-    }*/
     @Override
     public void onPause() {
         super.onPause();
         receiveMessage();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
        // unregisterReceiver(myReceiver);
 
     }
