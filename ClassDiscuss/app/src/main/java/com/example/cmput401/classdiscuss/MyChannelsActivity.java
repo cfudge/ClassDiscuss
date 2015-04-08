@@ -75,6 +75,15 @@ public class MyChannelsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         channelAdapter.notifyDataSetChanged();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
     }
 
     public void initializeChannels(){

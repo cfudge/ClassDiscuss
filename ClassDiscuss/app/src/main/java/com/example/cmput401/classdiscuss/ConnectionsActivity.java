@@ -76,6 +76,14 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         connectionsAdapter.notifyDataSetChanged();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
     }
 
     public void addConnections(){
