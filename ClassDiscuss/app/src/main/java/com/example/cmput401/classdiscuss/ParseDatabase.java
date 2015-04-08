@@ -13,13 +13,18 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -225,16 +230,51 @@ public class ParseDatabase extends Activity {
                 }
             }
         }
-        Iterator<String> keySetIterator1 = ConnectionsDate.keySet().iterator();
+        ValueComparator bvc =  new ValueComparator(ConnectionsDate);
+        TreeMap<String,Date> sorted_map = new TreeMap<String,Date>(bvc);
+        sorted_map.putAll(ConnectionsDate);
+
+        Iterator<String> keySetIterator1 = sorted_map.keySet().iterator();
+
+        //Log.e("score ", "seperator *********");
 
         Connections.getInstance().clear();
         while(keySetIterator1.hasNext()){
             String key = keySetIterator1.next();
+            Date time = ConnectionsDate.get(key);
+            //Timestamp conversion
+            Calendar cal = Calendar.getInstance();
+
+            // and get that as a Date
+            Date today = cal.getTime();
+
+            //formatting options
+            SimpleDateFormat hour =
+                    new SimpleDateFormat ("hh:mm a");
+            SimpleDateFormat day =
+                    new SimpleDateFormat ("MMMM dd, yyyy", Locale.CANADA);
+
+            long dateDiffMS = today.getTime() - time.getTime();
+            float dateDiffSecs = dateDiffMS/1000;
+            float dateDiffMins = dateDiffSecs/60;
+            float dateDiffHrs = dateDiffMins/60;
+            float dateDiffDays = dateDiffHrs/24;
+            String postTime = null;
+            if((dateDiffDays < 1)){
+
+                //post time if not today
+                postTime = hour.format(time);
+            }
+            else{
+                postTime = day.format(time);
+            }
+
+
             //set the connections info here!!!!!!!!!!!!
             Connections.getInstance().displayMessage.add(ConnectionsMessage.get(key));
             Connections.getInstance().myConnections.add(key);
-            Connections.getInstance().messageTime.add(ConnectionsDate.get(key).toString());
-            Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +ConnectionsDate.get(key));
+            Connections.getInstance().messageTime.add(postTime);
+            Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +postTime);
 
         }
 
@@ -248,7 +288,7 @@ public class ParseDatabase extends Activity {
                 if (e == null) {
                     // The query was successful.
                     updateOtherUsersData(objects);
-                    Log.d("score", "updated users info");
+                    //Log.d("score", "updated users info");
                 } else {
                     //failed
                 }
@@ -322,6 +362,23 @@ public class ParseDatabase extends Activity {
             //save default image
             objects.get(x).saveInBackground();
 
+        }
+    }
+
+    class ValueComparator implements Comparator<String> {
+
+        Map<String, Date> base;
+        public ValueComparator(Map<String, Date> base) {
+            this.base = base;
+        }
+
+        // Note: this comparator imposes orderings that are inconsistent with equals.
+        public int compare(String a, String b) {
+            if (base.get(a).after(base.get(b))) {
+                return -1;
+            } else {
+                return 1;
+            } // returning 0 would merge keys
         }
     }
 
