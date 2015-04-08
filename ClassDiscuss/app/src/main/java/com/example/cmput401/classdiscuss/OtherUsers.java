@@ -65,7 +65,7 @@ public class OtherUsers{
         if(usersLocationMap.get(username)!=null){
             if(usersLocationMap.get(username).get(0) !=null) {
                 LongitudeNum = usersLocationMap.get(username).get(0).doubleValue();
-                Log.e("score", "Longitude ** = " + LongitudeNum + "n");
+                //Log.e("score", "Longitude ** = " + LongitudeNum + "n");
             }
         }
         return LongitudeNum;
@@ -149,7 +149,7 @@ public class OtherUsers{
         usersLocation.add(latitude);
 
         //add/update new users
-        Log.e("score", "Longitude string = " + longitude + "n");
+        //Log.e("score", "Longitude string = " + longitude + "n");
         usersLocationMap.put(name, usersLocation );
     }
 
