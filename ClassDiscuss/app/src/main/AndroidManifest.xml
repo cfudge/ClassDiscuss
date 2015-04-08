@@ -119,6 +119,9 @@
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.cmput401.classdiscuss.ProfileActivity" />
         </activity>
         <activity
             android:name=".MapActivity"

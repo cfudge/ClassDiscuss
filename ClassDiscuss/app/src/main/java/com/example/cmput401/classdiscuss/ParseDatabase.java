@@ -274,7 +274,7 @@ public class ParseDatabase extends Activity {
             Connections.getInstance().displayMessage.add(ConnectionsMessage.get(key));
             Connections.getInstance().myConnections.add(key);
             Connections.getInstance().messageTime.add(postTime);
-            Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +postTime);
+            //Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +postTime);
 
         }
 

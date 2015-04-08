@@ -43,6 +43,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
         Profiles profiles = Profiles.getInstance();
 
         switch (item.getItemId()) {
+            case R.id.action_others_profile:
+                Intent myProfileother = new Intent();
+                myProfileother.setClass(getApplicationContext(), ProfileActivity.class);
+                startActivity(myProfileother);
+                break;
             case R.id.action_profile:
                 final ParseUser user = ParseUser.getCurrentUser();
                 if (user != null){

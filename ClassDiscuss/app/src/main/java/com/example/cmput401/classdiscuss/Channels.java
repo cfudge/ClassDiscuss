@@ -23,6 +23,11 @@ public class Channels {
         availableChannelList.add("CMPUT 104");
         availableChannelList.add("CMPUT 105");
         availableChannelList.add("CMPUT 106");
+        availableChannelList.add("CMPUT 325");
+        availableChannelList.add("CMPUT 401");
+        availableChannelList.add("CMPUT 402");
+        availableChannelList.add("CMPUT 410");
+        availableChannelList.add("CMPUT 414");
         availableChannelList.add("MATH 114");
         availableChannelList.add("MATH 115");
         availableChannelList.add("MUSIC 103");
