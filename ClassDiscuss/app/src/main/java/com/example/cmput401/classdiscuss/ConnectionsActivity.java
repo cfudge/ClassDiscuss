@@ -79,6 +79,9 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         connectionsAdapter.notifyDataSetChanged();
+        if(ParseUser.getCurrentUser()!=null){
+            ParseDatabase.getInstance().pullConnectionsInfo(ParseUser.getCurrentUser().getUsername());
+        }
     }
 
     public void addConnections(){
