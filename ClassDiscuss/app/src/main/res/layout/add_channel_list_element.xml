@@ -12,13 +12,16 @@
             android:layout_weight="0.99"
             android:textAlignment="center"
             android:gravity="center_vertical"
+            android:paddingTop="10dp"
             android:layout_width="wrap_content"
+            android:textSize="20sp"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/add_channel_button"
             android:layout_width="70dp"
-            android:src="@drawable/ic_add_channel"
+            android:paddingTop="7dp"
+            android:src="@drawable/ic_greencircle"
             android:layout_height="50dp"
             android:text="Add"
             android:layout_alignParentTop="true"
@@ -29,6 +32,6 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:id="@+id/separator"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@android:color/holo_green_dark"/>
     </RelativeLayout>

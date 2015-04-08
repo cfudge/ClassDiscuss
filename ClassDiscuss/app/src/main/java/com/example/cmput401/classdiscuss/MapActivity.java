@@ -220,8 +220,8 @@ public class MapActivity extends sideBarMenuActivity {
         buildings = new ArrayList<CampusBuilding>();
         Context context = getApplicationContext();
 
-        CampusBuilding comSci = new CampusBuilding((new LatLng(53.526428, -113.527560)),
-                (new LatLng(53.527021, -113.526336)), (new LatLng(53.526800, -113.527184)),
+        CampusBuilding comSci = new CampusBuilding((new LatLng(53.526438, -113.527725)),
+                (new LatLng(53.527078, -113.526202)), (new LatLng(53.526800, -113.527184)),
                 mMap, context);
         buildings.add(comSci);
 
@@ -286,7 +286,7 @@ public class MapActivity extends sideBarMenuActivity {
         buildings.add(ECERF);
 
         CampusBuilding ECHA = new CampusBuilding((new LatLng(53.520695, -113.527091)),
-                (new LatLng(53.522399, -113.526157)), (new LatLng(53.521480, -113.526554)),
+                (new LatLng(53.522476, -113.525867)), (new LatLng(53.521480, -113.526554)),
                 mMap, context);
         buildings.add(ECHA);
 

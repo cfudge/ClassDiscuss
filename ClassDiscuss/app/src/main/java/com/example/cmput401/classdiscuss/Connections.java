@@ -1,10 +1,5 @@
 package com.example.cmput401.classdiscuss;
 
-import android.widget.TextView;
-
-import com.parse.ParseQuery;
-
-import java.sql.Connection;
 import java.util.ArrayList;
 
 /*
@@ -30,6 +25,11 @@ public class Connections {
         tempConnections = new ArrayList<String>();
         messageTime = new ArrayList<String>();
 
+    }
+    public void clear(){
+        myConnections.clear();
+        displayMessage.clear();
+        messageTime.clear();
     }
 
 }

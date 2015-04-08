@@ -74,7 +74,7 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
     public Object getChild(int groupPosition, int childPosition) {
 
 
-        return courses.get(groupPosition);
+        return courses.get(childPosition);
     }
 
     @Override
