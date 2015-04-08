@@ -227,14 +227,17 @@ public class ParseDatabase extends Activity {
         }
         Iterator<String> keySetIterator1 = ConnectionsDate.keySet().iterator();
 
-        Log.e("score", "messages *********");
+        Connections.getInstance().clear();
         while(keySetIterator1.hasNext()){
             String key = keySetIterator1.next();
             //set the connections info here!!!!!!!!!!!!
-
+            Connections.getInstance().displayMessage.add(ConnectionsMessage.get(key));
+            Connections.getInstance().myConnections.add(key);
+            Connections.getInstance().messageTime.add(ConnectionsDate.get(key).toString());
             Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +ConnectionsDate.get(key));
 
         }
+
     }
 
     //call this every time you update an image, so it updates the information
