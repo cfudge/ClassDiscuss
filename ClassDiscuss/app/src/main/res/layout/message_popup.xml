@@ -45,28 +45,26 @@
     </ExpandableListView>
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/enterMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Enter Message"
+        android:paddingBottom="5dp"
+        android:paddingTop="10dp"
+        android:imeOptions="actionSend"
+        />
+
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="SEND"
-        android:layout_gravity="right"
         android:paddingTop="10dp"
-        android:paddingBottom="5dp"/>
-
-    <EditText
-        android:id="@+id/enterMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="Enter Message"
         android:paddingBottom="5dp"
-        android:paddingTop="10dp"
-        />
-    </RelativeLayout>
+        android:layout_gravity="right" />
+
 
 </LinearLayout>
