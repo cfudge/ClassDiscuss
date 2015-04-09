@@ -32,8 +32,7 @@ public class ImageOperations {
         op.inSampleSize = calculateInSampleSize(op, reqWidth, reqHeight);
         Bitmap pic = BitmapFactory.decodeByteArray(image, 0, image.length, op);
 
-
-       ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
         pic.compress(Bitmap.CompressFormat.JPEG, 30, os);
 
         //compressing bitmap like here:
@@ -50,7 +49,7 @@ public class ImageOperations {
 
     //from developer.android: http://developer.android.com/training/displaying-bitmaps/load-bitmap.html
     public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
