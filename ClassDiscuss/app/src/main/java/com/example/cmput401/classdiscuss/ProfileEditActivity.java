@@ -115,6 +115,21 @@ public class ProfileEditActivity extends sideBarMenuActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
+    }
+
+
     /**
      * Referenced the code laid out here:
      * http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically

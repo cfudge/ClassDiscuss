@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /*
  * copyright 2015 Nhu Bui, Nancy Pham-Nguyen, Valerie Sawyer, Cole Fudge, Kelsey Wicentowich
@@ -34,6 +33,10 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(ParseUser.getCurrentUser()!=null){
+            ParseDatabase.getInstance().pullConnectionsInfo(ParseUser.getCurrentUser().getUsername());
+        }
+
         setContentView(R.layout.activity_connections_list);
         myConnections = myConnections.getInstance();
         connectionsAdapter = new ConnectionsAdapter(this, myConnections.myConnections, myConnections.displayMessage, ConnectionsActivity.this);
@@ -76,6 +79,17 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     protected void onResume(){
         super.onResume();
         connectionsAdapter.notifyDataSetChanged();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
+        if(ParseUser.getCurrentUser()!=null){
+            ParseDatabase.getInstance().pullConnectionsInfo(ParseUser.getCurrentUser().getUsername());
+        }
     }
 
     public void addConnections(){

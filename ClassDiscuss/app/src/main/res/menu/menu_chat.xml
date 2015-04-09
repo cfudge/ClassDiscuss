@@ -5,13 +5,15 @@
     <item android:id="@+id/action_goToMap" android:title=""
         android:icon="@drawable/ic_show_on_map"
         android:orderInCategory="100" app:showAsAction="always" />
+    <item android:id="@+id/action_others_profile" android:title="@string/profile_other"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:icon="@drawable/ic_profile_icon"/>
+
     <item android:id="@+id/action_myConnections" android:title="@string/my_connections"
-        android:icon="@drawable/ic_chat_icon"
-        android:orderInCategory="100" app:showAsAction="always" />
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_profile" android:title="@string/menu_profile"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_users" android:title="@string/menu_users"
-        android:orderInCategory="100" app:showAsAction="never" />
+
     <item android:id="@+id/action_myChannels" android:title="@string/menu_myChannels"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/menu_settings"

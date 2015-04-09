@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:text="Users"
         android:layout_gravity="center_horizontal"
@@ -37,36 +37,46 @@
 
     <ExpandableListView
         android:id="@+id/expandList"
-        android:text="Mutual Courses: "
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:dividerHeight="2dp"
+        android:dividerHeight="1dp"
         android:layout_weight="1">
     </ExpandableListView>
 
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/enterMessage"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        android:inputType="textMultiLine"
+        android:layout_gravity="left"
+        android:hint="Enter Message"
+        android:paddingBottom="5dp"
+        android:paddingTop="19dp"
+        android:imeOptions="actionSend"
+        />
+
     <Button
         android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="SEND"
-        android:layout_gravity="right"
+        android:layout_weight="30"
         android:paddingTop="10dp"
-        android:paddingBottom="5dp"/>
-
-    <EditText
-        android:id="@+id/enterMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="Enter Message"
         android:paddingBottom="5dp"
-        android:paddingTop="10dp"
-        />
-    </RelativeLayout>
+        android:layout_gravity="right" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dp"
+        android:id="@+id/separator"
+        android:visibility="visible"
+        android:background="@android:color/holo_blue_bright"/>
+</RelativeLayout>
+
 
 </LinearLayout>

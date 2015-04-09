@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,10 +42,12 @@ public class ConnectionsAdapter extends ArrayAdapter<String> {
         TextView listText = (TextView) customView.findViewById(R.id.listText);
         TextView secondText = (TextView) customView.findViewById(R.id.secondText);
         TextView timeText = (TextView) customView.findViewById(R.id.timeText);
+        ImageView ImageView = (ImageView) customView.findViewById(R.id.imageUserProfile);
 
        listText.setText(connections);
        secondText.setText(message);
        timeText.setText(time);
+        ImageView.setImageBitmap(OtherUsers.getInstance().getUsersImageByUserName(connections));
 
         return customView;
     }

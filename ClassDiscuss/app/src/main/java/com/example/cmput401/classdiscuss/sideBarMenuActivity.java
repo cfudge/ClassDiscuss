@@ -1,13 +1,18 @@
 package com.example.cmput401.classdiscuss;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -43,6 +48,11 @@ public class sideBarMenuActivity extends ActionBarActivity {
         Profiles profiles = Profiles.getInstance();
 
         switch (item.getItemId()) {
+            case R.id.action_others_profile:
+                Intent myProfileother = new Intent();
+                myProfileother.setClass(getApplicationContext(), ProfileActivity.class);
+                startActivity(myProfileother);
+                break;
             case R.id.action_profile:
                 final ParseUser user = ParseUser.getCurrentUser();
                 if (user != null){
@@ -58,11 +68,13 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(myProfile);
                 break;
             case R.id.action_myChannels:
+
                 Intent channel = new Intent();
                 channel.setClass(getApplicationContext(), MyChannelsActivity.class);
                 startActivity(channel);
                 break;
             case R.id.action_myConnections:
+
                 Intent activity = new Intent();
                 activity.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(activity);
@@ -90,11 +102,12 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(login);
                 break;
             case R.id.action_chat:
-                profiles = Profiles.getInstance();
                 Notice notice = Notice.getInstance();
+                notice.iconDisappear();
+                invalidateOptionsMenu();
+                profiles = Profiles.getInstance();
                 Profile displayProfile = new Profile();
                 Log.d("notice name", notice.getUsername());
-                notice.iconDisappear();
                 displayProfile.getParseEntry("username",notice.getUsername());
                 profiles.displayProfile = displayProfile;
                 Intent connection = new Intent();
@@ -121,16 +134,22 @@ public class sideBarMenuActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        //menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_chat_icon)).setEnabled(false);
+        //MenuItem item = menu.getItem(2);
+        //item.setEnabled(false);
+       // menu.findItem(R.id.action_chat).setIcon(R.drawable.ic_chat_icon_notify);
         Notice notice = Notice.getInstance();
+        /*
+        if (notice.unreadNotice())
+            menu.findItem(R.id.action_chat).setVisible(true);
+        if(notice.readNotice())
+            menu.findItem(R.id.action_chat).setVisible(false);
+            */
         Log.d("prepare", "yes");
-        if (!notice.isIconThere())
-        //    Log.d("here", "yes");
-         //   MenuItem chat = menu.findItem(R.id.action_chat);
-           // chat.isVisible();
-        //}
-        //else {
+        if (notice.unreadNotice())
+           Log.d("here", "yes");
+        else
            menu.removeItem(R.id.action_chat);
-       // }
         return true;
     }
 

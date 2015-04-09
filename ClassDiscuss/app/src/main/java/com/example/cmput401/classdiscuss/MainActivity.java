@@ -101,6 +101,20 @@ public class MainActivity extends Activity implements OnClickListener,
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
+    }
+
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
@@ -359,7 +373,7 @@ public class MainActivity extends Activity implements OnClickListener,
         }
     }
 
-    private void connectToParse(){
+    public void connectToParse(){
         Profiles profiles = Profiles.getInstance();
         String loginUser = profiles.loginEmail.replace("@ualberta.ca", "");
         //create new user

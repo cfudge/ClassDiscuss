@@ -82,6 +82,20 @@ public class ProfileActivity extends sideBarMenuActivity{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Notice notice = Notice.getInstance();
+        notice.setLive(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater menuI = getMenuInflater();
