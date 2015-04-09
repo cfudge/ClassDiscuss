@@ -373,7 +373,7 @@ public class MainActivity extends Activity implements OnClickListener,
         }
     }
 
-    private void connectToParse(){
+    public void connectToParse(){
         Profiles profiles = Profiles.getInstance();
         String loginUser = profiles.loginEmail.replace("@ualberta.ca", "");
         //create new user
