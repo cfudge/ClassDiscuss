@@ -31,6 +31,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,14 +59,14 @@ public class ChatActivity extends sideBarMenuActivity {
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
     IntentFilter filter1;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 70;
     private Message message = new Message();
 
     Profiles profiles = Profiles.getInstance();
-
+    public String body;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
-
+    Notice notice = Notice.getInstance();
     // Defines a runnable which is run every 10000ms
     private Runnable runnable = new Runnable() {
         @Override
@@ -80,9 +83,7 @@ public class ChatActivity extends sideBarMenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         setTitle(profiles.displayProfile.getUserName());
-
         postPicView = (ImageView) findViewById(R.id.postPicView);
         postPicView.setVisibility(View.INVISIBLE);
         //topbar color
@@ -106,14 +107,20 @@ public class ChatActivity extends sideBarMenuActivity {
             startActivity(ToLogIn);//login();
         }
         // Run the runnable object defined every 100ms
-      // handler.postDelayed(runnable, 100);
+       handler.postDelayed(runnable, 100);
     }
     public void onResume() {
         super.onResume();
+        receiveMessage();
+        if(notice.getUsername().equals(profiles.displayProfile.getUserName()))
+            notice.iconDisappear();
+        notice.setLive(true);
        // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
         //registerReceiver(myReceiver, filter1);
         //registerReceiver(myReceiver, filter1);
     }
+
+
 
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
@@ -151,38 +158,47 @@ public class ChatActivity extends sideBarMenuActivity {
             public void onClick(View v) {
                 postPicView.setImageBitmap(null);
                 postPicView.setVisibility(View.INVISIBLE);
-                String body = etMessage.getText().toString();
-                // Use Message model to create new messages now
-                message.setUserId(sUserId);
-                message.setBody(body);
-                message.setReceiver(profiles.displayProfile.getUserName());
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        /*ParsePush push = new ParsePush();
-                        push.setChannel(profiles.displayProfile.getUserName().toString());
-                        push.setMessage("New Message!");
-                        push.sendInBackground();*/
-                        // Find users near a given location
-                        ParseQuery userQuery = ParseUser.getQuery();
-                        userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
-                        if (userQuery == null)
-                            Log.d("user query is", "null");
+                body = etMessage.getText().toString();
+                if (!body.isEmpty()) {
+                    // Use Message model to create new messages now
+                    message.setUserId(sUserId);
+                    message.setBody(body);
+                    message.setReceiver(profiles.displayProfile.getUserName());
+                    message.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            /*ParsePush push = new ParsePush();
+                            push.setChannel(profiles.displayProfile.getUserName().toString());
+                            push.setMessage("New Message!");
+                            push.sendInBackground();*/
+                            // Find users near a given location
+                            ParseQuery userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
+                            if (userQuery == null)
+                                Log.d("user query is", "null");
 
-                        ParseQuery pushQuery = ParseInstallation.getQuery();
-                        pushQuery.whereMatchesQuery("user", userQuery);
-
-// Send push notification to query
-                        ParsePush push = new ParsePush();
-                        push.setQuery(pushQuery); // Set our Installation query
-                        push.setMessage("New Message!");
-                        push.sendInBackground();
-                        receiveMessage();
-
-                    }
-                });
-                message = new Message();
-                etMessage.setText("");
+                            ParseQuery pushQuery = ParseInstallation.getQuery();
+                            pushQuery.whereMatchesQuery("user", userQuery);
+                            JSONObject obj =new JSONObject();
+                            try{
+                                obj.put("username", ParseUser.getCurrentUser().getUsername());
+                                obj.put("message", body);
+                            } catch (JSONException error) {
+                                // TODO Auto-generated catch block
+                                error.printStackTrace();
+                            }
+                            // Send push notification to query
+                            ParsePush push = new ParsePush();
+                            push.setQuery(pushQuery); // Set our Installation query
+                            //push.setMessage("New Message!");
+                            push.setData(obj);
+                            push.sendInBackground();
+                            receiveMessage();
+                        }
+                    });
+                    message = new Message();
+                    etMessage.setText("");
+                }
             }
         });
         btPicAdd.setOnClickListener(new View.OnClickListener() {
@@ -252,10 +268,10 @@ public class ChatActivity extends sideBarMenuActivity {
                 }
                 try {
                     message.setPic(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri));
-                   postPicView.post(new Runnable(){
-                       public void run(){
-                            postPicView.setImageBitmap(message.getSmallPostPic());
-                            postPicView.setVisibility(View.VISIBLE);
+                   postPicView.post(new Runnable() {
+                       public void run() {
+                           postPicView.setImageBitmap(message.getSmallPostPic());
+                           postPicView.setVisibility(View.VISIBLE);
                        }
                    });
                 } catch (IOException e) {
@@ -314,30 +330,13 @@ public class ChatActivity extends sideBarMenuActivity {
             }
         });
     }
-    private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-            Log.d("in br", "yesdgfffffffffffffffffffffffffffffff");
-            if(intent.getAction().equalsIgnoreCase("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED"))
-            {
-                Log.d("DEFINITELY HERE", "YES");
-                receiveMessage();
-            }
-
-        }
-    };
-    /*public final class Receiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent){
-            receiveMessage();
-
-        }
-    }*/
     @Override
     public void onPause() {
         super.onPause();
+        receiveMessage();
+        Notice notice = Notice.getInstance();
+        notice.setLive(false);
        // unregisterReceiver(myReceiver);
 
     }

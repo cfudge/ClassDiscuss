@@ -54,4 +54,6 @@
     <string name="title_activity_map">Map</string>
     <string name="title_activity_test">testActivity</string>
     <string name="camera_icon_desc">Camera Icon</string>
+
+    <string name="view_message">View message</string>
 </resources>
