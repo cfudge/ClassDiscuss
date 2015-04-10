@@ -357,7 +357,7 @@ public class ParseDatabase extends Activity {
             String username = objects.get(x).getUsername();
 
             //add info to users list
-            usersList.updateOtherUsersInfo(username, longitude, latitude, channels, picBitmap);
+            usersList.updateOtherUsersInfo(username, latitude,longitude, channels, picBitmap);
 
             //save default image
             objects.get(x).saveInBackground();

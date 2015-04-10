@@ -54,7 +54,7 @@ public class OtherUsers{
         double latitudeNum= 0;
         if(usersLocationMap.get(username)!=null){
             if(usersLocationMap.get(username).get(1) !=null) {
-                latitudeNum = usersLocationMap.get(username).get(1).doubleValue();
+                latitudeNum = usersLocationMap.get(username).get(0).doubleValue();
             }
         }
         return latitudeNum;
@@ -64,7 +64,7 @@ public class OtherUsers{
         double LongitudeNum= 0;
         if(usersLocationMap.get(username)!=null){
             if(usersLocationMap.get(username).get(0) !=null) {
-                LongitudeNum = usersLocationMap.get(username).get(0).doubleValue();
+                LongitudeNum = usersLocationMap.get(username).get(1).doubleValue();
                 //Log.e("score", "Longitude ** = " + LongitudeNum + "n");
             }
         }
@@ -141,12 +141,11 @@ public class OtherUsers{
         }
     }
 
-    private void UpdateUsersLocationInfo(String name, double longitude, double latitude){
-        boolean foundUser= false;
+    private void UpdateUsersLocationInfo(String name, double latitude, double longitude){
         // create list one and store values
         ArrayList<Double> usersLocation = new ArrayList<Double>();
-        usersLocation.add(longitude);
         usersLocation.add(latitude);
+        usersLocation.add(longitude);
 
         //add/update new users
         //Log.e("score", "Longitude string = " + longitude + "n");
