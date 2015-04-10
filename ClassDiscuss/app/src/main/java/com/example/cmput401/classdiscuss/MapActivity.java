@@ -38,14 +38,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import java.util.ArrayList;
 
 /*
@@ -93,28 +86,6 @@ public class MapActivity extends sideBarMenuActivity {
         ParseDatabase.getInstance().updateData();
 
         setUpMapIfNeeded();
-
-        /*//set channel button listener
-        Button channel_button = (Button) findViewById(R.id.channel_map_btn);
-        channel_button.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent myChannels = new Intent();
-                myChannels.setClass(getApplicationContext(), MyChannelsActivity.class);
-                startActivity(myChannels);
-            }
-        });
-
-        //set connections button listener
-        Button connectionsButton = (Button) findViewById(R.id.connect_map_btn);
-        connectionsButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent myConnections = new Intent();
-                myConnections.setClass(getApplicationContext(), ConnectionsActivity.class);
-                startActivity(myConnections);
-            }
-        });*/
     }
     @Override
     protected void onResume(){
@@ -438,7 +409,6 @@ public class MapActivity extends sideBarMenuActivity {
         {
             String otherName = otherUsernames.get(a);
             ArrayList<String> otherUserChannels = users.getChannelsListByUsername(otherName);
-            //ArrayList<String> commonChannels = new ArrayList<String>(otherUserChannels);
             commonChannels = new ArrayList<String>(otherUserChannels);
 
             commonChannels.retainAll(activeChannels);
@@ -471,18 +441,13 @@ public class MapActivity extends sideBarMenuActivity {
     }
 
     public void popupMenu(){
-       // popupAdapter = new PopupListAdapter(this, inPopUpBuilding);
         expandAdapter = new MutualClassAdapter(this, inPopUpBuilding,commonChannels);
         LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.message_popup, null);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-/*        popupList = (ListView) view.findViewById(R.id.popup_list_view);
-        popupList.setAdapter(popupAdapter);*/
-
         expandView = (ExpandableListView) view.findViewById(R.id.expandList);
         expandView.setAdapter(expandAdapter);
-//        popupList.setAdapter(popupAdapter);
 
         popup.showAtLocation(view, Gravity.CENTER, 0,0);
 
@@ -542,18 +507,6 @@ public class MapActivity extends sideBarMenuActivity {
             }
         });
     }
-
-    /*public void sortList() {
-
-        ArrayList<Integer> times = new ArrayList<Integer>();
-        times.add(timeStamp.getHours());
-        Collections.sort(times, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                return lhs.compareTo(rhs);
-            }
-        });
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
