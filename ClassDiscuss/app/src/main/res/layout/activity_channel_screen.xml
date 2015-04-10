@@ -41,6 +41,7 @@
             android:layout_gravity="center_horizontal|center"
             android:background="@drawable/ic_greencircle"
             android:textColor="#33CCFF"
+            android:text="Add"
             android:layout_alignParentTop="true" />
 
 

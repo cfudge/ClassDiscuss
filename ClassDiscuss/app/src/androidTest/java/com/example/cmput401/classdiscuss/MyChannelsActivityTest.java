@@ -27,6 +27,7 @@ public class MyChannelsActivityTest extends ActivityInstrumentationTestCase2<MyC
 
         setActivityInitialTouchMode(true);
 
+        //http://stackoverflow.com/questions/4320099/how-do-i-write-an-android-junit-test-when-my-activity-relies-on-extras-passed-th
         Intent intent = new Intent();
         intent.setClassName("com.example.cmput401.classdiscuss", "com.example.cmput401.classdiscuss.ChannelsAddActivity");
         setActivityIntent(intent);
@@ -41,20 +42,19 @@ public class MyChannelsActivityTest extends ActivityInstrumentationTestCase2<MyC
        assertEquals("Button label is incorrect", "Add", addButton.getText());
     }
 
-    public void testIntentOnClick(){
+    public void testButtonNotNull(){
         assertNotNull("Button cannot be null", addButton);
-
-
     }
 
-    /*public void testAddButtonLayout(){
+    public void testAddButtonLayout(){
         final View decorView = myChannelsActivity.getWindow().getDecorView();
 
         ViewAsserts.assertOnScreen(decorView, addButton);
 
         final ViewGroup.LayoutParams layoutParams = addButton.getLayoutParams();
         assertNotNull(layoutParams);
-        assertEquals(layoutParams.width, 90);
-        assertEquals(layoutParams.height, 90);
-    }*/
+        assertEquals(layoutParams.width, 135);
+        assertEquals(layoutParams.height, 135);
+
+    }
 }
