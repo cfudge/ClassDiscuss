@@ -61,7 +61,7 @@ public class MapActivity extends sideBarMenuActivity {
     private Connections myConnections;
     OtherUsers users =  OtherUsers.getInstance();
     PopupWindow popup;
-    PopupListAdapter popupAdapter;
+    
     ListView popupList;
     ParseUser currentUser = ParseUser.getCurrentUser();
     MyChannels myChannels = MyChannels.getInstance();
