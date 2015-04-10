@@ -22,12 +22,6 @@ public class MyChannelsActivity extends sideBarMenuActivity {
 
     private Connections myConnections;
 
-    OtherUsers users =  OtherUsers.getInstance();
-    PopupWindow popup;
-    PopupListAdapter popupAdapter;
-    ListView popupList;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

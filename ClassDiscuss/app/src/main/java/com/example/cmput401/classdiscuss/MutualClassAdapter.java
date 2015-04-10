@@ -31,9 +31,6 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
 
     ArrayList<OtherUserMapInfo> listItems;
 
-
-    boolean [] itemChecked;
-
     public MutualClassAdapter (Context context, ArrayList<OtherUserMapInfo> listItems, ArrayList<String> courses){
         this.context = context;
         this.courses = courses;
@@ -97,12 +94,8 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-       View customView = inflater.inflate(R.layout.popup_list,parent,false);
+        View customView = inflater.inflate(R.layout.popup_list,parent,false);
 
-      /*  ViewHolder holder;
-
-
-        holder = new ViewHolder();*/
 
         final String users = getGroup(groupPosition).toString();
 
@@ -112,10 +105,10 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
 
         checkBox = (CheckBox) customView.findViewById(R.id.checkBox);
 
-       checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                itemChecked[groupPosition] = isChecked;
+
 
                 if(isChecked){
                     if(myConnections.myConnections.contains(users));
@@ -131,30 +124,21 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
 
             }
         });
-      //  holder.checkBox.setChecked(itemChecked[groupPosition]);*/
         return customView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-       // View customView = convertView;
        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
        View customView = inflater.inflate(R.layout.child_layout, parent, false);
-       // ViewHolder holder;
 
-        String courses = getChild(groupPosition,childPosition).toString();
+       String courses = getChild(groupPosition,childPosition).toString();
 
+       TextView mutualCourses = (TextView) customView.findViewById(R.id.list_classes);
+       mutualCourses.setText(courses);
 
-           // holder = new ViewHolder();
-
-           // holder.mutualCourses = (TextView) customView.findViewById(R.id.list_classes);
-           // holder.mutualCourses.setText("TEST");
-
-        TextView mutualCourses = (TextView) customView.findViewById(R.id.list_classes);
-        mutualCourses.setText(courses);
-
-        return customView;
+       return customView;
     }
 
     @Override
@@ -192,9 +176,5 @@ public class MutualClassAdapter extends BaseExpandableListAdapter {
         return 0;
     }
 
-    final class ViewHolder{
-
-        CheckBox checkBox;
-    }
 
 }
