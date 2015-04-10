@@ -68,7 +68,6 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(myProfile);
                 break;
             case R.id.action_myChannels:
-
                 Intent channel = new Intent();
                 channel.setClass(getApplicationContext(), MyChannelsActivity.class);
                 startActivity(channel);
@@ -79,11 +78,6 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 activity.setClass(getApplicationContext(), ConnectionsActivity.class);
                 startActivity(activity);
                 break;
-            /*case R.id.action_edit_profile:
-                Intent edit = new Intent();
-                edit.setClass(getApplicationContext(), ProfileEditActivity.class);
-                startActivity(edit);
-                break;*/
             case R.id.action_users:
                 Intent usersIntent = new Intent();
                 usersIntent.setClass(getApplicationContext(), UserActivity.class);
@@ -95,8 +89,6 @@ public class sideBarMenuActivity extends ActionBarActivity {
                 startActivity(ProfileActivity);
                 break;
             case R.id.action_logout:
-                //MainActivity out = new MainActivity();
-               // out.signOutFromGplus();
                 Intent login = new Intent();
                 login.setClass(getApplicationContext(), MainActivity.class);
                 startActivity(login);
@@ -134,17 +126,7 @@ public class sideBarMenuActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        //menu.getItem(0).setIcon(getResources().getDrawable(R.drawable.ic_chat_icon)).setEnabled(false);
-        //MenuItem item = menu.getItem(2);
-        //item.setEnabled(false);
-       // menu.findItem(R.id.action_chat).setIcon(R.drawable.ic_chat_icon_notify);
         Notice notice = Notice.getInstance();
-        /*
-        if (notice.unreadNotice())
-            menu.findItem(R.id.action_chat).setVisible(true);
-        if(notice.readNotice())
-            menu.findItem(R.id.action_chat).setVisible(false);
-            */
         Log.d("prepare", "yes");
         if (notice.unreadNotice())
            Log.d("here", "yes");

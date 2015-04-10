@@ -42,12 +42,7 @@ public class ProfileActivityTest extends ActivityInstrumentationTestCase2<Profil
 
         setActivityInitialTouchMode(true);
 
-        //TextView textUserName = (TextView) mProfileActivity.findViewById(R.id.textUserName);
-
         mProfileActivity = getActivity();
-        //postPicView = (ImageView) mChatActivity.findViewById(R.id.postPicView);
-        //etMessage = (EditText) mChatActivity.findViewById(R.id.etMessage);
-        //btPicAdd = (ImageButton) mChatActivity.findViewById(R.id.btPicAdd);
 
 
         testPreconditions();
