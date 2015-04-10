@@ -1,8 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -196,6 +194,7 @@ public class ChatActivity extends sideBarMenuActivity {
                 final PackageManager packageManager = getPackageManager();
                 final List<ResolveInfo> listCam = packageManager.queryIntentActivities(getPic, 0);
                 for(ResolveInfo res: listCam){
+                    //for all intents that could be used to get take a picture
                     final String packageName = res.activityInfo.packageName;
                     final Intent intent = new Intent(getPic);
                     intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
@@ -204,10 +203,12 @@ public class ChatActivity extends sideBarMenuActivity {
                     cameraIntents.add(intent);
                 }
 
+                //intent for getting a file from gallery:
                 final Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
+                //create a dialogue to choose between all of the possible intents obtained above
                 final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
 
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
@@ -234,13 +235,17 @@ public class ChatActivity extends sideBarMenuActivity {
                         isCamera = false;
                     }
                     else{
+                        //if the action was ACTION_IMAGE_CAPTURE, the camera was selcted
                         isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
                 Uri selectedImageUri;
                 if(isCamera){
+                    //if we used the camera, then an image was saved to disk,
+                    //outputFileUri points to it
                     selectedImageUri = outputFileUri;
                 }else{
+                    //otherwise, data is returned:
                     selectedImageUri = data.getData();
                 }
                 try {
@@ -265,20 +270,7 @@ public class ChatActivity extends sideBarMenuActivity {
         return true;
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
         // Construct query to execute

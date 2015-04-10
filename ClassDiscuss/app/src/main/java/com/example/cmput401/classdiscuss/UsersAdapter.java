@@ -20,6 +20,7 @@ public class UsersAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final ArrayList<String> users;
     private final ArrayList<Bitmap> imageId;
+
     public UsersAdapter(Activity context,
                         ArrayList<String> users, ArrayList<Bitmap> imageId) {
         super(context, R.layout.activity_user_image, users);

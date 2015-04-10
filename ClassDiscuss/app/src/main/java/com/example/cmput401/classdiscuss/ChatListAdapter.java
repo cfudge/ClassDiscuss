@@ -114,7 +114,10 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
 
         holder.body.setText(message.getBody());
 
+        //get current date:
         cal = Calendar.getInstance();
+
+        //get the time this post was made:
         Date postTime = message.getPostTime();
 
         //date difference in milliseconds:
@@ -122,7 +125,6 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         float dateDiffSecs = dateDiffMS/1000;
         float dateDiffMins = dateDiffSecs/60;
         float dateDiffHrs = dateDiffMins/60;
-        float dateDiffDays = dateDiffHrs/24;
         int dayDiff = Math.abs(cal.getTime().getDay() - postTime.getDay());
         String postTimeString = postTime.toString();
 

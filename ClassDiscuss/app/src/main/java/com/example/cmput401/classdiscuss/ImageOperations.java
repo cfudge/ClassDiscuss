@@ -70,6 +70,8 @@ public class ImageOperations {
 
         return inSampleSize;
     }
+
+    //Get a byte stream from a bit map:
     public static byte[] getBytes(Bitmap bmp){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
