@@ -75,7 +75,6 @@ public class ChannelsAddActivity extends sideBarMenuActivity {
                     return true;
                 }
                 else {
-
                     addChannelListView.setFilterText(newText);
                     addChannelListView.setTextFilterEnabled(true);
                     addChannelListView.setAdapter(channelAdapter);

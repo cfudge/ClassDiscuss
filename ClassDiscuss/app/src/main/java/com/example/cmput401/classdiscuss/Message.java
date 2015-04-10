@@ -23,6 +23,7 @@ public class Message extends ParseObject {
     private boolean triedProFetch = false;
     private boolean triedPostPicFetch = false;
     private Profiles profiles = Profiles.getInstance();
+
     public String getUserId() {
         return getString("userId");
     }

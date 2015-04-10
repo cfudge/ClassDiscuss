@@ -11,7 +11,7 @@ public class MyChannels {
     String UNACTIVE = "unActive";
     private static final MyChannels MyChannelsInstance = new MyChannels();
 
-    public ArrayList<String>displayMessage;
+    public ArrayList<String> displayMessage;
     private HashMap<String, String> subscribedChannelList;
 
     private MyChannels() {

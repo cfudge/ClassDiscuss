@@ -82,7 +82,7 @@ public class ChatActivityTest extends ActivityInstrumentationTestCase2<ChatActiv
     }
 
     public void testbtPicAdd_pushButton(){
-        
+
     }
 
 
