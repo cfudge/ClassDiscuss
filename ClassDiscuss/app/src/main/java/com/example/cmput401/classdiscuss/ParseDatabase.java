@@ -99,27 +99,6 @@ public class ParseDatabase extends Activity {
         });
     }
 
-    /*private void createNewProfileToParse() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ImageClass);
-        query.whereEqualTo("username", OldProfile.getInstance().getUserName());
-
-        //check if email already existed in database
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                if (object == null) {
-                    //make a new object for the user in the database
-                    ParseObject Channels = new ParseObject(ImageClass);
-                    Channels.put("Image", "");
-                    Channels.put("username", OldProfile.getInstance().getUserName());
-                    Channels.saveInBackground();
-
-                } else { //success
-                    //already existed
-                }
-            }
-        });
-    }*/
-
     public String getMyChannelObjectId() {
         return this.myChannelObjectId;
     }
@@ -127,21 +106,6 @@ public class ParseDatabase extends Activity {
     public void setMyChannelObjectId(String ID) {
         this.myChannelObjectId = ID;
     }
-
-    /*public void UpdateChannelsToParse(final String item) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ChannelsClass);
-
-        // Retrieve the object by id
-        query.getInBackground(getMyChannelObjectId(), new GetCallback<ParseObject>() {
-            public void done(ParseObject ParseChannels, ParseException e) {
-                if (e == null) {
-
-                    ParseChannels.add("channels", item);
-                    ParseChannels.saveInBackground();
-                }
-            }
-        });
-    }*/
 
     public void UpdateChannelsToParse(final String HashMapStrings) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -236,7 +200,6 @@ public class ParseDatabase extends Activity {
 
         Iterator<String> keySetIterator1 = sorted_map.keySet().iterator();
 
-        //Log.e("score ", "seperator *********");
 
         Connections.getInstance().clear();
         while(keySetIterator1.hasNext()){
@@ -274,7 +237,7 @@ public class ParseDatabase extends Activity {
             Connections.getInstance().displayMessage.add(ConnectionsMessage.get(key));
             Connections.getInstance().myConnections.add(key);
             Connections.getInstance().messageTime.add(postTime);
-            //Log.e("score", "data saved " + key + " "+ ConnectionsMessage.get(key) + " " +postTime);
+
 
         }
 
@@ -288,7 +251,6 @@ public class ParseDatabase extends Activity {
                 if (e == null) {
                     // The query was successful.
                     updateOtherUsersData(objects);
-                    //Log.d("score", "updated users info");
                 } else {
                     //failed
                 }

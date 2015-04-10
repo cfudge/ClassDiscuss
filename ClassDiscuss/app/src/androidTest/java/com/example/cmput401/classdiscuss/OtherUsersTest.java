@@ -12,9 +12,6 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
-/**
- * Created by nhu on 15-04-10.
- */
 public class OtherUsersTest extends ActivityInstrumentationTestCase2<UserActivity> {
     private Context context;
     OtherUsers users = OtherUsers.getInstance();
