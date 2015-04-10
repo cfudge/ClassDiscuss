@@ -94,12 +94,10 @@ public class ChatActivity extends sideBarMenuActivity {
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             refreshMessages();
-            //filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-// Associate the device with a user
+            // Associate the device with a user
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.put("user",ParseUser.getCurrentUser());
             installation.saveInBackground();
-            //registerReceiver(myReceiver, filter1);
             startWithCurrentUser();
         } else {
             Intent ToLogIn = new Intent();
@@ -115,9 +113,6 @@ public class ChatActivity extends sideBarMenuActivity {
         if(notice.getUsername().equals(profiles.displayProfile.getUserName()))
             notice.iconDisappear();
         notice.setLive(true);
-       // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-        //registerReceiver(myReceiver, filter1);
-        //registerReceiver(myReceiver, filter1);
     }
 
 
@@ -127,20 +122,6 @@ public class ChatActivity extends sideBarMenuActivity {
         sUserId = ParseUser.getCurrentUser().getUsername();
         setupMessagePosting();
     }
-
-    // Create an anonymous user using ParseAnonymousUtils and set sUserId
-    /*private void login() {
-        ParseAnonymousUtils.logIn(new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) {
-                    Log.d(TAG, "Anonymous login failed: " + e.toString());
-                } else {
-                    startWithCurrentUser();
-                }
-            }
-        });
-    }*/
 
     // Setup button event handler which posts the entered message to Parse
     private void setupMessagePosting() {
@@ -167,10 +148,6 @@ public class ChatActivity extends sideBarMenuActivity {
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            /*ParsePush push = new ParsePush();
-                            push.setChannel(profiles.displayProfile.getUserName().toString());
-                            push.setMessage("New Message!");
-                            push.sendInBackground();*/
                             // Find users near a given location
                             ParseQuery userQuery = ParseUser.getQuery();
                             userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
@@ -337,7 +314,6 @@ public class ChatActivity extends sideBarMenuActivity {
         receiveMessage();
         Notice notice = Notice.getInstance();
         notice.setLive(false);
-       // unregisterReceiver(myReceiver);
 
     }
 
