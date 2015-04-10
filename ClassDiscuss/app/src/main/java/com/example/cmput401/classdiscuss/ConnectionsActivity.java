@@ -23,13 +23,6 @@ public class ConnectionsActivity extends sideBarMenuActivity {
     private Connections myConnections;
     ConnectionsAdapter connectionsAdapter;
 
-
-    ArrayList<Integer> messageTimes = new ArrayList<Integer>();
-
-    long time =  System.currentTimeMillis();
-    Timestamp timeStamp =  new Timestamp(time);
-    String tStamp = timeStamp.toString();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +52,6 @@ public class ConnectionsActivity extends sideBarMenuActivity {
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ChatActivity.class);
                 startActivity(intent);
-
-               // Toast.makeText(getBaseContext(), itemValue, Toast.LENGTH_LONG).show();
-
             }
         });
 
@@ -94,14 +84,6 @@ public class ConnectionsActivity extends sideBarMenuActivity {
 
     public void addConnections(){
 
-       /* messageTimes.add(timeStamp.getHours());
-        messageTimes.add(timeStamp.getMinutes());
-        messageTimes.add(timeStamp.getSeconds());
-        messageTimes.add(30);
-        messageTimes.add(60);
-        messageTimes.add(1);*/
-
-
         if(myConnections.myConnections.isEmpty()) {
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");
@@ -110,22 +92,9 @@ public class ConnectionsActivity extends sideBarMenuActivity {
             TextView noMessage = (TextView) findViewById(R.id.no_messages);
             noMessage.setText("NO MESSAGES");
         }
-
-      //  sortList();
         TextView noMessage = (TextView) findViewById(R.id.no_messages);
         noMessage.setText(myConnections.myConnections.size() + " Connections");
-
     }
-
-
-    /*public void sortList(){
-        Collections.sort(messageTimes, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                return lhs.compareTo(rhs);
-            }
-        });
-    }*/
 
 
     @Override
