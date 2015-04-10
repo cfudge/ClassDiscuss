@@ -1,5 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
@@ -20,6 +21,8 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
     private ListView listView;
 
     private Connections connections;
+    private Context context;
+    private ConnectionsAdapter connectionsAdapter;
 
 
     public  ConnectionsActivityTest(){
@@ -37,6 +40,7 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
 
 
         connections = connections.getInstance();
+        context = this.getInstrumentation().getTargetContext().getApplicationContext();
         connectionsActivity = getActivity();
 
         textView= (TextView) connectionsActivity.findViewById(R.id.no_messages);
@@ -65,5 +69,14 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
         assertEquals("The texts do not match", connections.myConnections.size() + " Connections" , textView.getText().toString());
     }
 
+    public void testAdapter(){
+        connectionsAdapter = (ConnectionsAdapter) listView.getAdapter();
+        String test = connectionsAdapter.getItem(0);
+        String test2 = connectionsAdapter.getItem(1);
+       
+        assertEquals("There are no connections in the list", test, connections.myConnections.get(0));
+        assertEquals("Connection doesn't exist", test2, connections.myConnections.get(1));
+
+    }
 
 }
