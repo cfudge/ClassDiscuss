@@ -33,9 +33,10 @@ public class ProfileActivity extends sideBarMenuActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
+        Profile displayProfile = profiles.displayProfile;
+
         //Folowing https://www.parse.com/docs/android_guide#queries-basic
         //final ArrayList<User> foundUsers = new ArrayList<User>();
-        Profile displayProfile = profiles.displayProfile;
 
         TextView textUserName = (TextView) findViewById(R.id.textUserName);
         TextView textUserEmail = (TextView) findViewById(R.id.textUserEmail);
@@ -73,6 +74,7 @@ public class ProfileActivity extends sideBarMenuActivity{
         listview.setAdapter(adapter);
         if (currentUser != null) {
             if(!profiles.displayProfile.getUserName().equals(currentUser.getUsername().toString())){
+                //if we're not displaying the user's own profile
                 if (mutual == true)
                     textChannelTitle.setText("Mutual courses with " + displayProfile.getUserName() + ":");
                 else

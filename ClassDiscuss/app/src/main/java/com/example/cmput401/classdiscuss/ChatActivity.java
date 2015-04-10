@@ -1,8 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -94,12 +92,10 @@ public class ChatActivity extends sideBarMenuActivity {
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             refreshMessages();
-            //filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-// Associate the device with a user
+            // Associate the device with a user
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.put("user",ParseUser.getCurrentUser());
             installation.saveInBackground();
-            //registerReceiver(myReceiver, filter1);
             startWithCurrentUser();
         } else {
             Intent ToLogIn = new Intent();
@@ -115,9 +111,6 @@ public class ChatActivity extends sideBarMenuActivity {
         if(notice.getUsername().equals(profiles.displayProfile.getUserName()))
             notice.iconDisappear();
         notice.setLive(true);
-       // filter1 = new IntentFilter("android.bluetooth.BluetoothDevice.ACTION_ACL_CONNECTED");
-        //registerReceiver(myReceiver, filter1);
-        //registerReceiver(myReceiver, filter1);
     }
 
 
@@ -127,20 +120,6 @@ public class ChatActivity extends sideBarMenuActivity {
         sUserId = ParseUser.getCurrentUser().getUsername();
         setupMessagePosting();
     }
-
-    // Create an anonymous user using ParseAnonymousUtils and set sUserId
-    /*private void login() {
-        ParseAnonymousUtils.logIn(new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) {
-                    Log.d(TAG, "Anonymous login failed: " + e.toString());
-                } else {
-                    startWithCurrentUser();
-                }
-            }
-        });
-    }*/
 
     // Setup button event handler which posts the entered message to Parse
     private void setupMessagePosting() {
@@ -167,10 +146,6 @@ public class ChatActivity extends sideBarMenuActivity {
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            /*ParsePush push = new ParsePush();
-                            push.setChannel(profiles.displayProfile.getUserName().toString());
-                            push.setMessage("New Message!");
-                            push.sendInBackground();*/
                             // Find users near a given location
                             ParseQuery userQuery = ParseUser.getQuery();
                             userQuery.whereEqualTo("username", profiles.displayProfile.getUserName());
@@ -219,6 +194,7 @@ public class ChatActivity extends sideBarMenuActivity {
                 final PackageManager packageManager = getPackageManager();
                 final List<ResolveInfo> listCam = packageManager.queryIntentActivities(getPic, 0);
                 for(ResolveInfo res: listCam){
+                    //for all intents that could be used to get take a picture
                     final String packageName = res.activityInfo.packageName;
                     final Intent intent = new Intent(getPic);
                     intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
@@ -227,10 +203,12 @@ public class ChatActivity extends sideBarMenuActivity {
                     cameraIntents.add(intent);
                 }
 
+                //intent for getting a file from gallery:
                 final Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
+                //create a dialogue to choose between all of the possible intents obtained above
                 final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
 
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
@@ -257,13 +235,17 @@ public class ChatActivity extends sideBarMenuActivity {
                         isCamera = false;
                     }
                     else{
+                        //if the action was ACTION_IMAGE_CAPTURE, the camera was selcted
                         isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
                 Uri selectedImageUri;
                 if(isCamera){
+                    //if we used the camera, then an image was saved to disk,
+                    //outputFileUri points to it
                     selectedImageUri = outputFileUri;
                 }else{
+                    //otherwise, data is returned:
                     selectedImageUri = data.getData();
                 }
                 try {
@@ -288,20 +270,7 @@ public class ChatActivity extends sideBarMenuActivity {
         return true;
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
         // Construct query to execute

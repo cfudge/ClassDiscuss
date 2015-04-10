@@ -40,11 +40,11 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
 
         String channelName = getItem(position);
         TextView listText = (TextView) channelAddView.findViewById(R.id.add_channel_name);
-        //final TextView name = (TextView) channelAddView.findViewById(R.id.add_channel_button);
 
         ImageView addImageView = (ImageView) channelAddView.findViewById(R.id.add_channel_button);
 
         if (myChannels.ifContains(getItem(position))){
+            //if the channel is already subscribed, set the remove icon instead
             addImageView.setImageResource(R.drawable.ic_remove_channel);
             addImageView.getLayoutParams().height = 130;
         }
@@ -56,7 +56,6 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 add(position);
-                //test.setText(String.valueOf(position));
             }
         });
 
@@ -67,8 +66,7 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
 
     public void add(final int position){
         if(myChannels.ifContains(getItem(position))) {
-            /*Toast.makeText(getContext(), "Already subscribed.",
-                    Toast.LENGTH_SHORT).show();*/
+            //remove channel
             myChannels.deleteChannel(getItem(position));
             this.notifyDataSetChanged();
             return;
@@ -77,6 +75,7 @@ public class ChannelsAddAdapter extends ArrayAdapter<String>{
             alert(position);
             return;
         }
+        //add the channel to the user's subscribed channels
         myChannels.addChannel(getItem(position));
         this.notifyDataSetChanged();
 

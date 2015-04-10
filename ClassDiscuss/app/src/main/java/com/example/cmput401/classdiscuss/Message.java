@@ -17,8 +17,12 @@ import java.util.Date;
  */
 @ParseClassName("Message")
 public class Message extends ParseObject {
+    //a smaller version of a pic for preview in images that the user
+    //is still editing
     private Bitmap smallPostPic;
+    //bitmap for the message
     private Bitmap postPic = null;
+    //profile pic of the message's sender:
     private Bitmap proPic = null;
     private boolean triedProFetch = false;
     private boolean triedPostPicFetch = false;
@@ -43,13 +47,19 @@ public class Message extends ParseObject {
 
     public Bitmap getSmallPostPic() { return smallPostPic; }
 
+    //return the picture posted with the message, or null if
+    //there isn't one
     public Bitmap getPic() {
         if(triedPostPicFetch){
+            //If we've already retrieved it before(or got null)
+            //return the same result
             return postPic;
         }
         triedPostPicFetch = true;
+        //fetch the picfile from parse
         ParseFile picFile = getParseFile("picture");
         if (picFile == null) {
+            //there is no pic for this message
             return null;
         }
         else {
@@ -65,8 +75,12 @@ public class Message extends ParseObject {
         }
     }
 
+    //returns a bitmap of the profile picture of the person
+    //who sent the message
     public Bitmap getPosterPic(){
         if(triedProFetch){
+            //If we've already retrieved it before(or got null)
+            //return the same result
             return proPic;
         }
         Bitmap result;
@@ -78,6 +92,9 @@ public class Message extends ParseObject {
         }
         ParseFile picFile = null;
         ParseUser sender = null;
+
+        //perform a parse query to get the user that corresponds
+        //to the message's sender's username
         ParseQuery query = ParseUser.getQuery();
         query.whereEqualTo("username", getUserId());
         try {
@@ -87,11 +104,14 @@ public class Message extends ParseObject {
             //e.printStackTrace();
         }
 
+        //get the user's picFile, if possible:
         if(sender != null) {
             picFile = sender.getParseFile("ProfilePic");
         }
         if(picFile != null) {
             result = ImageOperations.bitmapFromPicFile(picFile, 100, 100);
+            //backup retrieved profile pic so that we do not need to fetch
+            //it from parse again
             profiles.profilePics.put(getUserId(), result);
             proPic = result;
             return result;
@@ -101,6 +121,7 @@ public class Message extends ParseObject {
         }
     }
 
+    //convert a bitmap
     public void setPic(Bitmap pic){
         // Convert it to byte
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
