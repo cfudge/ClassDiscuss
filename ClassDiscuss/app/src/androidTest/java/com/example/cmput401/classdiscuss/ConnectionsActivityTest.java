@@ -1,5 +1,6 @@
 package com.example.cmput401.classdiscuss;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.view.View;
@@ -18,6 +19,8 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
     private ConnectionsActivity connectionsActivity;
     private ListView listView;
 
+    private Connections connections;
+
 
     public  ConnectionsActivityTest(){
         super(ConnectionsActivity.class);
@@ -27,6 +30,13 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
 
         setActivityInitialTouchMode(true);
 
+        //http://stackoverflow.com/questions/4320099/how-do-i-write-an-android-junit-test-when-my-activity-relies-on-extras-passed-th
+        Intent intent = new Intent();
+        intent.setClassName("com.example.cmput401.classdiscuss", "com.example.cmput401.classdiscuss.ChatActivity");
+        setActivityIntent(intent);
+
+
+        connections = connections.getInstance();
         connectionsActivity = getActivity();
 
         textView= (TextView) connectionsActivity.findViewById(R.id.no_messages);
@@ -51,7 +61,9 @@ public class ConnectionsActivityTest extends ActivityInstrumentationTestCase2<Co
     }
 
 
-
+    public void testText(){
+        assertEquals("The texts do not match", connections.myConnections.size() + " Connections" , textView.getText().toString());
+    }
 
 
 }

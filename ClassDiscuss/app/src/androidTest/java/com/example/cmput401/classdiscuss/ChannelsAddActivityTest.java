@@ -23,7 +23,5 @@ public class ChannelsAddActivityTest extends ActivityInstrumentationTestCase2<Ch
 
         channelsAddActivity = getActivity();
 
-
-        // testAddButton();
     }
 }
